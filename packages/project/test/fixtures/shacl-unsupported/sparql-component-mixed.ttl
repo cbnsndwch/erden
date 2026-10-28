@@ -1,0 +1,27 @@
+@prefix demo: <https://example.invalid/erden/demo#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+demo:PublishedArtifactShape a sh:NodeShape ;
+  sh:targetClass demo:PublishedArtifact ;
+  sh:property [
+    sh:path rdf:type ;
+    sh:hasValue demo:Artifact ;
+    sh:message "published artifacts must inherit the Artifact type"
+  ] .
+
+# The same component on a shape that also has a Core constraint the data meets. The engine runs only the Core
+# constraint, so before the refusal this project passed although its data breaks the component.
+demo:MustNotHaveGenerator a sh:ConstraintComponent ;
+  sh:parameter [ sh:path demo:forbiddenProperty ] ;
+  sh:validator [ a sh:SPARQLAskValidator ;
+    sh:message "the value is linked by a forbidden property" ;
+    sh:ask "ASK { FILTER NOT EXISTS { $this $forbiddenProperty ?any } }" ] .
+
+demo:ComponentUseShape a sh:NodeShape ;
+  sh:targetClass demo:PublishedArtifact ;
+  demo:forbiddenProperty prov:wasGeneratedBy ;
+  sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ] .

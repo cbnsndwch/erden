@@ -1,0 +1,26 @@
+@prefix ex: <https://example.test/formats#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.test/formats> a owl:Ontology .
+
+ex:Animal a owl:Class ;
+    rdfs:label "Animal"@en .
+ex:Dog a owl:Class ;
+    rdfs:subClassOf ex:Animal .
+ex:Cat a owl:Class ;
+    rdfs:subClassOf ex:Animal .
+
+ex:chases a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( ex:Dog ex:Cat ) ] ;
+    rdfs:range ex:Animal .
+ex:age a owl:DatatypeProperty ;
+    rdfs:domain ex:Animal ;
+    rdfs:range xsd:integer .
+
+ex:rex a owl:NamedIndividual , ex:Dog ;
+    rdfs:comment "A dog & his \"toy\" <ball>." ;
+    ex:age 3 ;
+    ex:chases ex:tom .
+ex:tom a owl:NamedIndividual , ex:Cat .

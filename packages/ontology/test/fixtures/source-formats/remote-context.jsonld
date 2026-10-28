@@ -1,0 +1,6 @@
+{
+    "@context": "https://schema.org/",
+    "@id": "https://example.test/formats#rex",
+    "@type": "Thing",
+    "name": "Rex"
+}

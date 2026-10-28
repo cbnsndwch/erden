@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "packageName": "@erden/shacl-linux-x64-gnu",
+  "packageVersion": "0.1.0+purrdf.3.0.1",
+  "tool": {
+    "name": "erden-shacl",
+    "version": "0.1.0+purrdf.3.0.1",
+    "engineDigest": "sha256:026b0ef70f4bd68cbe0fff535b8287eb804825c057f46cc116ae1f2087b427cc"
+  },
+  "runtime": {
+    "os": "linux",
+    "cpu": "x64",
+    "libc": "glibc"
+  },
+  "target": "x86_64-unknown-linux-gnu",
+  "binary": {
+    "path": "bin/erden-shacl",
+    "bytes": 11750792,
+    "sha256": "sha256:6ec761d9ead6f40dd747da972f1be7cd45e212321ea7c8dd134eb38bc42f06a9"
+  },
+  "knownAnswer": {
+    "fixture": "core-and-sparql",
+    "responseBytes": 2202,
+    "responseSha256": "sha256:db8343f26115bcb9b4d6ed4718b8b5cb34f14ae8cc004c04a09ee8e1bf43eea8"
+  }
+}

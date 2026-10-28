@@ -1,0 +1,104 @@
+[
+    {
+        "id": "test003c",
+        "input": "rdfc10/test003-in.nq",
+        "expected": "rdfc10/test003-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test016c",
+        "input": "rdfc10/test016-in.nq",
+        "expected": "rdfc10/test016-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test018c",
+        "input": "rdfc10/test018-in.nq",
+        "expected": "rdfc10/test018-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test021c",
+        "input": "rdfc10/test021-in.nq",
+        "expected": "rdfc10/test021-rdfc10.nq",
+        "complexity": "medium"
+    },
+    {
+        "id": "test033c",
+        "input": "rdfc10/test033-in.nq",
+        "expected": "rdfc10/test033-rdfc10.nq",
+        "complexity": "medium"
+    },
+    {
+        "id": "test043c",
+        "input": "rdfc10/test043-in.nq",
+        "expected": "rdfc10/test043-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test044c",
+        "input": "rdfc10/test044-in.nq",
+        "expected": "rdfc10/test044-rdfc10.nq",
+        "complexity": "high"
+    },
+    {
+        "id": "test053c",
+        "input": "rdfc10/test053-in.nq",
+        "expected": "rdfc10/test053-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test060c",
+        "input": "rdfc10/test060-in.nq",
+        "expected": "rdfc10/test060-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test061c",
+        "input": "rdfc10/test061-in.nq",
+        "expected": "rdfc10/test061-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test062c",
+        "input": "rdfc10/test062-in.nq",
+        "expected": "rdfc10/test062-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test070c",
+        "input": "rdfc10/test070-in.nq",
+        "expected": "rdfc10/test070-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test071c",
+        "input": "rdfc10/test071-in.nq",
+        "expected": "rdfc10/test071-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test072c",
+        "input": "rdfc10/test072-in.nq",
+        "expected": "rdfc10/test072-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test073c",
+        "input": "rdfc10/test073-in.nq",
+        "expected": "rdfc10/test073-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test076c",
+        "input": "rdfc10/test076-in.nq",
+        "expected": "rdfc10/test076-rdfc10.nq",
+        "complexity": "low"
+    },
+    {
+        "id": "test077c",
+        "input": "rdfc10/test077-in.nq",
+        "expected": "rdfc10/test077-rdfc10.nq",
+        "complexity": "low"
+    }
+]

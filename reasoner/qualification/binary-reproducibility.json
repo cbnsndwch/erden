@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 5,
+  "qualificationBaseCommit": "8c6db97adaf46fe76e628036d36bf18de906ec4b",
+  "qualificationSourceCommit": "8c6db97adaf46fe76e628036d36bf18de906ec4b",
+  "qualificationReasonerCommitTree": "01f45cd6075a053bf40cd6ab591243eb9597325f",
+  "adapterCrateSourceTree": "777932ce458b61fdf624f14d4fb2fb4da7930169",
+  "cargoLockDigest": "sha256:ed8f5e514476629d704a85c3363d5f15039a8f3646244fc63aaa19c287e3f211",
+  "sourceDateEpoch": 1785703783,
+  "toolchain": {
+    "rustc": "1.96.0",
+    "commit": "ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96",
+    "llvm": "22.1.2"
+  },
+  "source": {
+    "extraction": "git-archive",
+    "adapterCratePath": "reasoner/erden-reasoner",
+    "purrdfCrateVersion": "0.12.0",
+    "purrdfCommit": "dfb1df73199668720116dfbc737c0585e23afb5e"
+  },
+  "windows": {
+    "target": "x86_64-pc-windows-msvc",
+    "build": {
+      "builder": "github-actions",
+      "workflow": ".github/workflows/reasoner-build.yml",
+      "runId": 38180355880,
+      "runnerLabel": "windows-2025",
+      "sourceCommit": "4ba5f82692d9b98a6f682a97eccae767385dbf77",
+      "sourceCommitNote": "pull request merge commit on GitHub; its tree is sourceHeadCommit's",
+      "sourceHeadCommit": "249ef9c750ee7f72e89edfba08df5a44261a179f",
+      "reasonerCommitTree": "17b8d9edb63a90d9ebdb6395d43998550c3c6d94",
+      "adapterCrateSourceTree": "777932ce458b61fdf624f14d4fb2fb4da7930169",
+      "cargoLockDigest": "sha256:ed8f5e514476629d704a85c3363d5f15039a8f3646244fc63aaa19c287e3f211"
+    },
+    "linker": {
+      "visualStudio": "18.10.12217.157",
+      "msvcTools": "14.51.36231"
+    },
+    "rustflags": "-C link-arg=/Brepro --remap-path-prefix=<reasoner>=/erden-reasoner --remap-path-prefix=<cargo-home>=/cargo",
+    "runs": [
+      {
+        "label": "clean-target-a",
+        "sourcePath": "git-archive-a",
+        "bytes": 1350144,
+        "sha256": "sha256:9e6b2487706fc5406becce8e3fbb01c1456243fb66f4519e2e00147906e37051"
+      },
+      {
+        "label": "clean-target-b",
+        "sourcePath": "git-archive-b",
+        "bytes": 1350144,
+        "sha256": "sha256:9e6b2487706fc5406becce8e3fbb01c1456243fb66f4519e2e00147906e37051"
+      }
+    ],
+    "package": {
+      "label": "checked-package-binary",
+      "sourcePath": "reasoner/win32-x64-msvc/bin/erden-reasoner.exe",
+      "bytes": 1350144,
+      "sha256": "sha256:9e6b2487706fc5406becce8e3fbb01c1456243fb66f4519e2e00147906e37051",
+      "matchesAllRecordedRuns": true
+    },
+    "knownAnswer": {
+      "fixture": "subclass-type",
+      "responseBytes": 2299,
+      "responseSha256": "sha256:e17e5720cb772ce8b15ebe38305c970047fb5862805d4ca23eeb7eefff1fe27b"
+    },
+    "result": "byte-identical-and-package-matched"
+  },
+  "linux": {
+    "target": "x86_64-unknown-linux-gnu",
+    "builderImage": "rust@sha256:5e2214abe154fe26e39f64488952e5c991eeed1d6d6da7cc8381ae83927f0cfc",
+    "rustflags": "-C link-arg=-Wl,--build-id=none --remap-path-prefix=/work=/erden-reasoner --remap-path-prefix=/usr/local/cargo=/cargo",
+    "runs": [
+      {
+        "label": "clean-target-a",
+        "sourcePath": "git-archive-a",
+        "bytes": 1556160,
+        "sha256": "sha256:a5deaeecf3568101cfc981a2194f0af9edc1590c506f50b8b61cda4c4c1d571a"
+      },
+      {
+        "label": "clean-target-b",
+        "sourcePath": "git-archive-b",
+        "bytes": 1556160,
+        "sha256": "sha256:a5deaeecf3568101cfc981a2194f0af9edc1590c506f50b8b61cda4c4c1d571a"
+      }
+    ],
+    "package": {
+      "label": "checked-package-binary",
+      "sourcePath": "reasoner/linux-x64-gnu/bin/erden-reasoner",
+      "bytes": 1556160,
+      "sha256": "sha256:a5deaeecf3568101cfc981a2194f0af9edc1590c506f50b8b61cda4c4c1d571a",
+      "matchesAllRecordedRuns": true
+    },
+    "knownAnswer": {
+      "fixture": "subclass-type",
+      "responseBytes": 2299,
+      "responseSha256": "sha256:8248a224ed33ee4ebc8826eb19efd758b8eb2aed8ca60bf984ea6727113f005d"
+    },
+    "result": "byte-identical-and-package-matched"
+  },
+  "linuxArm64": {
+    "target": "aarch64-unknown-linux-gnu",
+    "build": {
+      "builder": "github-actions",
+      "workflow": ".github/workflows/reasoner-build.yml",
+      "runId": 38185895491,
+      "runnerLabel": "ubuntu-24.04-arm",
+      "sourceCommit": "ebe7d9cc79943e04d1cd60cdc94e4d9933fbf8f6",
+      "sourceCommitNote": "pull request merge commit on GitHub; its reasoner tree is sourceHeadCommit's",
+      "sourceHeadCommit": "8c53201a44531306f5e0926276e25a9a9562790f",
+      "reasonerCommitTree": "3aa9ad63c10b427b300997b6ac3a139871b6d1fc",
+      "adapterCrateSourceTree": "777932ce458b61fdf624f14d4fb2fb4da7930169",
+      "cargoLockDigest": "sha256:ed8f5e514476629d704a85c3363d5f15039a8f3646244fc63aaa19c287e3f211"
+    },
+    "builderImage": "rust@sha256:5e2214abe154fe26e39f64488952e5c991eeed1d6d6da7cc8381ae83927f0cfc",
+    "builderPlatform": "linux/arm64",
+    "rustflags": "-C link-arg=-Wl,--build-id=none --remap-path-prefix=/work=/erden-reasoner --remap-path-prefix=/usr/local/cargo=/cargo",
+    "runs": [
+      {
+        "label": "clean-target-a",
+        "sourcePath": "git-archive-a",
+        "bytes": 1315512,
+        "sha256": "sha256:657a3b5f6e526404d1c87e5adb3e05eb800f7936702af433c093fcc21b0d5ace"
+      },
+      {
+        "label": "clean-target-b",
+        "sourcePath": "git-archive-b",
+        "bytes": 1315512,
+        "sha256": "sha256:657a3b5f6e526404d1c87e5adb3e05eb800f7936702af433c093fcc21b0d5ace"
+      }
+    ],
+    "package": {
+      "label": "checked-package-binary",
+      "sourcePath": "reasoner/linux-arm64-gnu/bin/erden-reasoner",
+      "bytes": 1315512,
+      "sha256": "sha256:657a3b5f6e526404d1c87e5adb3e05eb800f7936702af433c093fcc21b0d5ace",
+      "matchesAllRecordedRuns": true
+    },
+    "knownAnswer": {
+      "fixture": "subclass-type",
+      "responseBytes": 2299,
+      "responseSha256": "sha256:ca35f7a22322e153e2504e553efafa446ba4b8cf017ca94854671fb696fe7d7e"
+    },
+    "result": "byte-identical-and-package-matched"
+  },
+  "darwinArm64": {
+    "target": "aarch64-apple-darwin",
+    "build": {
+      "builder": "github-actions",
+      "workflow": ".github/workflows/reasoner-build.yml",
+      "runId": 38185895491,
+      "runnerLabel": "macos-15",
+      "sourceCommit": "ebe7d9cc79943e04d1cd60cdc94e4d9933fbf8f6",
+      "sourceCommitNote": "pull request merge commit on GitHub; its reasoner tree is sourceHeadCommit's",
+      "sourceHeadCommit": "8c53201a44531306f5e0926276e25a9a9562790f",
+      "reasonerCommitTree": "3aa9ad63c10b427b300997b6ac3a139871b6d1fc",
+      "adapterCrateSourceTree": "777932ce458b61fdf624f14d4fb2fb4da7930169",
+      "cargoLockDigest": "sha256:ed8f5e514476629d704a85c3363d5f15039a8f3646244fc63aaa19c287e3f211"
+    },
+    "linker": {
+      "xcode": "Xcode 16.4 (Build version 16F6)",
+      "sdk": "macosx 15.5 (24F74)",
+      "cc": "Apple clang version 17.0.0 (clang-1700.0.13.5)",
+      "ld": "@(#)PROGRAM:ld PROJECT:ld-1167.5"
+    },
+    "rustflags": "--remap-path-prefix=<reasoner>=/erden-reasoner --remap-path-prefix=<cargo-home>=/cargo",
+    "runs": [
+      {
+        "label": "clean-target-a",
+        "sourcePath": "git-archive-a",
+        "bytes": 1231872,
+        "sha256": "sha256:5f4e5b2c6b123acadeccd606b20d8ed73a6a0c7da1dd285640e03d8b94cdfb9e"
+      },
+      {
+        "label": "clean-target-b",
+        "sourcePath": "git-archive-b",
+        "bytes": 1231872,
+        "sha256": "sha256:5f4e5b2c6b123acadeccd606b20d8ed73a6a0c7da1dd285640e03d8b94cdfb9e"
+      }
+    ],
+    "package": {
+      "label": "checked-package-binary",
+      "sourcePath": "reasoner/darwin-arm64/bin/erden-reasoner",
+      "bytes": 1231872,
+      "sha256": "sha256:5f4e5b2c6b123acadeccd606b20d8ed73a6a0c7da1dd285640e03d8b94cdfb9e",
+      "matchesAllRecordedRuns": true
+    },
+    "knownAnswer": {
+      "fixture": "subclass-type",
+      "responseBytes": 2299,
+      "responseSha256": "sha256:d91ae0ecdc3b1ba3ee7fa35eb2a1f05eb5d913720812ec7e83e1343114169a0d"
+    },
+    "result": "byte-identical-and-package-matched"
+  },
+  "crossPlatformDeterminism": {
+    "workflow": ".github/workflows/reasoner-build.yml",
+    "runId": 38185895491,
+    "sourceHeadCommit": "8c53201a44531306f5e0926276e25a9a9562790f",
+    "requestSet": "reasoner/qualification/determinism-cases.ts",
+    "requests": 51,
+    "requestsManifestSha256": "sha256:af021168da368b5b89d24a4b233cd17e7e45dca770180cfdfd0aa7a8a14853f5",
+    "excludedFields": [
+      "tool.executableDigest"
+    ],
+    "executables": {
+      "x86_64-unknown-linux-gnu": {
+        "sha256": "sha256:a5deaeecf3568101cfc981a2194f0af9edc1590c506f50b8b61cda4c4c1d571a",
+        "runner": "linux x64"
+      },
+      "aarch64-unknown-linux-gnu": {
+        "sha256": "sha256:657a3b5f6e526404d1c87e5adb3e05eb800f7936702af433c093fcc21b0d5ace",
+        "runner": "linux arm64"
+      },
+      "x86_64-pc-windows-msvc": {
+        "sha256": "sha256:9e6b2487706fc5406becce8e3fbb01c1456243fb66f4519e2e00147906e37051",
+        "runner": "win32 x64"
+      },
+      "aarch64-apple-darwin": {
+        "sha256": "sha256:5f4e5b2c6b123acadeccd606b20d8ed73a6a0c7da1dd285640e03d8b94cdfb9e",
+        "runner": "darwin arm64"
+      }
+    },
+    "comparisonSha256": "sha256:e9bfd3578e591559a407dac476d5df7cd3c2f536dbafc3d2b0be4078876cca6c",
+    "result": "identical"
+  },
+  "notYetAvailable": []
+}

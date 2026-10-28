@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "packageName": "@erden/shacl-win32-x64-msvc",
+  "packageVersion": "0.1.0+purrdf.3.0.1",
+  "tool": {
+    "name": "erden-shacl",
+    "version": "0.1.0+purrdf.3.0.1",
+    "engineDigest": "sha256:026b0ef70f4bd68cbe0fff535b8287eb804825c057f46cc116ae1f2087b427cc"
+  },
+  "runtime": {
+    "os": "win32",
+    "cpu": "x64"
+  },
+  "target": "x86_64-pc-windows-msvc",
+  "binary": {
+    "path": "bin/erden-shacl.exe",
+    "bytes": 13892608,
+    "sha256": "sha256:c7ee9a4bff6d0e2cba6d089aa25a81af79c4fe4aee992643db7ef5f8148901a5"
+  },
+  "knownAnswer": {
+    "fixture": "core-and-sparql",
+    "responseBytes": 2202,
+    "responseSha256": "sha256:4d0dbccc6d44917f870550c71a75291447f479140623ce23064ae93597de8cb8"
+  }
+}

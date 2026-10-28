@@ -1,0 +1,57 @@
+# The license of every file in this repository, in the REUSE format (https://reuse.software/spec-3.3/). Erden's own
+# files are Apache-2.0; the overrides below are the third-party texts and fixtures it carries, each under its own
+# terms. The license texts are in LICENSES/. `reuse lint` checks this.
+version = 1
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 cbnsndwch LLC"
+SPDX-License-Identifier = "Apache-2.0"
+
+# W3C RDF Dataset Canonicalization test fixtures, under the W3C 3-clause BSD License (see LICENSE.txt there).
+[[annotations]]
+path = "packages/ontology/test/fixtures/rdf-canon/**"
+precedence = "override"
+SPDX-FileCopyrightText = "W3C and contributors"
+SPDX-License-Identifier = "LicenseRef-W3C-BSD-3-Clause-2008"
+
+# The W3C SHACL test suite, under the W3C Software and Document License (see UPSTREAM-LICENSE.md there).
+[[annotations]]
+path = "shacl/qualification/w3c/data-shapes-test-suite/**"
+precedence = "override"
+SPDX-FileCopyrightText = "W3C and contributors"
+SPDX-License-Identifier = "W3C-20150513"
+
+# Reasoner requests whose ontologies are the W3C's PROV-O and SKOS, under the W3C Software and Document License.
+[[annotations]]
+path = [
+    "reasoner/qualification/determinism/captured/prov-o-complete.request.json.br",
+    "reasoner/qualification/determinism/captured/skos-complete.request.json.br",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "W3C and contributors"
+SPDX-License-Identifier = "W3C-20150513"
+
+# Validator messages copied from rdf-validate-shacl 0.6.5 (MIT), in an Apache-2.0 file.
+[[annotations]]
+path = "packages/ontology/src/shacl-engine/messages.ts"
+precedence = "override"
+SPDX-FileCopyrightText = ["2026 cbnsndwch LLC", "2020 Zazuko GmbH"]
+SPDX-License-Identifier = "Apache-2.0 AND MIT"
+
+# The standard MIT text, used for a dependency that ships no license file of its own (release/license-policy.json).
+[[annotations]]
+path = "release/licenses/MIT.txt"
+precedence = "override"
+SPDX-FileCopyrightText = "the MIT License's authors"
+SPDX-License-Identifier = "MIT"
+
+# Third-party license texts and notices, copied byte for byte from the engines' locked dependencies and named by their
+# SHA-256. Each is the license or notice of the component that ships it (each engine's THIRD-PARTY-NOTICES.md and
+# sbom.json name the component) and stays under the terms it states.
+[[annotations]]
+path = ["reasoner/qualification/licenses/**", "shacl/qualification/licenses/**"]
+precedence = "override"
+SPDX-FileCopyrightText = "the respective upstream authors"
+SPDX-License-Identifier = "LicenseRef-Third-Party-Notices"

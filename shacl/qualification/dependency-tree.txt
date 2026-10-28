@@ -1,0 +1,197 @@
+# Locked Cargo normal/build dependency graph of erden-shacl for x86_64-unknown-linux-gnu, aarch64-unknown-linux-gnu, x86_64-pc-windows-msvc, aarch64-apple-darwin (stable CycloneDX bom-ref identities)
+# Locked but built by none of these targets: bumpalo@3.20.3 once_cell@1.21.4 r-efi@5.3.0 rustversion@1.0.23 wasip2@1.0.4+wasi-0.2.12 wasm-bindgen-macro-support@0.2.125 wasm-bindgen-macro@0.2.125 wasm-bindgen-shared@0.2.125 wasm-bindgen@0.2.125 wit-bindgen@0.57.1
+pkg:cargo/aead@0.6.1 -[normal]-> pkg:cargo/crypto-common@0.2.2
+pkg:cargo/aead@0.6.1 -[normal]-> pkg:cargo/inout@0.2.2
+pkg:cargo/aes-gcm@0.11.1 -[normal]-> pkg:cargo/aead@0.6.1
+pkg:cargo/aes-gcm@0.11.1 -[normal]-> pkg:cargo/aes@0.9.3
+pkg:cargo/aes-gcm@0.11.1 -[normal]-> pkg:cargo/cipher@0.5.2
+pkg:cargo/aes-gcm@0.11.1 -[normal]-> pkg:cargo/ctr@0.10.1
+pkg:cargo/aes-gcm@0.11.1 -[normal]-> pkg:cargo/ctutils@0.4.3
+pkg:cargo/aes-gcm@0.11.1 -[normal]-> pkg:cargo/ghash@0.6.0
+pkg:cargo/aes@0.9.3 -[normal]-> pkg:cargo/cipher@0.5.2
+pkg:cargo/aes@0.9.3 -[normal]-> pkg:cargo/cpubits@0.1.1
+pkg:cargo/aes@0.9.3 -[normal]-> pkg:cargo/cpufeatures@0.3.1
+pkg:cargo/aho-corasick@1.1.5 -[normal]-> pkg:cargo/memchr@2.8.3
+pkg:cargo/block-buffer@0.12.1 -[normal]-> pkg:cargo/hybrid-array@0.4.15
+pkg:cargo/cfg-if@1.0.5 ->
+pkg:cargo/cipher@0.5.2 -[normal]-> pkg:cargo/block-buffer@0.12.1
+pkg:cargo/cipher@0.5.2 -[normal]-> pkg:cargo/crypto-common@0.2.2
+pkg:cargo/cipher@0.5.2 -[normal]-> pkg:cargo/inout@0.2.2
+pkg:cargo/cmov@0.5.4 ->
+pkg:cargo/const-oid@0.10.2 ->
+pkg:cargo/cpubits@0.1.1 ->
+pkg:cargo/cpufeatures@0.3.1 -[normal]-> pkg:cargo/libc@0.2.190
+pkg:cargo/crossbeam-deque@0.8.8 -[normal]-> pkg:cargo/crossbeam-epoch@0.9.21
+pkg:cargo/crossbeam-deque@0.8.8 -[normal]-> pkg:cargo/crossbeam-utils@0.8.23
+pkg:cargo/crossbeam-epoch@0.9.21 -[normal]-> pkg:cargo/crossbeam-utils@0.8.23
+pkg:cargo/crossbeam-utils@0.8.23 ->
+pkg:cargo/crypto-common@0.2.2 -[normal]-> pkg:cargo/hybrid-array@0.4.15
+pkg:cargo/ctr@0.10.1 -[normal]-> pkg:cargo/cipher@0.5.2
+pkg:cargo/ctutils@0.4.3 -[normal]-> pkg:cargo/cmov@0.5.4
+pkg:cargo/digest@0.11.3 -[normal]-> pkg:cargo/block-buffer@0.12.1
+pkg:cargo/digest@0.11.3 -[normal]-> pkg:cargo/const-oid@0.10.2
+pkg:cargo/digest@0.11.3 -[normal]-> pkg:cargo/crypto-common@0.2.2
+pkg:cargo/either@1.19.0 ->
+pkg:cargo/erden-shacl@0.1.0 -[normal]-> pkg:cargo/purrdf-rdf@3.0.1
+pkg:cargo/erden-shacl@0.1.0 -[normal]-> pkg:cargo/purrdf-shapes@3.0.1
+pkg:cargo/erden-shacl@0.1.0 -[normal]-> pkg:cargo/serde_json@1.0.145
+pkg:cargo/erden-shacl@0.1.0 -[normal]-> pkg:cargo/serde@1.0.228
+pkg:cargo/erden-shacl@0.1.0 -[normal]-> pkg:cargo/sha2@0.11.0
+pkg:cargo/fastrand@2.5.0 ->
+pkg:cargo/getrandom@0.3.4 -[normal]-> pkg:cargo/cfg-if@1.0.5
+pkg:cargo/getrandom@0.3.4 -[normal]-> pkg:cargo/libc@0.2.190
+pkg:cargo/ghash@0.6.0 -[normal]-> pkg:cargo/polyval@0.7.3
+pkg:cargo/hashbrown@0.17.1 ->
+pkg:cargo/hybrid-array@0.4.15 -[normal]-> pkg:cargo/typenum@1.20.1
+pkg:cargo/inout@0.2.2 -[normal]-> pkg:cargo/hybrid-array@0.4.15
+pkg:cargo/itoa@1.0.18 ->
+pkg:cargo/libc@0.2.190 ->
+pkg:cargo/memchr@2.8.3 ->
+pkg:cargo/polyval@0.7.3 -[normal]-> pkg:cargo/cpubits@0.1.1
+pkg:cargo/polyval@0.7.3 -[normal]-> pkg:cargo/cpufeatures@0.3.1
+pkg:cargo/polyval@0.7.3 -[normal]-> pkg:cargo/universal-hash@0.6.1
+pkg:cargo/proc-macro2@1.0.107 -[normal]-> pkg:cargo/unicode-ident@1.0.27
+pkg:cargo/purrdf-cdt@3.0.1 -[normal]-> pkg:cargo/purrdf-events@3.0.1
+pkg:cargo/purrdf-cdt@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-cdt@3.0.1 -[normal]-> pkg:cargo/purrdf-iri@3.0.1
+pkg:cargo/purrdf-cdt@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-cdt@3.0.1 -[normal]-> pkg:cargo/purrdf-xsd@3.0.1
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/hashbrown@0.17.1
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/purrdf-cdt@3.0.1
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/purrdf-deflate@3.0.1
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/purrdf-events@3.0.1
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/purrdf-iri@3.0.1
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/purrdf-xsd@3.0.1
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/regex-syntax@0.8.11
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/regex@1.13.1
+pkg:cargo/purrdf-core@3.0.1 -[normal]-> pkg:cargo/sha2@0.11.0
+pkg:cargo/purrdf-datalog@3.0.1 -[normal]-> pkg:cargo/hashbrown@0.17.1
+pkg:cargo/purrdf-datalog@3.0.1 -[normal]-> pkg:cargo/purrdf-core@3.0.1
+pkg:cargo/purrdf-datalog@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-datalog@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-datalog@3.0.1 -[normal]-> pkg:cargo/rayon@1.12.0
+pkg:cargo/purrdf-deflate@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-ed25519@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-ed25519@3.0.1 -[normal]-> pkg:cargo/sha2@0.11.0
+pkg:cargo/purrdf-events@3.0.1 ->
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/aes-gcm@0.11.1
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/fastrand@2.5.0
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/purrdf-deflate@3.0.1
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/purrdf-ed25519@3.0.1
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/purrdf-events@3.0.1
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/purrdf-iri@3.0.1
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/purrdf-xsd@3.0.1
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/rayon@1.12.0
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/structured-zstd@0.0.49
+pkg:cargo/purrdf-gts@3.0.1 -[normal]-> pkg:cargo/visual-hashing@1.0.0
+pkg:cargo/purrdf-hash@3.0.1 ->
+pkg:cargo/purrdf-iri@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-iri@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-lex@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/hashbrown@0.17.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/purrdf-core@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/purrdf-ed25519@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/purrdf-events@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/purrdf-gts@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/purrdf-iri@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/purrdf-sparql-algebra@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/purrdf-sparql-eval@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/purrdf-xsd@3.0.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/rayon@1.12.0
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/regex@1.13.1
+pkg:cargo/purrdf-rdf@3.0.1 -[normal]-> pkg:cargo/sha2@0.11.0
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-core@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-datalog@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-deflate@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-iri@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-rdf@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-slice@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-sparql-algebra@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-sparql-eval@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/purrdf-xsd@3.0.1
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/rayon@1.12.0
+pkg:cargo/purrdf-shapes@3.0.1 -[normal]-> pkg:cargo/regex@1.13.1
+pkg:cargo/purrdf-slice@3.0.1 -[normal]-> pkg:cargo/purrdf-core@3.0.1
+pkg:cargo/purrdf-slice@3.0.1 -[normal]-> pkg:cargo/purrdf-gts@3.0.1
+pkg:cargo/purrdf-slice@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-slice@3.0.1 -[normal]-> pkg:cargo/purrdf-iri@3.0.1
+pkg:cargo/purrdf-slice@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-slice@3.0.1 -[normal]-> pkg:cargo/purrdf-rdf@3.0.1
+pkg:cargo/purrdf-slice@3.0.1 -[normal]-> pkg:cargo/purrdf-sparql-algebra@3.0.1
+pkg:cargo/purrdf-slice@3.0.1 -[normal]-> pkg:cargo/rayon@1.12.0
+pkg:cargo/purrdf-slice@3.0.1 -[normal]-> pkg:cargo/regex@1.13.1
+pkg:cargo/purrdf-slice@3.0.1 -[normal]-> pkg:cargo/sha2@0.11.0
+pkg:cargo/purrdf-sparql-algebra@3.0.1 -[normal]-> pkg:cargo/purrdf-cdt@3.0.1
+pkg:cargo/purrdf-sparql-algebra@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-sparql-algebra@3.0.1 -[normal]-> pkg:cargo/purrdf-iri@3.0.1
+pkg:cargo/purrdf-sparql-algebra@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-sparql-algebra@3.0.1 -[normal]-> pkg:cargo/purrdf-xsd@3.0.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/getrandom@0.3.4
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/hashbrown@0.17.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/purrdf-cdt@3.0.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/purrdf-core@3.0.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/purrdf-iri@3.0.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/purrdf-sparql-algebra@3.0.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/purrdf-sparql-results@3.0.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/purrdf-stack@3.0.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/purrdf-xsd@3.0.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/rayon@1.12.0
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/regex@1.13.1
+pkg:cargo/purrdf-sparql-eval@3.0.1 -[normal]-> pkg:cargo/sha2@0.11.0
+pkg:cargo/purrdf-sparql-results@3.0.1 -[normal]-> pkg:cargo/purrdf-core@3.0.1
+pkg:cargo/purrdf-sparql-results@3.0.1 -[normal]-> pkg:cargo/purrdf-iri@3.0.1
+pkg:cargo/purrdf-sparql-results@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/purrdf-stack@3.0.1 -[normal]-> pkg:cargo/libc@0.2.190
+pkg:cargo/purrdf-stack@3.0.1 -[normal]-> pkg:cargo/windows-sys@0.61.2
+pkg:cargo/purrdf-xsd@3.0.1 -[normal]-> pkg:cargo/purrdf-hash@3.0.1
+pkg:cargo/purrdf-xsd@3.0.1 -[normal]-> pkg:cargo/purrdf-lex@3.0.1
+pkg:cargo/quote@1.0.47 -[normal]-> pkg:cargo/proc-macro2@1.0.107
+pkg:cargo/rayon-core@1.13.0 -[normal]-> pkg:cargo/crossbeam-deque@0.8.8
+pkg:cargo/rayon-core@1.13.0 -[normal]-> pkg:cargo/crossbeam-utils@0.8.23
+pkg:cargo/rayon@1.12.0 -[normal]-> pkg:cargo/either@1.19.0
+pkg:cargo/rayon@1.12.0 -[normal]-> pkg:cargo/rayon-core@1.13.0
+pkg:cargo/regex-automata@0.4.18 -[normal]-> pkg:cargo/aho-corasick@1.1.5
+pkg:cargo/regex-automata@0.4.18 -[normal]-> pkg:cargo/memchr@2.8.3
+pkg:cargo/regex-automata@0.4.18 -[normal]-> pkg:cargo/regex-syntax@0.8.11
+pkg:cargo/regex-syntax@0.8.11 ->
+pkg:cargo/regex@1.13.1 -[normal]-> pkg:cargo/aho-corasick@1.1.5
+pkg:cargo/regex@1.13.1 -[normal]-> pkg:cargo/memchr@2.8.3
+pkg:cargo/regex@1.13.1 -[normal]-> pkg:cargo/regex-automata@0.4.18
+pkg:cargo/regex@1.13.1 -[normal]-> pkg:cargo/regex-syntax@0.8.11
+pkg:cargo/ryu@1.0.23 ->
+pkg:cargo/serde_core@1.0.228 ->
+pkg:cargo/serde_derive@1.0.228 -[normal]-> pkg:cargo/proc-macro2@1.0.107
+pkg:cargo/serde_derive@1.0.228 -[normal]-> pkg:cargo/quote@1.0.47
+pkg:cargo/serde_derive@1.0.228 -[normal]-> pkg:cargo/syn@2.0.119
+pkg:cargo/serde_json@1.0.145 -[normal]-> pkg:cargo/itoa@1.0.18
+pkg:cargo/serde_json@1.0.145 -[normal]-> pkg:cargo/memchr@2.8.3
+pkg:cargo/serde_json@1.0.145 -[normal]-> pkg:cargo/ryu@1.0.23
+pkg:cargo/serde_json@1.0.145 -[normal]-> pkg:cargo/serde_core@1.0.228
+pkg:cargo/serde@1.0.228 -[normal]-> pkg:cargo/serde_core@1.0.228
+pkg:cargo/serde@1.0.228 -[normal]-> pkg:cargo/serde_derive@1.0.228
+pkg:cargo/sha2@0.11.0 -[normal]-> pkg:cargo/cfg-if@1.0.5
+pkg:cargo/sha2@0.11.0 -[normal]-> pkg:cargo/cpufeatures@0.3.1
+pkg:cargo/sha2@0.11.0 -[normal]-> pkg:cargo/digest@0.11.3
+pkg:cargo/structured-zstd@0.0.49 -[normal]-> pkg:cargo/fastrand@2.5.0
+pkg:cargo/structured-zstd@0.0.49 -[normal]-> pkg:cargo/twox-hash@2.1.5
+pkg:cargo/syn@2.0.119 -[normal]-> pkg:cargo/proc-macro2@1.0.107
+pkg:cargo/syn@2.0.119 -[normal]-> pkg:cargo/quote@1.0.47
+pkg:cargo/syn@2.0.119 -[normal]-> pkg:cargo/unicode-ident@1.0.27
+pkg:cargo/twox-hash@2.1.5 ->
+pkg:cargo/typenum@1.20.1 ->
+pkg:cargo/unicode-ident@1.0.27 ->
+pkg:cargo/universal-hash@0.6.1 -[normal]-> pkg:cargo/crypto-common@0.2.2
+pkg:cargo/universal-hash@0.6.1 -[normal]-> pkg:cargo/ctutils@0.4.3
+pkg:cargo/visual-hashing@1.0.0 ->
+pkg:cargo/windows-link@0.2.1 ->
+pkg:cargo/windows-sys@0.61.2 -[normal]-> pkg:cargo/windows-link@0.2.1

@@ -1,0 +1,30 @@
+{
+    "name": "@erden/shacl-linux-arm64-gnu",
+    "version": "0.1.0+purrdf.3.0.1",
+    "description": "Qualified Erden SHACL engine for Linux arm64 (glibc)",
+    "license": "Apache-2.0",
+    "bin": {
+        "erden-shacl": "bin/erden-shacl"
+    },
+    "files": [
+        "bin",
+        "metadata.json",
+        "README.md",
+        "LICENSE",
+        "NOTICE",
+        "THIRD-PARTY-NOTICES.md"
+    ],
+    "os": [
+        "linux"
+    ],
+    "cpu": [
+        "arm64"
+    ],
+    "libc": [
+        "glibc"
+    ],
+    "type": "module",
+    "engines": {
+        "node": "^24"
+    }
+}

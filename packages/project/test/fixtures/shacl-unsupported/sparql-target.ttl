@@ -1,0 +1,22 @@
+@prefix demo: <https://example.invalid/erden/demo#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+demo:PublishedArtifactShape a sh:NodeShape ;
+  sh:targetClass demo:PublishedArtifact ;
+  sh:property [
+    sh:path rdf:type ;
+    sh:hasValue demo:Artifact ;
+    sh:message "published artifacts must inherit the Artifact type"
+  ] .
+
+# A SHACL-SPARQL target on a shape whose Core constraint the data breaks: the engine would check no node.
+demo:TargetedShape a sh:NodeShape ;
+  sh:target [
+    a sh:SPARQLTarget ;
+    sh:select "SELECT ?this WHERE { ?this a <https://example.invalid/erden/demo#PublishedArtifact> }"
+  ] ;
+  sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:message "published artifacts need a label" ] .

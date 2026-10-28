@@ -1,0 +1,8 @@
+Third-party license texts and notices
+
+The files in reasoner/qualification/licenses/ and shacl/qualification/licenses/ are the license texts and notices of the
+third-party components the Erden engines are built from, copied byte for byte from those components' locked releases
+and named by their SHA-256. Each file is under the terms it states and applies to the component that ships it: each
+engine's qualification/THIRD-PARTY-NOTICES.md and qualification/sbom.json name the component for every file.
+
+They are not licensed by cbnsndwch LLC, and their presence here grants no license to anything else in this repository.

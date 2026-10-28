@@ -1,0 +1,5 @@
+# RDF canonicalization fixtures
+
+These unmodified N-Quads inputs and expected outputs come from the W3C RDF Dataset Canonicalization test suite at commit `15619df2fda7a4ca88308733789b6774517f9638`. See [the pinned upstream manifest](https://github.com/w3c/rdf-canon/blob/15619df2fda7a4ca88308733789b6774517f9638/tests/manifest.ttl) and [LICENSE.txt](LICENSE.txt). `source.json` records every imported file's SHA-256; `cases.json` lists the 17 selected positive SHA-256 cases. The additional `test074-in.nq` is the official negative clique-graph case.
+
+The tests normalize these datasets into separately scoped components, reconstruct each component instance with fresh blank-node labels, and compare the full canonical dataset with the official expected bytes. They also check repeated components, permutations, capacity limits, and cancellation separately. This is a selected regression suite, not a claim to cover every W3C conformance case. Language tags follow Erden's explicit lowercasing policy.

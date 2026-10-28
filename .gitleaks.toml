@@ -1,0 +1,8 @@
+# gitleaks' own rules, minus the made-up tokens of the tests (scripts/audit-open-tree.mjs runs gitleaks with this).
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "test tokens: the hexadecimal digits in order, and reversed"
+regexTarget = "secret"
+regexes = ['''^(?:0123456789abcdef|fedcba9876543210)$''']

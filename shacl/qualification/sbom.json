@@ -1,0 +1,2902 @@
+{
+  "$schema": "https://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "bom-ref": "pkg:cargo/erden-shacl@0.1.0",
+      "type": "application",
+      "name": "erden-shacl",
+      "version": "0.1.0",
+      "purl": "pkg:cargo/erden-shacl@0.1.0",
+      "licenses": [
+        {
+          "expression": "Apache-2.0"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "workspace"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "Apache-2.0"
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "erden:cargo-lock-sha256",
+        "value": "sha256:4f85d22854b0747423c286fd019533a6caf08a9dc3d4770ddbb637d307713244"
+      },
+      {
+        "name": "erden:purrdf-shapes-commit",
+        "value": "dcd24b1cc56cd7ac24cbe0d38dcf5a89022eaccf"
+      }
+    ],
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "erden-shacl-evidence-generator",
+          "version": "1"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "pkg:cargo/aead@0.6.1",
+      "type": "library",
+      "name": "aead",
+      "version": "0.6.1",
+      "purl": "pkg:cargo/aead@0.6.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1973cfbc1a2daf9cf550e74e1f088c28e7f7d8c1e1418fb6c9dc5184b7e84c99"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/traits"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/aes-gcm@0.11.1",
+      "type": "library",
+      "name": "aes-gcm",
+      "version": "0.11.1",
+      "purl": "pkg:cargo/aes-gcm@0.11.1",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "7f2b8006a0c83f52b62ba44a97b58bf76fe2f70a329e588f67f89691d93d498f"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/AEADs"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/aes@0.9.3",
+      "type": "library",
+      "name": "aes",
+      "version": "0.9.3",
+      "purl": "pkg:cargo/aes@0.9.3",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "35f0f96ce78e38c3dc6d8948aa8163d06385be74000f3c7a95bf1eef35d3ea32"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/block-ciphers"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/aho-corasick@1.1.5",
+      "type": "library",
+      "name": "aho-corasick",
+      "version": "1.1.5",
+      "purl": "pkg:cargo/aho-corasick@1.1.5",
+      "licenses": [
+        {
+          "expression": "Unlicense OR MIT"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c982642fa9e8606056828ee9a8505737230110bb1099153c79efe865c59d12ba"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/BurntSushi/aho-corasick"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/block-buffer@0.12.1",
+      "type": "library",
+      "name": "block-buffer",
+      "version": "0.12.1",
+      "purl": "pkg:cargo/block-buffer@0.12.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d2f6c7dbe95a6ed67ad9f18e57daf93a2f034c524b99fd2b76d18fdfeb6660aa"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/utils"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/cfg-if@1.0.5",
+      "type": "library",
+      "name": "cfg-if",
+      "version": "1.0.5",
+      "purl": "pkg:cargo/cfg-if@1.0.5",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4e7648175b45a9a48536d676f68d918270699102aa8dab5496df06904c914600"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/rust-lang/cfg-if"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/cipher@0.5.2",
+      "type": "library",
+      "name": "cipher",
+      "version": "0.5.2",
+      "purl": "pkg:cargo/cipher@0.5.2",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e8cf2a2c93cd704877c0858356ed03480ff301ee950b43f1cbe4573b088bfa6c"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/traits"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/cmov@0.5.4",
+      "type": "library",
+      "name": "cmov",
+      "version": "0.5.4",
+      "purl": "pkg:cargo/cmov@0.5.4",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0c9ea0ac24bc397ab3c98583a3c9ba74fa56b09a4449bbe172b9b1ddb016027a"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/utils"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/const-oid@0.10.2",
+      "type": "library",
+      "name": "const-oid",
+      "version": "0.10.2",
+      "purl": "pkg:cargo/const-oid@0.10.2",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a6ef517f0926dd24a1582492c791b6a4818a4d94e789a334894aa15b0d12f55c"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/formats"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/cpubits@0.1.1",
+      "type": "library",
+      "name": "cpubits",
+      "version": "0.1.1",
+      "purl": "pkg:cargo/cpubits@0.1.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "15b85f9c39137c3a891689859392b1bd49812121d0d61c9caf00d46ed5ce06ae"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/utils"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/cpufeatures@0.3.1",
+      "type": "library",
+      "name": "cpufeatures",
+      "version": "0.3.1",
+      "purl": "pkg:cargo/cpufeatures@0.3.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5ca28b0ae3115b884660db4118d803791fd6756b6e88f39c0f3f7859060d7566"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/utils"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/crossbeam-deque@0.8.8",
+      "type": "library",
+      "name": "crossbeam-deque",
+      "version": "0.8.8",
+      "purl": "pkg:cargo/crossbeam-deque@0.8.8",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "622f3fc73690be383c7214310406f28a90e6edeadc3cea882f9d71e495b9711a"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/crossbeam-rs/crossbeam"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/crossbeam-epoch@0.9.21",
+      "type": "library",
+      "name": "crossbeam-epoch",
+      "version": "0.9.21",
+      "purl": "pkg:cargo/crossbeam-epoch@0.9.21",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "dc74980687109a3b14c72fd458107bf0baa1da1a1a805e178d15501ba9b86d9d"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/crossbeam-rs/crossbeam"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/crossbeam-utils@0.8.23",
+      "type": "library",
+      "name": "crossbeam-utils",
+      "version": "0.8.23",
+      "purl": "pkg:cargo/crossbeam-utils@0.8.23",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a31eee39dddec8330830986fcd7625edb5a24ec90ea038215273bbc3adb08ac6"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/crossbeam-rs/crossbeam"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/crypto-common@0.2.2",
+      "type": "library",
+      "name": "crypto-common",
+      "version": "0.2.2",
+      "purl": "pkg:cargo/crypto-common@0.2.2",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ce6e4c961d6cd6c9a86db418387425e8bdeaf05b3c8bc1411e6dca4c252f1453"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/traits"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/ctr@0.10.1",
+      "type": "library",
+      "name": "ctr",
+      "version": "0.10.1",
+      "purl": "pkg:cargo/ctr@0.10.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "baaca1c4b237092596f64d571e9db6ce4109c4ef9742e27590f1709594461f21"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/block-modes"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/ctutils@0.4.3",
+      "type": "library",
+      "name": "ctutils",
+      "version": "0.4.3",
+      "purl": "pkg:cargo/ctutils@0.4.3",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "03bb0e1cc970d482d121d9a1744999169b69a07470b3d644a7894e53fcaf4574"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/utils"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/digest@0.11.3",
+      "type": "library",
+      "name": "digest",
+      "version": "0.11.3",
+      "purl": "pkg:cargo/digest@0.11.3",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f1dd6dbb5841937940781866fa1281a1ff7bd3bf827091440879f9994983d5c2"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/traits"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/either@1.19.0",
+      "type": "library",
+      "name": "either",
+      "version": "1.19.0",
+      "purl": "pkg:cargo/either@1.19.0",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0e9c71c2167ca323c882b99918929403426e2373ea17242ff5653e0d5e1058be"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/rayon-rs/either"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/fastrand@2.5.0",
+      "type": "library",
+      "name": "fastrand",
+      "version": "2.5.0",
+      "purl": "pkg:cargo/fastrand@2.5.0",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "da7c62ceae207dd37ea5b845da6a0696c799f85e97da1ab5b7910be3c1c80223"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/smol-rs/fastrand"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/getrandom@0.3.4",
+      "type": "library",
+      "name": "getrandom",
+      "version": "0.3.4",
+      "purl": "pkg:cargo/getrandom@0.3.4",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "899def5c37c4fd7b2664648c28120ecec138e4d395b459e5ca34f9cce2dd77fd"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/rust-random/getrandom"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/ghash@0.6.0",
+      "type": "library",
+      "name": "ghash",
+      "version": "0.6.0",
+      "purl": "pkg:cargo/ghash@0.6.0",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2eecf2d5dc9b66b732b97707a0210906b1d30523eb773193ab777c0c84b3e8d5"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/universal-hashes"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/hashbrown@0.17.1",
+      "type": "library",
+      "name": "hashbrown",
+      "version": "0.17.1",
+      "purl": "pkg:cargo/hashbrown@0.17.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ed5909b6e89a2db4456e54cd5f673791d7eca6732202bbf2a9cc504fe2f9b84a"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/rust-lang/hashbrown"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/hybrid-array@0.4.15",
+      "type": "library",
+      "name": "hybrid-array",
+      "version": "0.4.15",
+      "purl": "pkg:cargo/hybrid-array@0.4.15",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "27f864f10dfb56725ce5ce5472bc52252c8f93a4ab86327122cebf62c5f59a17"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/hybrid-array"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/inout@0.2.2",
+      "type": "library",
+      "name": "inout",
+      "version": "0.2.2",
+      "purl": "pkg:cargo/inout@0.2.2",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4250ce6452e92010fdf7268ccc5d14faa80bb12fc741938534c58f16804e03c7"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/utils"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/itoa@1.0.18",
+      "type": "library",
+      "name": "itoa",
+      "version": "1.0.18",
+      "purl": "pkg:cargo/itoa@1.0.18",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8f42a60cbdf9a97f5d2305f08a87dc4e09308d1276d28c869c684d7777685682"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/dtolnay/itoa"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/libc@0.2.190",
+      "type": "library",
+      "name": "libc",
+      "version": "0.2.190",
+      "purl": "pkg:cargo/libc@0.2.190",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ce5d3ddc6d3fa000eb1536d85e147bfe31aacaba692ed6a876f95cb7c855be78"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/rust-lang/libc"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/memchr@2.8.3",
+      "type": "library",
+      "name": "memchr",
+      "version": "2.8.3",
+      "purl": "pkg:cargo/memchr@2.8.3",
+      "licenses": [
+        {
+          "expression": "Unlicense OR MIT"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "cf8baf1c55e62ffcace7a9f06f4bd9cd3f0c4beb022d3b367256b91b87513d98"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/BurntSushi/memchr"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/polyval@0.7.3",
+      "type": "library",
+      "name": "polyval",
+      "version": "0.7.3",
+      "purl": "pkg:cargo/polyval@0.7.3",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f0fa31d631f2b2cb2a544d0aa321ce847a94764d701ca2becc411138b93d49cd"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/universal-hashes"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/proc-macro2@1.0.107",
+      "type": "library",
+      "name": "proc-macro2",
+      "version": "1.0.107",
+      "purl": "pkg:cargo/proc-macro2@1.0.107",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "985e7ec9bb745e6ce6535b544d84d6cd6f7ad8bd711c398938ae983b91a766d9"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/dtolnay/proc-macro2"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-cdt@3.0.1",
+      "type": "library",
+      "name": "purrdf-cdt",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-cdt@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5f3f6ce304b34bb666d5ffe441587563206cbc7702ab76708e26eb2398f531af"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-core@3.0.1",
+      "type": "library",
+      "name": "purrdf-core",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-core@3.0.1",
+      "licenses": [
+        {
+          "expression": "(MIT OR Apache-2.0 OR MulanPSL-2.0) AND Unicode-3.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1d073303e9c754f0244391992392aee7a71129a99817b6b608fc0d24a0d80e8d"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT AND Unicode-3.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-datalog@3.0.1",
+      "type": "library",
+      "name": "purrdf-datalog",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-datalog@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "438d3d607a0e55794e0b016af3cba4332b954ddf2ec4c04cb864393e022934aa"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-deflate@3.0.1",
+      "type": "library",
+      "name": "purrdf-deflate",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-deflate@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3f1322db69953bf995fa856f361e463ebeed7a052d8853dd2d77c59c4001e979"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-ed25519@3.0.1",
+      "type": "library",
+      "name": "purrdf-ed25519",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-ed25519@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ac199f2e42bd2f48caba9a6573b1161f067d9fbe06c376c28cfc93ed69892912"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-events@3.0.1",
+      "type": "library",
+      "name": "purrdf-events",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-events@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b5455431280c55a65bbf44f41f5f2d901a0c5923052cce94d392abead530e40c"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-gts@3.0.1",
+      "type": "library",
+      "name": "purrdf-gts",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-gts@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "76a60ea5fc7ca62449fa7a6ea80bd0a8c14983d15d9584d4fa42140a3e1a9e4f"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-hash@3.0.1",
+      "type": "library",
+      "name": "purrdf-hash",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-hash@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "bd021886ad0790918ec3501c47f952f98cc60474340fe4dad8df1f4b77471a91"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-iri@3.0.1",
+      "type": "library",
+      "name": "purrdf-iri",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-iri@3.0.1",
+      "licenses": [
+        {
+          "expression": "(MIT OR Apache-2.0 OR MulanPSL-2.0) AND Unicode-3.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "682988bf556aa2d09dbcb30bea74dc07fa356648b7217c0fd95330a168694aaa"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT AND Unicode-3.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-lex@3.0.1",
+      "type": "library",
+      "name": "purrdf-lex",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-lex@3.0.1",
+      "licenses": [
+        {
+          "expression": "(MIT OR Apache-2.0 OR MulanPSL-2.0) AND MIT AND Unicode-3.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c1443d0cd967b66b82188958bc92b63dc9673e253f86f559eb93de0319a73486"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT AND Unicode-3.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-rdf@3.0.1",
+      "type": "library",
+      "name": "purrdf-rdf",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-rdf@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "967240728285800972d323c7bd67dd5facd937572a3d17d65716242e39bb2a10"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-shapes@3.0.1",
+      "type": "library",
+      "name": "purrdf-shapes",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-shapes@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a4e6d0720b974870f2b29256e5c5bb5e62c4d40308afb24ee66556525a2bbeb5"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-slice@3.0.1",
+      "type": "library",
+      "name": "purrdf-slice",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-slice@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "edbe19c6825da25e00e675f8d8049f503f2a76624c2f41f1add7f55756ea02c0"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-sparql-algebra@3.0.1",
+      "type": "library",
+      "name": "purrdf-sparql-algebra",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-sparql-algebra@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "429dfe21a2abbcc515c3cf05ce354f0e29e0c36c9624342f964bcc9cab7cbb24"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-sparql-eval@3.0.1",
+      "type": "library",
+      "name": "purrdf-sparql-eval",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-sparql-eval@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "08a95bb1166c152d784081ac144d10e482e1f2922d6438cdae5e6aa60f1ad69c"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-sparql-results@3.0.1",
+      "type": "library",
+      "name": "purrdf-sparql-results",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-sparql-results@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "332b4b18dd46a7841eb776f44813c0d1cdd3f76b504c6ef151332575c916b355"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-stack@3.0.1",
+      "type": "library",
+      "name": "purrdf-stack",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-stack@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b9667b6e28591992199ae8841b5f82611fc92e99b25f1faf3826f22bfd359376"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/purrdf-xsd@3.0.1",
+      "type": "library",
+      "name": "purrdf-xsd",
+      "version": "3.0.1",
+      "purl": "pkg:cargo/purrdf-xsd@3.0.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6d925ae9a7cac3fd7ded1fca01da0cc7caf895cf2df5ef4400669c39a753a8f8"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/purrdf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/quote@1.0.47",
+      "type": "library",
+      "name": "quote",
+      "version": "1.0.47",
+      "purl": "pkg:cargo/quote@1.0.47",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1fbf4db142a473a8d80c26bbf18454ed458bf8d26c8219c331daecfdbd079001"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/dtolnay/quote"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/rayon-core@1.13.0",
+      "type": "library",
+      "name": "rayon-core",
+      "version": "1.13.0",
+      "purl": "pkg:cargo/rayon-core@1.13.0",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "22e18b0f0062d30d4230b2e85ff77fdfe4326feb054b9783a3460d8435c8ab91"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/rayon-rs/rayon"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/rayon@1.12.0",
+      "type": "library",
+      "name": "rayon",
+      "version": "1.12.0",
+      "purl": "pkg:cargo/rayon@1.12.0",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "fb39b166781f92d482534ef4b4b1b2568f42613b53e5b6c160e24cfbfa30926d"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/rayon-rs/rayon"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/regex-automata@0.4.18",
+      "type": "library",
+      "name": "regex-automata",
+      "version": "0.4.18",
+      "purl": "pkg:cargo/regex-automata@0.4.18",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ad8553b9b26413251cbf30e620595c7a41b3887f03da04579c0e6b0d6a06b4b2"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/rust-lang/regex"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/regex-syntax@0.8.11",
+      "type": "library",
+      "name": "regex-syntax",
+      "version": "0.8.11",
+      "purl": "pkg:cargo/regex-syntax@0.8.11",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d6f6ff9a378485b298a5286656da665ba74413d36db0979633275d2e708145d4"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/rust-lang/regex"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/regex@1.13.1",
+      "type": "library",
+      "name": "regex",
+      "version": "1.13.1",
+      "purl": "pkg:cargo/regex@1.13.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f020237b6c8eed93db2e2cb53c00c60a8e1bc73da7d073199a1180401450218d"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/rust-lang/regex"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/ryu@1.0.23",
+      "type": "library",
+      "name": "ryu",
+      "version": "1.0.23",
+      "purl": "pkg:cargo/ryu@1.0.23",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR BSL-1.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9774ba4a74de5f7b1c1451ed6cd5285a32eddb5cccb8cc655a4e50009e06477f"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/dtolnay/ryu"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "Apache-2.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/serde_core@1.0.228",
+      "type": "library",
+      "name": "serde_core",
+      "version": "1.0.228",
+      "purl": "pkg:cargo/serde_core@1.0.228",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "41d385c7d4ca58e59fc732af25c3983b67ac852c1a25000afe1175de458b67ad"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/serde-rs/serde"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/serde_derive@1.0.228",
+      "type": "library",
+      "name": "serde_derive",
+      "version": "1.0.228",
+      "purl": "pkg:cargo/serde_derive@1.0.228",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d540f220d3187173da220f885ab66608367b6574e925011a9353e4badda91d79"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/serde-rs/serde"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/serde_json@1.0.145",
+      "type": "library",
+      "name": "serde_json",
+      "version": "1.0.145",
+      "purl": "pkg:cargo/serde_json@1.0.145",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "402a6f66d8c709116cf22f558eab210f5a50187f702eb4d7e5ef38d9a7f1c79c"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/serde-rs/json"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/serde@1.0.228",
+      "type": "library",
+      "name": "serde",
+      "version": "1.0.228",
+      "purl": "pkg:cargo/serde@1.0.228",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9a8e94ea7f378bd32cbbd37198a4a91436180c5bb472411e48b5ec2e2124ae9e"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/serde-rs/serde"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/sha2@0.11.0",
+      "type": "library",
+      "name": "sha2",
+      "version": "0.11.0",
+      "purl": "pkg:cargo/sha2@0.11.0",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "446ba717509524cb3f22f17ecc096f10f4822d76ab5c0b9822c5f9c284e825f4"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/hashes"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/structured-zstd@0.0.49",
+      "type": "library",
+      "name": "structured-zstd",
+      "version": "0.0.49",
+      "purl": "pkg:cargo/structured-zstd@0.0.49",
+      "licenses": [
+        {
+          "expression": "Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "392eea135985654a313cdfee001e93031bacd96a3693a5dc4b0d13793e40b27a"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/structured-world/structured-zstd"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "Apache-2.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/syn@2.0.119",
+      "type": "library",
+      "name": "syn",
+      "version": "2.0.119",
+      "purl": "pkg:cargo/syn@2.0.119",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "872831b642d1a07999a962a351ed35b955ea2cfc8f3862091e2a240a84f17297"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/dtolnay/syn"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/twox-hash@2.1.5",
+      "type": "library",
+      "name": "twox-hash",
+      "version": "2.1.5",
+      "purl": "pkg:cargo/twox-hash@2.1.5",
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "86a801b3cea342a06d468c8710662aa29e5e05e4f5c0d62f00bbb7f2ad7941c2"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/shepmaster/twox-hash"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/typenum@1.20.1",
+      "type": "library",
+      "name": "typenum",
+      "version": "1.20.1",
+      "purl": "pkg:cargo/typenum@1.20.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b6f5e870be6c3b371b77fe0ee0bafb859fa4964b4404c27de1d380043c4dda20"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/paholg/typenum"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/unicode-ident@1.0.27",
+      "type": "library",
+      "name": "unicode-ident",
+      "version": "1.0.27",
+      "purl": "pkg:cargo/unicode-ident@1.0.27",
+      "licenses": [
+        {
+          "expression": "(MIT OR Apache-2.0) AND Unicode-3.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a2c754d6c33795a1c324727428e5a7dedb5b06195f9890bdbcba760d3e246563"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/dtolnay/unicode-ident"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT AND Unicode-3.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/universal-hash@0.6.1",
+      "type": "library",
+      "name": "universal-hash",
+      "version": "0.6.1",
+      "purl": "pkg:cargo/universal-hash@0.6.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f4987bdc12753382e0bec4a65c50738ffaabc998b9cdd1f952fb5f39b0048a96"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RustCrypto/traits"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/visual-hashing@1.0.0",
+      "type": "library",
+      "name": "visual-hashing",
+      "version": "1.0.0",
+      "purl": "pkg:cargo/visual-hashing@1.0.0",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0 OR MulanPSL-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5056c65a9a789c9c1156fbfab38df224d7b729089e3b075892136e8f3092166e"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Blackcat-Informatics/visual-hashing"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/windows-link@0.2.1",
+      "type": "library",
+      "name": "windows-link",
+      "version": "0.2.1",
+      "purl": "pkg:cargo/windows-link@0.2.1",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f0805222e57f7521d6a62e36fa9163bc891acd422f971defe97d64e70d0a4fe5"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/microsoft/windows-rs"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/windows-sys@0.61.2",
+      "type": "library",
+      "name": "windows-sys",
+      "version": "0.61.2",
+      "purl": "pkg:cargo/windows-sys@0.61.2",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ae137229bcbd6cdf0f7b80a31df61766145077ddf49416a728b02cb3921ff3fc"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/microsoft/windows-rs"
+        }
+      ],
+      "properties": [
+        {
+          "name": "erden:locked-source",
+          "value": "registry+https://github.com/rust-lang/crates.io-index"
+        },
+        {
+          "name": "erden:selected-licenses",
+          "value": "MIT"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:cargo/aead@0.6.1",
+      "dependsOn": [
+        "pkg:cargo/crypto-common@0.2.2",
+        "pkg:cargo/inout@0.2.2"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/aes-gcm@0.11.1",
+      "dependsOn": [
+        "pkg:cargo/aead@0.6.1",
+        "pkg:cargo/aes@0.9.3",
+        "pkg:cargo/cipher@0.5.2",
+        "pkg:cargo/ctr@0.10.1",
+        "pkg:cargo/ctutils@0.4.3",
+        "pkg:cargo/ghash@0.6.0"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/aes@0.9.3",
+      "dependsOn": [
+        "pkg:cargo/cipher@0.5.2",
+        "pkg:cargo/cpubits@0.1.1",
+        "pkg:cargo/cpufeatures@0.3.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/aho-corasick@1.1.5",
+      "dependsOn": [
+        "pkg:cargo/memchr@2.8.3"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/block-buffer@0.12.1",
+      "dependsOn": [
+        "pkg:cargo/hybrid-array@0.4.15"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/cfg-if@1.0.5",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/cipher@0.5.2",
+      "dependsOn": [
+        "pkg:cargo/block-buffer@0.12.1",
+        "pkg:cargo/crypto-common@0.2.2",
+        "pkg:cargo/inout@0.2.2"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/cmov@0.5.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/const-oid@0.10.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/cpubits@0.1.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/cpufeatures@0.3.1",
+      "dependsOn": [
+        "pkg:cargo/libc@0.2.190"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/crossbeam-deque@0.8.8",
+      "dependsOn": [
+        "pkg:cargo/crossbeam-epoch@0.9.21",
+        "pkg:cargo/crossbeam-utils@0.8.23"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/crossbeam-epoch@0.9.21",
+      "dependsOn": [
+        "pkg:cargo/crossbeam-utils@0.8.23"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/crossbeam-utils@0.8.23",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/crypto-common@0.2.2",
+      "dependsOn": [
+        "pkg:cargo/hybrid-array@0.4.15"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/ctr@0.10.1",
+      "dependsOn": [
+        "pkg:cargo/cipher@0.5.2"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/ctutils@0.4.3",
+      "dependsOn": [
+        "pkg:cargo/cmov@0.5.4"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/digest@0.11.3",
+      "dependsOn": [
+        "pkg:cargo/block-buffer@0.12.1",
+        "pkg:cargo/const-oid@0.10.2",
+        "pkg:cargo/crypto-common@0.2.2"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/either@1.19.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/erden-shacl@0.1.0",
+      "dependsOn": [
+        "pkg:cargo/purrdf-rdf@3.0.1",
+        "pkg:cargo/purrdf-shapes@3.0.1",
+        "pkg:cargo/serde_json@1.0.145",
+        "pkg:cargo/serde@1.0.228",
+        "pkg:cargo/sha2@0.11.0"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/fastrand@2.5.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/getrandom@0.3.4",
+      "dependsOn": [
+        "pkg:cargo/cfg-if@1.0.5",
+        "pkg:cargo/libc@0.2.190"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/ghash@0.6.0",
+      "dependsOn": [
+        "pkg:cargo/polyval@0.7.3"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/hashbrown@0.17.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/hybrid-array@0.4.15",
+      "dependsOn": [
+        "pkg:cargo/typenum@1.20.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/inout@0.2.2",
+      "dependsOn": [
+        "pkg:cargo/hybrid-array@0.4.15"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/itoa@1.0.18",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/libc@0.2.190",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/memchr@2.8.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/polyval@0.7.3",
+      "dependsOn": [
+        "pkg:cargo/cpubits@0.1.1",
+        "pkg:cargo/cpufeatures@0.3.1",
+        "pkg:cargo/universal-hash@0.6.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/proc-macro2@1.0.107",
+      "dependsOn": [
+        "pkg:cargo/unicode-ident@1.0.27"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-cdt@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/purrdf-events@3.0.1",
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-iri@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1",
+        "pkg:cargo/purrdf-xsd@3.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-core@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/hashbrown@0.17.1",
+        "pkg:cargo/purrdf-cdt@3.0.1",
+        "pkg:cargo/purrdf-deflate@3.0.1",
+        "pkg:cargo/purrdf-events@3.0.1",
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-iri@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1",
+        "pkg:cargo/purrdf-xsd@3.0.1",
+        "pkg:cargo/regex-syntax@0.8.11",
+        "pkg:cargo/regex@1.13.1",
+        "pkg:cargo/sha2@0.11.0"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-datalog@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/hashbrown@0.17.1",
+        "pkg:cargo/purrdf-core@3.0.1",
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1",
+        "pkg:cargo/rayon@1.12.0"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-deflate@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/purrdf-hash@3.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-ed25519@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/sha2@0.11.0"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-events@3.0.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/purrdf-gts@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/aes-gcm@0.11.1",
+        "pkg:cargo/fastrand@2.5.0",
+        "pkg:cargo/purrdf-deflate@3.0.1",
+        "pkg:cargo/purrdf-ed25519@3.0.1",
+        "pkg:cargo/purrdf-events@3.0.1",
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-iri@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1",
+        "pkg:cargo/purrdf-xsd@3.0.1",
+        "pkg:cargo/rayon@1.12.0",
+        "pkg:cargo/structured-zstd@0.0.49",
+        "pkg:cargo/visual-hashing@1.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-hash@3.0.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/purrdf-iri@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-lex@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/purrdf-hash@3.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-rdf@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/hashbrown@0.17.1",
+        "pkg:cargo/purrdf-core@3.0.1",
+        "pkg:cargo/purrdf-ed25519@3.0.1",
+        "pkg:cargo/purrdf-events@3.0.1",
+        "pkg:cargo/purrdf-gts@3.0.1",
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-iri@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1",
+        "pkg:cargo/purrdf-sparql-algebra@3.0.1",
+        "pkg:cargo/purrdf-sparql-eval@3.0.1",
+        "pkg:cargo/purrdf-xsd@3.0.1",
+        "pkg:cargo/rayon@1.12.0",
+        "pkg:cargo/regex@1.13.1",
+        "pkg:cargo/sha2@0.11.0"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-shapes@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/purrdf-core@3.0.1",
+        "pkg:cargo/purrdf-datalog@3.0.1",
+        "pkg:cargo/purrdf-deflate@3.0.1",
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-iri@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1",
+        "pkg:cargo/purrdf-rdf@3.0.1",
+        "pkg:cargo/purrdf-slice@3.0.1",
+        "pkg:cargo/purrdf-sparql-algebra@3.0.1",
+        "pkg:cargo/purrdf-sparql-eval@3.0.1",
+        "pkg:cargo/purrdf-xsd@3.0.1",
+        "pkg:cargo/rayon@1.12.0",
+        "pkg:cargo/regex@1.13.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-slice@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/purrdf-core@3.0.1",
+        "pkg:cargo/purrdf-gts@3.0.1",
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-iri@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1",
+        "pkg:cargo/purrdf-rdf@3.0.1",
+        "pkg:cargo/purrdf-sparql-algebra@3.0.1",
+        "pkg:cargo/rayon@1.12.0",
+        "pkg:cargo/regex@1.13.1",
+        "pkg:cargo/sha2@0.11.0"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-sparql-algebra@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/purrdf-cdt@3.0.1",
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-iri@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1",
+        "pkg:cargo/purrdf-xsd@3.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-sparql-eval@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/getrandom@0.3.4",
+        "pkg:cargo/hashbrown@0.17.1",
+        "pkg:cargo/purrdf-cdt@3.0.1",
+        "pkg:cargo/purrdf-core@3.0.1",
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-iri@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1",
+        "pkg:cargo/purrdf-sparql-algebra@3.0.1",
+        "pkg:cargo/purrdf-sparql-results@3.0.1",
+        "pkg:cargo/purrdf-stack@3.0.1",
+        "pkg:cargo/purrdf-xsd@3.0.1",
+        "pkg:cargo/rayon@1.12.0",
+        "pkg:cargo/regex@1.13.1",
+        "pkg:cargo/sha2@0.11.0"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-sparql-results@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/purrdf-core@3.0.1",
+        "pkg:cargo/purrdf-iri@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-stack@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/libc@0.2.190",
+        "pkg:cargo/windows-sys@0.61.2"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/purrdf-xsd@3.0.1",
+      "dependsOn": [
+        "pkg:cargo/purrdf-hash@3.0.1",
+        "pkg:cargo/purrdf-lex@3.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/quote@1.0.47",
+      "dependsOn": [
+        "pkg:cargo/proc-macro2@1.0.107"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/rayon-core@1.13.0",
+      "dependsOn": [
+        "pkg:cargo/crossbeam-deque@0.8.8",
+        "pkg:cargo/crossbeam-utils@0.8.23"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/rayon@1.12.0",
+      "dependsOn": [
+        "pkg:cargo/either@1.19.0",
+        "pkg:cargo/rayon-core@1.13.0"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/regex-automata@0.4.18",
+      "dependsOn": [
+        "pkg:cargo/aho-corasick@1.1.5",
+        "pkg:cargo/memchr@2.8.3",
+        "pkg:cargo/regex-syntax@0.8.11"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/regex-syntax@0.8.11",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/regex@1.13.1",
+      "dependsOn": [
+        "pkg:cargo/aho-corasick@1.1.5",
+        "pkg:cargo/memchr@2.8.3",
+        "pkg:cargo/regex-automata@0.4.18",
+        "pkg:cargo/regex-syntax@0.8.11"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/ryu@1.0.23",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/serde_core@1.0.228",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/serde_derive@1.0.228",
+      "dependsOn": [
+        "pkg:cargo/proc-macro2@1.0.107",
+        "pkg:cargo/quote@1.0.47",
+        "pkg:cargo/syn@2.0.119"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/serde_json@1.0.145",
+      "dependsOn": [
+        "pkg:cargo/itoa@1.0.18",
+        "pkg:cargo/memchr@2.8.3",
+        "pkg:cargo/ryu@1.0.23",
+        "pkg:cargo/serde_core@1.0.228"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/serde@1.0.228",
+      "dependsOn": [
+        "pkg:cargo/serde_core@1.0.228",
+        "pkg:cargo/serde_derive@1.0.228"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/sha2@0.11.0",
+      "dependsOn": [
+        "pkg:cargo/cfg-if@1.0.5",
+        "pkg:cargo/cpufeatures@0.3.1",
+        "pkg:cargo/digest@0.11.3"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/structured-zstd@0.0.49",
+      "dependsOn": [
+        "pkg:cargo/fastrand@2.5.0",
+        "pkg:cargo/twox-hash@2.1.5"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/syn@2.0.119",
+      "dependsOn": [
+        "pkg:cargo/proc-macro2@1.0.107",
+        "pkg:cargo/quote@1.0.47",
+        "pkg:cargo/unicode-ident@1.0.27"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/twox-hash@2.1.5",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/typenum@1.20.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/unicode-ident@1.0.27",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/universal-hash@0.6.1",
+      "dependsOn": [
+        "pkg:cargo/crypto-common@0.2.2",
+        "pkg:cargo/ctutils@0.4.3"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/visual-hashing@1.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/windows-link@0.2.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:cargo/windows-sys@0.61.2",
+      "dependsOn": [
+        "pkg:cargo/windows-link@0.2.1"
+      ]
+    }
+  ]
+}

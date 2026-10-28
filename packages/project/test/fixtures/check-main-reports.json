@@ -1,0 +1,23 @@
+{
+    "recordedOn": "merge/owl-el-rl-code over main fdd33bf (with erden-shacl), 2026-10-16: reasoner 0.3.0+purrdf.0.12.0.dfb1df7 built from source (calculus fc444990\u2026, partition rules erden.profile-partition/v3; the test hashes each report with a placeholder executable digest, since a source build has no pinned one) and erden-shacl 0.1.0+purrdf.3.0.1 (6ec761d9\u2026). Against the 0.2.0 recording, decided consistent reports add reasoning.completeness, and the reasoner identity changes; report-mode-properties-typed-by-dependent also names the v3 rules digest. Re-recorded on fix/registry-gaps-reasoner, 2026-10-16: inconsistent and inconsistent-across-layers only add reasoning.diagnostics[].locations, the file, line and column of each statement the diagnostic\u2019s axioms were read from; with that key removed they give the bytes recorded before.",
+    "reports": {
+        "erden-demo": "2e2ca24b75b07c2d0bb14752237824c30fae64f5d321a9aa617b2f30af981ab9",
+        "synthetic-chain": "1c4269f9e8181a6df13a884096b7f822dee77d2ed2220fc94d90072db0c9ad32",
+        "local-additions": "97b67002cb07a936c86056234260da7154ddfd96d5dd64ef6aa6684e23116a58",
+        "dependency-class-under-new-class": "1f9bae4682dfcf67d434ecd449f45d4b2a4688b08fb634806a46e3613789edf4",
+        "equivalence-between-borrowed-terms": "a56d6bf872bc6fa46d6271896c31bfe424f2de02d0cf4d3fdb3288a53e55302f",
+        "domain-on-borrowed-property": "93a6140c0cc271bd796f5d4cecc8f7f63ac2eb2bb0e5e2e8efce5b344bf9058a",
+        "assertion-about-dependency-individual": "3bb10be1ec13cbe3f56ab0c38c1315924b700c62c9469fb184034328a1f5374b",
+        "new-individual-to-dependency-individual": "9e126ac1babbbbe992983e7a9544a3216fe74ef3b1a1e65deebbaec0ed9d5154",
+        "siblings-through-skos": "1744d8e552bc9de395c98371ea2ebd54d3bde66e53eacc854fc7b2e337430b8b",
+        "report-mode-undeclared-term-declared-by-dependent": "16ff7b7a26c28bf51b63e4ef14d8c8a8e634545092abd83a639ad96b6a5eba7d",
+        "report-mode-properties-typed-by-dependent": "aeb07eaa3c49a2d78eb9f4006ff970a35d8e4e63577328bb44a5789da713cced",
+        "ambiguous-property-kind": "35408a46e974222c4a6907c1d631d290c56d13ad368befcfe9df579f03a8d483",
+        "data-range-across-layers": "71099f87cd0e217651632811df4760bcea99e6fe9690c2ac16298eff09ea6055",
+        "inconsistent": "a14401068860d89a59b72e4f2b738b15c065c3394de41b87974aad0ae96f794c",
+        "inconsistent-across-layers": "2dac51ec4b5f7c8c9cba353dac04abb1ac312965322a42a6a82f9b1b584e030c",
+        "unsatisfiable-class": "4a0606fb77e4e12f1c202a60c4cf7c0bbd95cd38c323db21b19f7a561cf5585c",
+        "union-over-input-limit": "0b05fe4d64dab7527435fa8e12e16b1105797c4ead5b75d3b2816ddcd40911d4",
+        "union-over-inference-limit": "22d94184e83bc363f116aa72cb449c0592722e743319419948df342fd592cb7f"
+    }
+}

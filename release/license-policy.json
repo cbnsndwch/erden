@@ -1,0 +1,36 @@
+{
+    "schemaVersion": 1,
+    "description": "The license policy of the CLI archive's npm dependencies (release/lib/notices.mjs, with the reasoner's policy code). A package whose license is not allowed, or that ships no license file and is not listed under withoutLicenseFile, fails the build.",
+    "allowedIdentifiers": ["0BSD", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "ISC", "MIT"],
+    "deniedIdentifiers": [
+        "AGPL-1.0-only",
+        "AGPL-3.0-only",
+        "AGPL-3.0-or-later",
+        "GPL-2.0-only",
+        "GPL-2.0-or-later",
+        "GPL-3.0-only",
+        "GPL-3.0-or-later",
+        "LGPL-2.1-only",
+        "LGPL-3.0-only",
+        "SSPL-1.0"
+    ],
+    "selections": {
+        "0BSD": ["0BSD"],
+        "Apache-2.0": ["Apache-2.0"],
+        "BSD-2-Clause": ["BSD-2-Clause"],
+        "BSD-3-Clause": ["BSD-3-Clause"],
+        "ISC": ["ISC"],
+        "MIT": ["MIT"],
+        "MIT OR Apache-2.0": ["MIT"]
+    },
+    "withoutLicenseFile": {
+        "@msgpackr-extract/msgpackr-extract-*": {
+            "licenseFileOf": "msgpackr-extract",
+            "reason": "the per-platform prebuilt addon of msgpackr-extract, published from the same repository under the same MIT license, whose LICENSE covers it"
+        },
+        "oxigraph": {
+            "standardText": "MIT",
+            "reason": "the oxigraph npm package ships no license file; it is dual-licensed MIT OR Apache-2.0 and MIT is selected"
+        }
+    }
+}

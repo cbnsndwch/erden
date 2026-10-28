@@ -1,0 +1,39 @@
+{
+    "name": "@erden/project",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Local Erden project operations: initialize, check, install, package, and maintain the package store.",
+    "license": "Apache-2.0",
+    "files": [
+        "src",
+        "dist",
+        "NOTICE"
+    ],
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "development": "./src/index.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "node ../../scripts/build-typescript-package.mjs",
+        "prepack": "pnpm run build"
+    },
+    "dependencies": {
+        "@erden/contracts": "workspace:0.0.0",
+        "@erden/ontology": "workspace:0.0.0",
+        "@erden/package-format": "workspace:0.0.0",
+        "effect": "4.0.0-rc.111",
+        "semver": "7.8.5"
+    },
+    "devDependencies": {
+        "@erden/reasoner-protocol": "workspace:0.0.0",
+        "@types/semver": "7.8.0",
+        "ajv": "8.20.0"
+    },
+    "engines": {
+        "node": "^24"
+    }
+}

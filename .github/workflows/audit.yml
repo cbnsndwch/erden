@@ -1,0 +1,26 @@
+name: audit
+
+# Every change is audited for what a public repository must not hold: private IPv4 addresses, home directory paths,
+# email addresses that are not no-reply or example ones, unlisted executable or compressed files, files over 5 MB,
+# secrets (gitleaks) and files without a license (reuse lint). scripts/open-tree-audit.json lists the allowed hits and
+# pins both tools' images; they run without network.
+on:
+    push:
+        branches: [main]
+    pull_request:
+
+permissions:
+    contents: read
+
+jobs:
+    audit:
+        # This is a versioned runner label; GitHub-managed runner contents are not content-addressed.
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  persist-credentials: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - run: node scripts/audit-open-tree.mjs .

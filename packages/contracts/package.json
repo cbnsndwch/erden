@@ -1,0 +1,45 @@
+{
+    "name": "@erden/contracts",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Erden manifest, lockfile, check-report, and registry wire contracts.",
+    "license": "Apache-2.0",
+    "files": [
+        "src",
+        "dist",
+        "NOTICE"
+    ],
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "development": "./src/index.ts",
+            "default": "./dist/index.js"
+        },
+        "./registry-origin": {
+            "types": "./src/manifest/registry-origin.ts",
+            "development": "./src/manifest/registry-origin.ts",
+            "default": "./dist/manifest/registry-origin.js"
+        }
+    },
+    "scripts": {
+        "build": "node ../../scripts/build-typescript-package.mjs",
+        "prepack": "pnpm run build"
+    },
+    "dependencies": {
+        "@erden/ontology": "workspace:0.0.0",
+        "@erden/package-format": "workspace:0.0.0",
+        "@erden/reasoner-protocol": "workspace:0.0.0",
+        "@iarna/toml": "2.2.5",
+        "effect": "4.0.0-rc.111",
+        "jsonc-parser": "3.3.1",
+        "semver": "7.8.5",
+        "yaml": "2.9.1"
+    },
+    "devDependencies": {
+        "@types/semver": "7.8.0"
+    },
+    "engines": {
+        "node": "^24"
+    }
+}

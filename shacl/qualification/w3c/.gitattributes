@@ -1,0 +1,3 @@
+# The vendored suite keeps upstream's exact bytes (82 of its files end lines in CRLF), so its committed tree is
+# upstream's tree 57ca544debba0dca11306266ee43116a848d2290 and the suite's literals are the ones W3C published.
+data-shapes-test-suite/** -text

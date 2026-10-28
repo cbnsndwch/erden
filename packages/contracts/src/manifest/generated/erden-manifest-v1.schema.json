@@ -1,0 +1,270 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://erden.dev/schemas/manifest/v1.json",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "enum": [
+        "https://erden.dev/schemas/manifest/v1.json"
+      ]
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "description": "an integer"
+    },
+    "canonicalIri": {
+      "type": "string",
+      "allOf": [
+        {
+          "format": "uri",
+          "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:(?!.*[\\s\\u0000-\\u001f\\u007f-\\u009f\\uD800-\\uDFFF])[\\s\\S]+$",
+          "x-erden-canonical-iri": true,
+          "description": "an absolute ontology IRI using its exact canonical URL serialization"
+        }
+      ]
+    },
+    "alias": {
+      "type": "string",
+      "pattern": "^@[a-z0-9][a-z0-9-]*\\/[a-z0-9][a-z0-9-]*$",
+      "description": "a scoped registry alias such as @org/package"
+    },
+    "ownedIriPrefixes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "allOf": [
+          {
+            "format": "uri",
+            "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:(?!.*[\\s\\u0000-\\u001f\\u007f-\\u009f\\uD800-\\uDFFF])[\\s\\S]+$",
+            "x-erden-canonical-iri": true,
+            "description": "an absolute IRI prefix using its exact canonical URL serialization"
+          }
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "a non-empty array of unique explicitly owned IRI prefixes"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "a value with a length of at least 1",
+      "allOf": [
+        {
+          "pattern": "^\\S[\\s\\S]*\\S$|^\\S$|^$",
+          "description": "a string with no leading or trailing whitespace"
+        },
+        {
+          "pattern": "^(?![\\s\\S]*[\\uD800-\\uDFFF])[\\s\\S]*$",
+          "description": "a well-formed Unicode string without lone UTF-16 surrogates"
+        }
+      ]
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "a value with a length of at least 1",
+      "allOf": [
+        {
+          "pattern": "^\\S[\\s\\S]*\\S$|^\\S$|^$",
+          "description": "a string with no leading or trailing whitespace"
+        },
+        {
+          "pattern": "^(?![\\s\\S]*[\\uD800-\\uDFFF])[\\s\\S]*$",
+          "description": "a well-formed Unicode string without lone UTF-16 surrogates"
+        }
+      ]
+    },
+    "registry": {
+      "type": "string",
+      "allOf": [
+        {
+          "format": "uri",
+          "x-erden-registry-origin": true,
+          "description": "an http(s) origin with no credentials, no path beyond /, no query, and no fragment"
+        }
+      ]
+    },
+    "outsideProfile": {
+      "type": "string",
+      "enum": [
+        "refuse",
+        "report"
+      ],
+      "description": "What the check does with statements Erden does not reason over yet. refuse (the default) fails listing every one; report reasons over everything else, leaves these unreasoned and lists them in the check report."
+    },
+    "sources": {
+      "type": "object",
+      "properties": {
+        "ontology": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "description": "a value with a length of at least 1",
+            "allOf": [
+              {
+                "pattern": "^\\S[\\s\\S]*\\S$|^\\S$|^$",
+                "description": "a string with no leading or trailing whitespace"
+              },
+              {
+                "pattern": "^(?![\\s\\S]*[\\uD800-\\uDFFF])[\\s\\S]*$",
+                "description": "a well-formed Unicode string without lone UTF-16 surrogates"
+              },
+              {
+                "pattern": "^[^\\u0000]+$",
+                "description": "a non-empty path without NUL characters"
+              }
+            ]
+          },
+          "minItems": 1,
+          "description": "Ontology sources. A file selector may name a Turtle (.ttl), N-Triples (.nt), RDF/XML (.rdf, .owl) or JSON-LD (.jsonld) file, read as published; a directory selector reads only its .ttl files."
+        },
+        "shapes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "description": "a value with a length of at least 1",
+            "allOf": [
+              {
+                "pattern": "^\\S[\\s\\S]*\\S$|^\\S$|^$",
+                "description": "a string with no leading or trailing whitespace"
+              },
+              {
+                "pattern": "^(?![\\s\\S]*[\\uD800-\\uDFFF])[\\s\\S]*$",
+                "description": "a well-formed Unicode string without lone UTF-16 surrogates"
+              },
+              {
+                "pattern": "^[^\\u0000]+$",
+                "description": "a non-empty path without NUL characters"
+              }
+            ]
+          }
+        },
+        "competencyQuestions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "description": "a value with a length of at least 1",
+            "allOf": [
+              {
+                "pattern": "^\\S[\\s\\S]*\\S$|^\\S$|^$",
+                "description": "a string with no leading or trailing whitespace"
+              },
+              {
+                "pattern": "^(?![\\s\\S]*[\\uD800-\\uDFFF])[\\s\\S]*$",
+                "description": "a well-formed Unicode string without lone UTF-16 surrogates"
+              },
+              {
+                "pattern": "^[^\\u0000]+$",
+                "description": "a non-empty path without NUL characters"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "ontology"
+      ],
+      "additionalProperties": false,
+      "description": "Source layout: RDF ontology files, Turtle SHACL shapes and SPARQL competency questions. Directory selectors read .ttl (ontology, shapes) or .rq (questions) files."
+    },
+    "citationRoots": {
+      "type": "object",
+      "patternProperties": {
+        "^(?![\\s\\S]*[\\uD800-\\uDFFF])\\S(?:[\\s\\S]*\\S)?$": {
+          "type": "string",
+          "minLength": 1,
+          "description": "a value with a length of at least 1",
+          "allOf": [
+            {
+              "pattern": "^\\S[\\s\\S]*\\S$|^\\S$|^$",
+              "description": "a string with no leading or trailing whitespace"
+            },
+            {
+              "pattern": "^(?![\\s\\S]*[\\uD800-\\uDFFF])[\\s\\S]*$",
+              "description": "a well-formed Unicode string without lone UTF-16 surrogates"
+            },
+            {
+              "pattern": "^[^\\u0000]+$",
+              "description": "a non-empty path without NUL characters"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "dependencies": {
+      "type": "object",
+      "patternProperties": {
+        "^@[a-z0-9][a-z0-9-]*\\/[a-z0-9][a-z0-9-]*$": {
+          "type": "string",
+          "minLength": 1,
+          "description": "a value with a length of at least 1",
+          "allOf": [
+            {
+              "pattern": "^\\S[\\s\\S]*\\S$|^\\S$|^$",
+              "description": "a string with no leading or trailing whitespace"
+            },
+            {
+              "pattern": "^(?![\\s\\S]*[\\uD800-\\uDFFF])[\\s\\S]*$",
+              "description": "a well-formed Unicode string without lone UTF-16 surrogates"
+            },
+            {
+              "format": "semver-range",
+              "description": "a valid semantic-version range"
+            }
+          ]
+        },
+        "^[A-Za-z][A-Za-z0-9+.-]*:(?!.*[\\s\\u0000-\\u001f\\u007f-\\u009f\\uD800-\\uDFFF])[\\s\\S]+$": {
+          "type": "string",
+          "minLength": 1,
+          "description": "a value with a length of at least 1",
+          "allOf": [
+            {
+              "pattern": "^\\S[\\s\\S]*\\S$|^\\S$|^$",
+              "description": "a string with no leading or trailing whitespace"
+            },
+            {
+              "pattern": "^(?![\\s\\S]*[\\uD800-\\uDFFF])[\\s\\S]*$",
+              "description": "a well-formed Unicode string without lone UTF-16 surrogates"
+            },
+            {
+              "format": "semver-range",
+              "description": "a valid semantic-version range"
+            }
+          ]
+        }
+      },
+      "propertyNames": {
+        "anyOf": [
+          {
+            "pattern": "^@[a-z0-9][a-z0-9-]*\\/[a-z0-9][a-z0-9-]*$"
+          },
+          {
+            "format": "uri",
+            "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:(?!.*[\\s\\u0000-\\u001f\\u007f-\\u009f\\uD800-\\uDFFF])[\\s\\S]+$",
+            "x-erden-canonical-iri": true
+          }
+        ]
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "canonicalIri",
+    "alias",
+    "ownedIriPrefixes",
+    "sources"
+  ],
+  "additionalProperties": false,
+  "title": "Erden project manifest v1",
+  "description": "The strict, format-neutral schema for erden.config.* project manifests."
+}

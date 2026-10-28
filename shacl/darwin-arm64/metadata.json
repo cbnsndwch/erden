@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "packageName": "@erden/shacl-darwin-arm64",
+  "packageVersion": "0.1.0+purrdf.3.0.1",
+  "tool": {
+    "name": "erden-shacl",
+    "version": "0.1.0+purrdf.3.0.1",
+    "engineDigest": "sha256:026b0ef70f4bd68cbe0fff535b8287eb804825c057f46cc116ae1f2087b427cc"
+  },
+  "runtime": {
+    "os": "darwin",
+    "cpu": "arm64"
+  },
+  "target": "aarch64-apple-darwin",
+  "binary": {
+    "path": "bin/erden-shacl",
+    "bytes": 9616368,
+    "sha256": "sha256:f96a8ddac5e32c2e9be0c5261626b7439bf5bd4de5a36d4dbfd627b2dfb4ad4f"
+  },
+  "knownAnswer": {
+    "fixture": "core-and-sparql",
+    "responseBytes": 2202,
+    "responseSha256": "sha256:347086910723900213fbd6dc6608c332cfca375eef2149df761c232166d983cf"
+  }
+}

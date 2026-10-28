@@ -1,0 +1,1 @@
+{"name":"js-shacl-engine","private":true,"dependencies":{"@rdfjs/data-model":"2.1.1","@rdfjs/dataset":"2.0.2","n3":"2.1.1","shacl-engine":"1.1.3"}}

@@ -1,0 +1,11 @@
+@prefix demo: <https://example.invalid/erden/demo#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+demo:PublishedArtifactShape a sh:NodeShape ;
+  sh:targetClass demo:PublishedArtifact ;
+  sh:property [
+    sh:path rdf:type ;
+    sh:hasValue demo:Artifact ;
+    sh:message "published artifacts must inherit the Artifact type"
+  ] .

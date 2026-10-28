@@ -1,0 +1,146 @@
+{
+    "repository": "https://github.com/w3c/rdf-canon",
+    "revision": "15619df2fda7a4ca88308733789b6774517f9638",
+    "files": [
+        {
+            "path": "rdfc10/test003-in.nq",
+            "sha256": "c79a92bb74bd179033d2cc93068f7984933e081b07fc2313ed22f98b4dea14a4"
+        },
+        {
+            "path": "rdfc10/test003-rdfc10.nq",
+            "sha256": "30184874c972fe137cd54a93b2bfd5d44ce1d4f3cc3783213928ec68a3004bc3"
+        },
+        {
+            "path": "rdfc10/test016-in.nq",
+            "sha256": "cacaba7d18d2bbdd4c9d02642df456c5875b86fd89a70606a9e7f5f90ddbabdc"
+        },
+        {
+            "path": "rdfc10/test016-rdfc10.nq",
+            "sha256": "4dddf4dcd5d0c3898eca4fed8168c75976f222f08d943deee40e0a6eade4ce2e"
+        },
+        {
+            "path": "rdfc10/test018-in.nq",
+            "sha256": "ae1204113c0184406cf252dd5cc90a6013dbb82d352a15f6e67ca3c3d7a81243"
+        },
+        {
+            "path": "rdfc10/test018-rdfc10.nq",
+            "sha256": "6395ed7238cb189282b9f9ead8bb593df6ebe039e0205daf9a97927dc62f80f1"
+        },
+        {
+            "path": "rdfc10/test021-in.nq",
+            "sha256": "8623e57aee3fad03ea58c1f6df8e55772cf545b28b4cc38656c3e25f1cdbf4b9"
+        },
+        {
+            "path": "rdfc10/test021-rdfc10.nq",
+            "sha256": "7a708bd2143c04e4f7269998948ac0652df01d8f0bc0b41243bcc68e9edd460e"
+        },
+        {
+            "path": "rdfc10/test033-in.nq",
+            "sha256": "821da5dc0667b2045b7da6f3fd2dec35459bcf2440a0fb7d8cb58851b9f7110f"
+        },
+        {
+            "path": "rdfc10/test033-rdfc10.nq",
+            "sha256": "e646d157d38d268a2dcec1ee02ce99184c2f8b7105ef5d6aa1abed9ec5d33bb8"
+        },
+        {
+            "path": "rdfc10/test043-in.nq",
+            "sha256": "1fcc2848b4ff46225aaed2233347a3e2f5977e0d1a46f9fc8334b15fc1a7248f"
+        },
+        {
+            "path": "rdfc10/test043-rdfc10.nq",
+            "sha256": "1fcc2848b4ff46225aaed2233347a3e2f5977e0d1a46f9fc8334b15fc1a7248f"
+        },
+        {
+            "path": "rdfc10/test044-in.nq",
+            "sha256": "42adcd42e748b86bc801a84d12806295f40da4ce120fe362ab2ed1cefb5ca060"
+        },
+        {
+            "path": "rdfc10/test044-rdfc10.nq",
+            "sha256": "fe8b404b4d8dbfc0f6108155df11e9d180936efde8ce747d47784f5740e5d0af"
+        },
+        {
+            "path": "rdfc10/test053-in.nq",
+            "sha256": "5e4c3868caea74c1e744d9f43c0cfd1419782889d9abf30660ce8c41708f4b23"
+        },
+        {
+            "path": "rdfc10/test053-rdfc10.nq",
+            "sha256": "5c4fe5f535d6121c9714c0c51741f815eb60aa16d119783428a2d636e09edf25"
+        },
+        {
+            "path": "rdfc10/test060-in.nq",
+            "sha256": "4940b0e5b9d22a99a714285a15e90bf508f34bc7aec8077c84ee431ad7e4ff8e"
+        },
+        {
+            "path": "rdfc10/test060-rdfc10.nq",
+            "sha256": "c9712fac14500dad7905a739b4b8d3e1ea5d45647c47bd37c5b9bca800435ef5"
+        },
+        {
+            "path": "rdfc10/test061-in.nq",
+            "sha256": "24247d6489a07f5da7efd55aa06cbf46eec25845c936400ec04f67fdc19f56e8"
+        },
+        {
+            "path": "rdfc10/test061-rdfc10.nq",
+            "sha256": "24247d6489a07f5da7efd55aa06cbf46eec25845c936400ec04f67fdc19f56e8"
+        },
+        {
+            "path": "rdfc10/test062-in.nq",
+            "sha256": "ab9c1c6f6f329213fec62dfebd812e38494e1b12a80be6a692d8b066cb4654e4"
+        },
+        {
+            "path": "rdfc10/test062-rdfc10.nq",
+            "sha256": "ab9c1c6f6f329213fec62dfebd812e38494e1b12a80be6a692d8b066cb4654e4"
+        },
+        {
+            "path": "rdfc10/test070-in.nq",
+            "sha256": "f814b05f8aab4013708a82321263fecf1f02d4a6b57282ef026e960a1561fd5f"
+        },
+        {
+            "path": "rdfc10/test070-rdfc10.nq",
+            "sha256": "e609f5e0aa3d447206ed9e5146ab65f59524e6ef57d49bff48ac22a58fbe683b"
+        },
+        {
+            "path": "rdfc10/test071-in.nq",
+            "sha256": "79eb5a1a4b22601f2227d0fc13b9d617e8280d7f5ec873ef3e9a63d74c83f400"
+        },
+        {
+            "path": "rdfc10/test071-rdfc10.nq",
+            "sha256": "b5c84db76fbc8c350ff8ea9c1abbf4aff12cf4db6ff7c4de552c0753aa648970"
+        },
+        {
+            "path": "rdfc10/test072-in.nq",
+            "sha256": "e00be22fd53279d0ad72adc0a214bcfad15c4fa0a4a555841f958259fcdb7fbf"
+        },
+        {
+            "path": "rdfc10/test072-rdfc10.nq",
+            "sha256": "5c672812438c63f491d2baaa0ea5acad5bb6215ab01a61b1df1fe43897349e7e"
+        },
+        {
+            "path": "rdfc10/test073-in.nq",
+            "sha256": "2d67845d90a3a3c195790c05f30b077fafeb72bfaa828e9a5247684b602f11bd"
+        },
+        {
+            "path": "rdfc10/test073-rdfc10.nq",
+            "sha256": "96eb2f84ed9b0087608f58a8cb8b87890c45b996bc974463adb4c4430231c5ae"
+        },
+        {
+            "path": "rdfc10/test076-in.nq",
+            "sha256": "de336446a46da909ae88380d05917a9957d21f4f631ab721c40cfe526cd2791f"
+        },
+        {
+            "path": "rdfc10/test076-rdfc10.nq",
+            "sha256": "f028fc4a38aec866b7fadc8de3df1bb07f86816445d68eb94b805af6db3c0ab5"
+        },
+        {
+            "path": "rdfc10/test077-in.nq",
+            "sha256": "5bcbed9b8e8d631f9b1615a39ef4b26de1ce05d9940d2d5bad8ca3ebb3b49935"
+        },
+        {
+            "path": "rdfc10/test077-rdfc10.nq",
+            "sha256": "ec3f52322b496620ed7808c01a1f4de5c15c131f55e2b12e6cd21d03b545dc17"
+        },
+        {
+            "path": "rdfc10/test074-in.nq",
+            "sha256": "1770da65f66592883fa2fb5e6f852577c39c55f64f988ee654921b0c62d2815e"
+        }
+    ]
+}

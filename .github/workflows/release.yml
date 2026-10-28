@@ -1,0 +1,230 @@
+name: release
+
+# The tools release. Two modes:
+#
+# - Mint (workflow_dispatch with a version): builds both engines on the four native runners (twice each, with the
+#   cross-platform determinism check), then each platform's CLI archive (twice, from two git archive exports), and
+#   uploads the pins for a pull request: release/pins/<version>.json, and the engine mint outputs (each finalize
+#   script's package metadata, anchors and record) when an engine's binaries are not the committed pins. An engine
+#   change therefore takes two mints: the first pins the engines, and the second, on the commit that holds those
+#   pins, pins the archives.
+# - Release (push of tag v<version>): builds everything again from the tagged commit, with the pinned source date
+#   epoch, and refuses to publish unless every engine binary and every archive matches the committed pins byte for
+#   byte. Only then does the publish job, the one job with contents: write, create a draft release with the four
+#   archives, SHA256SUMS, install.sh and install.ps1, check the uploaded assets' digests and publish it. It runs only
+#   in the public repository (named cbnsndwch/erden and not private).
+on:
+    workflow_dispatch:
+        inputs:
+            version:
+                description: The version to mint (apps/cli/package.json's version)
+                required: true
+                type: string
+    push:
+        tags:
+            - 'v*'
+
+permissions:
+    contents: read
+
+jobs:
+    reasoner:
+        uses: ./.github/workflows/reasoner-build.yml
+        with:
+            commit: ${{ github.sha }}
+
+    shacl:
+        uses: ./.github/workflows/shacl-build.yml
+        with:
+            commit: ${{ github.sha }}
+
+    engines:
+        name: engine pins
+        needs: [reasoner, shacl]
+        # This is a versioned runner label; GitHub-managed runner contents are not content-addressed.
+        runs-on: ubuntu-24.04
+        outputs:
+            pinned: ${{ steps.check.outputs.pinned }}
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  fetch-depth: 0
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+              with:
+                  version: 10.15.0
+                  run_install: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            # Every artifact of this run so far, each in its own folder: reasoner-<target>, shacl-<target>, and the
+            # determinism comparisons.
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  path: engines
+            # Each finalize script writes its packages' pins from the built binaries; if that changes nothing, the
+            # binaries are the committed pins. A tag build must find them unchanged.
+            - name: Compare the built engines with the committed pins
+              id: check
+              shell: bash
+              run: |
+                  node reasoner/qualification/finalize-artifacts.mjs --artifacts engines --determinism engines/determinism-comparison --run-id "$GITHUB_RUN_ID"
+                  node shacl/qualification/finalize-artifacts.mjs --artifacts engines --determinism engines/shacl-determinism-comparison --run-id "$GITHUB_RUN_ID"
+                  changed=$(git status --porcelain -- reasoner shacl ':!reasoner/*/bin' ':!shacl/*/bin' ':!reasoner/qualification/mint.json' ':!shacl/qualification/binary-reproducibility.json')
+                  if [ -z "$changed" ]; then echo "pinned=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+                  echo "pinned=false" >> "$GITHUB_OUTPUT"
+                  git status --porcelain -- reasoner shacl
+                  if [ "$GITHUB_EVENT_NAME" = push ]; then echo "The tagged commit's engine pins are not these builds"; exit 1; fi
+                  # New platform package versions and optional dependencies change the lockfile's importers.
+                  pnpm install --lockfile-only --ignore-scripts
+                  mkdir -p engine-mint
+                  git diff --name-only -- reasoner shacl pnpm-lock.yaml | tar -cf engine-mint/changed.tar -T -
+                  git ls-files --others --exclude-standard -- reasoner shacl | tar -rf engine-mint/changed.tar -T -
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              if: ${{ steps.check.outputs.pinned == 'false' }}
+              with:
+                  name: engine-mint
+                  path: engine-mint/
+                  if-no-files-found: error
+
+    archive:
+        name: archive ${{ matrix.platform }}
+        needs: engines
+        if: ${{ needs.engines.outputs.pinned == 'true' }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    # These are versioned runner labels; GitHub-managed runner contents are not content-addressed.
+                    - platform: linux-x64
+                      target: x86_64-unknown-linux-gnu
+                      runner: ubuntu-24.04
+                    - platform: linux-arm64
+                      target: aarch64-unknown-linux-gnu
+                      runner: ubuntu-24.04-arm
+                    - platform: darwin-arm64
+                      target: aarch64-apple-darwin
+                      runner: macos-15
+                    - platform: win32-x64
+                      target: x86_64-pc-windows-msvc
+                      runner: windows-2025
+        runs-on: ${{ matrix.runner }}
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  fetch-depth: 0
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+              with:
+                  version: 10.15.0
+                  run_install: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+                  cache: pnpm
+                  cache-dependency-path: pnpm-lock.yaml
+            # Fills the store the archive builds install from offline.
+            - run: pnpm install --frozen-lockfile --ignore-scripts
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  name: reasoner-${{ matrix.target }}
+                  path: engines/reasoner
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  name: shacl-${{ matrix.target }}
+                  path: engines/shacl
+            - name: Download the pinned Node.js runtime
+              shell: bash
+              run: |
+                  file=$(node -p "require('./release/node-runtime.json').platforms['${{ matrix.platform }}'].file")
+                  base=$(node -p "require('./release/node-runtime.json').baseUrl")
+                  curl -fsSL --retry 3 -A 'erden-release/1' -o "$RUNNER_TEMP/$file" "$base$file"
+                  echo "NODE_ARCHIVE=$RUNNER_TEMP/$file" >> "$GITHUB_ENV"
+            - name: Use the pinned source date epoch for a tag build
+              if: ${{ github.event_name == 'push' }}
+              shell: bash
+              run: echo "SOURCE_DATE_EPOCH=$(node release/pins.mjs epoch --version "${GITHUB_REF_NAME#v}")" >> "$GITHUB_ENV"
+            - name: Build the archive twice, compare, and run it
+              shell: bash
+              run: |
+                  exe=""; if [ "${{ matrix.platform }}" = win32-x64 ]; then exe=".exe"; fi
+                  node release/build-cli-archive.mjs --node "$NODE_ARCHIVE" \
+                      --reasoner "engines/reasoner/${{ matrix.target }}/erden-reasoner$exe" \
+                      --shacl "engines/shacl/${{ matrix.target }}/erden-shacl$exe" --out release-build
+            # The install script for this archive, offline (--archive), then doctor, init, check and pack on the demo,
+            # and a reasoner changed by one byte refused. On Linux this runs in a container with no network.
+            - name: Install the archive offline and run it
+              shell: bash
+              run: |
+                  record="release-build/${{ matrix.platform }}.json"
+                  file=$(node -p "require('./$record').archive.file")
+                  container=""; if [ "$RUNNER_OS" = Linux ]; then container="--container"; fi
+                  node release/test-install.mjs --archive "release-build/$file" --record "$record" $container
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              with:
+                  name: archive-${{ matrix.platform }}
+                  path: release-build/
+                  if-no-files-found: error
+
+    pins:
+        name: release pins
+        needs: archive
+        # This is a versioned runner label; GitHub-managed runner contents are not content-addressed.
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  pattern: archive-*
+                  merge-multiple: true
+                  path: release-build
+            - name: Mint the pins
+              if: ${{ github.event_name == 'workflow_dispatch' }}
+              shell: bash
+              run: |
+                  version=$(node -p "require('./apps/cli/package.json').version")
+                  if [ "$version" != "${{ inputs.version }}" ]; then echo "apps/cli is $version, not ${{ inputs.version }}"; exit 1; fi
+                  node release/pins.mjs mint --artifacts release-build --out release-pins
+            - name: Refuse anything but the pinned bytes
+              if: ${{ github.event_name == 'push' }}
+              run: node release/pins.mjs verify --artifacts release-build --release --tag "$GITHUB_REF_NAME"
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              if: ${{ github.event_name == 'workflow_dispatch' }}
+              with:
+                  name: release-pins
+                  path: release-pins/
+                  if-no-files-found: error
+
+    publish:
+        name: publish
+        needs: pins
+        # Only the public repository publishes: a private copy of it never does, whatever it is named.
+        if: ${{ github.event_name == 'push' && github.repository == 'cbnsndwch/erden' && github.event.repository.private == false }}
+        # This is a versioned runner label; GitHub-managed runner contents are not content-addressed.
+        runs-on: ubuntu-24.04
+        permissions:
+            contents: write
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  pattern: archive-*
+                  merge-multiple: true
+                  path: release-build
+            - name: Assemble the assets
+              shell: bash
+              run: node release/assemble-assets.mjs --artifacts release-build --version "${GITHUB_REF_NAME#v}" --out assets
+            - name: Create a draft release, check the uploaded assets, then publish it
+              shell: bash
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  gh release create "$GITHUB_REF_NAME" --draft --verify-tag --title "Erden ${GITHUB_REF_NAME#v}" --notes-file assets/RELEASE-NOTES.md assets/erden-* assets/SHA256SUMS assets/install.sh assets/install.ps1
+                  mkdir uploaded
+                  gh release download "$GITHUB_REF_NAME" --dir uploaded
+                  (cd uploaded && sha256sum -c ../assets/SHA256SUMS)
+                  gh release edit "$GITHUB_REF_NAME" --draft=false

@@ -1,0 +1,23 @@
+schemaVersion: 1
+canonicalIri: https://example.test/ontology/notes#
+alias: "@acme/notes"
+ownedIriPrefixes:
+  - https://example.test/ontology/notes#
+  - "urn:acme:notes:"
+title: Notes ontology
+description: A portable manifest fixture.
+registry: HTTPS://REGISTRY.EXAMPLE.TEST:443/
+sources:
+  ontology:
+    - ontology
+    - imports/shared.ttl
+  shapes:
+    - shapes
+  competencyQuestions:
+    - questions
+citationRoots:
+  repository: "."
+  shared: ../shared-citations
+dependencies:
+  https://example.test/ontology/vocab: "~3.4.0"
+  "@erden/core": "^1.2.0"

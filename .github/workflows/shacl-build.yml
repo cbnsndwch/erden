@@ -1,0 +1,210 @@
+name: shacl-build
+
+# The minting path and qualification gate for the bundled SHACL engine, erden-shacl (shacl/), on the reasoner's model
+# (reasoner-build.yml) but with its own crate, toolchain (Rust 1.98.0) and builder image:
+#
+# - build: every target is built twice, from two separate `git archive` exports of the commit, on a native runner for
+#   that target; the job fails unless both builds are byte-identical, the exported Cargo.lock is the qualified one and
+#   the binary answers the known-answer request. The binary and its record are uploaded for the mint.
+# - determinism: every fresh binary answers one request set (shacl/qualification/determinism.mjs) twice; the answers
+#   must be byte-identical across the four platforms apart from tool.executableDigest.
+# - qualification: the safeguard gate on the Linux x64 binary: the W3C SHACL 1.0 suite (every verdict right, report
+#   isomorphism as committed in shacl/qualification/w3c-expected.json) and the Core cross-check against shacl-engine.
+#
+# A pull request builds its own merge commit. A manual run builds the commit it is given.
+on:
+    workflow_dispatch:
+        inputs:
+            commit:
+                description: Full commit SHA to build (default the dispatched branch's head)
+                required: false
+                type: string
+    # The release workflow (release.yml) calls this one for the commit it releases.
+    workflow_call:
+        inputs:
+            commit:
+                description: Full commit SHA to build
+                required: false
+                type: string
+    pull_request:
+        paths:
+            - 'shacl/**'
+            - '.github/workflows/shacl-build.yml'
+
+permissions:
+    contents: read
+
+jobs:
+    build:
+        name: build ${{ matrix.target }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    # These are versioned runner labels; GitHub-managed runner contents are not content-addressed.
+                    # Linux targets build inside the digest-pinned rust image, so only the host architecture matters.
+                    - target: x86_64-unknown-linux-gnu
+                      runner: ubuntu-24.04
+                    - target: aarch64-unknown-linux-gnu
+                      runner: ubuntu-24.04-arm
+                    - target: x86_64-pc-windows-msvc
+                      runner: windows-2025
+                    - target: aarch64-apple-darwin
+                      runner: macos-15
+        runs-on: ${{ matrix.runner }}
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  fetch-depth: 0
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - name: Install the qualified Rust toolchain for native builds
+              if: runner.os != 'Linux'
+              run: rustup toolchain install 1.98.0 --profile minimal --target ${{ matrix.target }}
+            - name: Build twice from git archive exports and compare
+              shell: bash
+              env:
+                  COMMIT: ${{ inputs.commit || github.sha }}
+              run: node shacl/qualification/verify-binary-reproducible.mjs ${{ matrix.target }} --commit "$COMMIT" --out shacl-build
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              with:
+                  name: shacl-${{ matrix.target }}
+                  path: shacl-build/
+                  if-no-files-found: error
+
+    determinism-requests:
+        name: determinism request set
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+              with:
+                  version: 10.15.0
+                  run_install: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+                  cache: pnpm
+                  cache-dependency-path: pnpm-lock.yaml
+            - run: pnpm run bootstrap:workspace
+            - run: pnpm run build
+            - run: node shacl/qualification/determinism.mjs requests --out determinism-requests
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              with:
+                  name: shacl-determinism-requests
+                  path: determinism-requests/
+                  if-no-files-found: error
+
+    determinism:
+        name: determinism ${{ matrix.target }}
+        needs: [build, determinism-requests]
+        if: ${{ always() && needs.determinism-requests.result == 'success' }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - target: x86_64-unknown-linux-gnu
+                      runner: ubuntu-24.04
+                    - target: aarch64-unknown-linux-gnu
+                      runner: ubuntu-24.04-arm
+                    - target: x86_64-pc-windows-msvc
+                      runner: windows-2025
+                    - target: aarch64-apple-darwin
+                      runner: macos-15
+        runs-on: ${{ matrix.runner }}
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  name: shacl-${{ matrix.target }}
+                  path: shacl-build
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  name: shacl-determinism-requests
+                  path: determinism-requests
+            - name: Answer the request set twice with the built binary
+              shell: bash
+              run: |
+                  binary="shacl-build/${{ matrix.target }}/erden-shacl"
+                  if [[ "${{ matrix.target }}" == *-windows-msvc ]]; then binary="$binary.exe"; else chmod +x "$binary"; fi
+                  node shacl/qualification/determinism.mjs run --binary "$binary" --requests determinism-requests \
+                      --out "determinism-answers/${{ matrix.target }}"
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              if: ${{ always() }}
+              with:
+                  name: shacl-determinism-answers-${{ matrix.target }}
+                  path: determinism-answers/
+                  if-no-files-found: error
+
+    determinism-compare:
+        name: determinism comparison
+        needs: [determinism]
+        if: ${{ always() }}
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  pattern: shacl-determinism-answers-*
+                  merge-multiple: true
+                  path: determinism-answers
+            - name: Compare the normalized answers byte for byte
+              run: node shacl/qualification/determinism.mjs compare --answers determinism-answers --out determinism-comparison
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              if: ${{ always() }}
+              with:
+                  name: shacl-determinism-comparison
+                  path: determinism-comparison/
+                  if-no-files-found: error
+
+    qualification:
+        name: qualification (W3C suite and Core cross-check)
+        needs: [build]
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  # The suite gate checks the vendored suite's tree id at HEAD.
+                  fetch-depth: 0
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+              with:
+                  version: 10.15.0
+                  run_install: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+                  cache: pnpm
+                  cache-dependency-path: pnpm-lock.yaml
+            - run: pnpm run bootstrap:workspace
+            - run: pnpm run build
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  name: shacl-x86_64-unknown-linux-gnu
+                  path: shacl-build
+            - name: Install the shacl-engine reference from its committed lock, outside the workspace
+              run: |
+                  mkdir -p "$RUNNER_TEMP/shacl-engine"
+                  cp shacl/qualification/reference/shacl-engine/package.json shacl/qualification/reference/shacl-engine/package-lock.json "$RUNNER_TEMP/shacl-engine/"
+                  (cd "$RUNNER_TEMP/shacl-engine" && npm ci --ignore-scripts --no-audit --no-fund)
+            - name: The W3C SHACL 1.0 suite gate
+              run: |
+                  chmod +x shacl-build/x86_64-unknown-linux-gnu/erden-shacl
+                  node shacl/qualification/harness/suite.mjs --binary shacl-build/x86_64-unknown-linux-gnu/erden-shacl \
+                      --out qualification/suite --expect shacl/qualification/w3c-expected.json
+            - name: The Core cross-check against shacl-engine
+              run: >-
+                  node shacl/qualification/harness/cross-check.mjs --binary shacl-build/x86_64-unknown-linux-gnu/erden-shacl
+                  --reference "$RUNNER_TEMP/shacl-engine" --out qualification/cross-check.json
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              if: ${{ always() }}
+              with:
+                  name: shacl-qualification
+                  path: qualification/
+                  if-no-files-found: error

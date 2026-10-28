@@ -1,0 +1,44 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "useTabs": false,
+    "tabWidth": 4,
+    "printWidth": 120,
+    "singleQuote": true,
+    "semi": true,
+    "trailingComma": "all",
+    "arrowParens": "always",
+    "endOfLine": "lf",
+    "sortImports": {
+        "customGroups": [
+            {
+                "groupName": "erden-workspace",
+                "elementNamePattern": ["@erden/**"]
+            }
+        ],
+        "groups": ["builtin", "external", "erden-workspace", "parent", ["sibling", "index"], "unknown"],
+        "newlinesBetween": true,
+        "sortSideEffects": false
+    },
+    "ignorePatterns": [
+        ".agents/**",
+        ".claude/**",
+        "**/build/**",
+        "**/dist/**",
+        "**/node_modules/**",
+        "coverage/**",
+        "packages/contracts/src/manifest/generated/**",
+        "packages/project/test/fixtures/**",
+        "reasoner/distribution/fixtures/**",
+        "reasoner/distribution/server-image-handoff.json",
+        "reasoner/distribution/src/artifacts.js",
+        "reasoner/protocol/fixtures/**",
+        "reasoner/qualification/**",
+        "reasoner/*-x64-*/metadata.json",
+        "reasoner/*-arm64*/metadata.json",
+        "shacl/distribution/fixtures/**",
+        "shacl/distribution/src/artifacts.js",
+        "shacl/*-x64-*/metadata.json",
+        "shacl/*-arm64*/metadata.json",
+        "shacl/qualification/**"
+    ]
+}

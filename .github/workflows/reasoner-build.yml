@@ -1,0 +1,180 @@
+name: reasoner-build
+
+# The documented minting path for the bundled reasoner: every target is built twice, from two separate
+# `git archive` exports of the qualification source commit, on a native runner for that target (no emulation or
+# cross-linking). The job fails unless both builds are byte-identical and answer the known-answer request; the
+# binary and its reproducibility record are uploaded for the mint to copy into the platform packages.
+#
+# The determinism check then answers one request set (reasoner/qualification/determinism-cases.ts) with every freshly
+# built binary on its own runner, twice, and compares the answers. They must be byte-identical apart from
+# tool.executableDigest, the digest of the executable itself (see reasoner/qualification/determinism.mjs), because
+# erden.lock pins answers by fingerprint and a lock made on one platform has to verify on another.
+#
+# A pull request builds its own (merge) commit, so a reasoner change is built, not the older accepted source. A manual
+# run builds the commit it is given, for example the accepted qualification commit when minting a new platform package
+# for the shipped engine, or the dispatched branch's head; the script refuses a commit whose adapter crate differs from
+# the checkout.
+on:
+    workflow_dispatch:
+        inputs:
+            commit:
+                description: Full commit SHA to build (default the dispatched branch's head)
+                required: false
+                type: string
+    # The release workflow (release.yml) calls this one for the commit it releases.
+    workflow_call:
+        inputs:
+            commit:
+                description: Full commit SHA to build
+                required: false
+                type: string
+    pull_request:
+        paths:
+            - 'reasoner/**'
+            - '.github/workflows/reasoner-build.yml'
+
+permissions:
+    contents: read
+
+jobs:
+    build:
+        name: build ${{ matrix.target }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    # These are versioned runner labels; GitHub-managed runner contents are not content-addressed.
+                    # Linux targets build inside the digest-pinned rust image, so only the host architecture matters.
+                    - target: x86_64-unknown-linux-gnu
+                      runner: ubuntu-24.04
+                    - target: aarch64-unknown-linux-gnu
+                      runner: ubuntu-24.04-arm
+                    - target: x86_64-pc-windows-msvc
+                      runner: windows-2025
+                    - target: aarch64-apple-darwin
+                      runner: macos-15
+        runs-on: ${{ matrix.runner }}
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  # Full history, so a dispatched commit other than the head can be exported.
+                  fetch-depth: 0
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - name: Install the qualified Rust toolchain for native builds
+              if: runner.os != 'Linux'
+              run: rustup toolchain install 1.96.0 --profile minimal --target ${{ matrix.target }}
+            - name: Build twice from git archive exports and compare
+              shell: bash
+              env:
+                  COMMIT: ${{ inputs.commit || github.sha }}
+              run: node reasoner/qualification/verify-binary-reproducible.mjs ${{ matrix.target }} --commit "$COMMIT" --out reasoner-build
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              with:
+                  name: reasoner-${{ matrix.target }}
+                  path: reasoner-build/
+                  if-no-files-found: error
+
+    determinism-requests:
+        name: determinism request set
+        # This is a versioned runner label; GitHub-managed runner contents are not content-addressed.
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+              with:
+                  version: 10.15.0
+                  run_install: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+                  cache: pnpm
+                  cache-dependency-path: pnpm-lock.yaml
+            - run: pnpm run bootstrap:workspace
+            - name: Write the request set
+              run: pnpm run determinism:requests
+              env:
+                  ERDEN_DETERMINISM_REQUESTS_OUT: ${{ github.workspace }}/determinism-requests
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              with:
+                  name: determinism-requests
+                  path: determinism-requests/
+                  if-no-files-found: error
+
+    determinism:
+        name: determinism ${{ matrix.target }}
+        needs: [build, determinism-requests]
+        # Answer with every binary that was built, even when another target's build failed.
+        if: ${{ always() && needs.determinism-requests.result == 'success' }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - target: x86_64-unknown-linux-gnu
+                      runner: ubuntu-24.04
+                    - target: aarch64-unknown-linux-gnu
+                      runner: ubuntu-24.04-arm
+                    - target: x86_64-pc-windows-msvc
+                      runner: windows-2025
+                    - target: aarch64-apple-darwin
+                      runner: macos-15
+        runs-on: ${{ matrix.runner }}
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  name: reasoner-${{ matrix.target }}
+                  path: reasoner-build
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  name: determinism-requests
+                  path: determinism-requests
+            - name: Answer the request set twice with the built binary
+              shell: bash
+              run: |
+                  binary="reasoner-build/${{ matrix.target }}/erden-reasoner"
+                  if [[ "${{ matrix.target }}" == *-windows-msvc ]]; then binary="$binary.exe"; else chmod +x "$binary"; fi
+                  node reasoner/qualification/determinism.mjs run --binary "$binary" \
+                      --record "reasoner-build/${{ matrix.target }}.json" --requests determinism-requests \
+                      --out "determinism-answers/${{ matrix.target }}"
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              if: ${{ always() }}
+              with:
+                  name: determinism-answers-${{ matrix.target }}
+                  path: determinism-answers/
+                  if-no-files-found: error
+
+    determinism-compare:
+        name: determinism comparison
+        needs: [determinism-requests, determinism]
+        if: ${{ always() && needs.determinism-requests.result == 'success' }}
+        # This is a versioned runner label; GitHub-managed runner contents are not content-addressed.
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  name: determinism-requests
+                  path: determinism-requests
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+              with:
+                  pattern: determinism-answers-*
+                  merge-multiple: true
+                  path: determinism-answers
+            - name: Compare the normalized answers byte for byte
+              run: >-
+                  node reasoner/qualification/determinism.mjs compare --requests determinism-requests
+                  --answers determinism-answers --out determinism-comparison
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              if: ${{ always() }}
+              with:
+                  name: determinism-comparison
+                  path: determinism-comparison/
+                  if-no-files-found: error

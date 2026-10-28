@@ -1,0 +1,35 @@
+{
+    "@context": {
+        "ex": "https://example.test/formats#",
+        "owl": "http://www.w3.org/2002/07/owl#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "subClassOf": { "@id": "rdfs:subClassOf", "@type": "@id" },
+        "domain": { "@id": "rdfs:domain", "@type": "@id" },
+        "range": { "@id": "rdfs:range", "@type": "@id" },
+        "unionOf": { "@id": "owl:unionOf", "@type": "@id", "@container": "@list" },
+        "chases": { "@id": "ex:chases", "@type": "@id" },
+        "age": { "@id": "ex:age", "@type": "xsd:integer" }
+    },
+    "@graph": [
+        { "@id": "https://example.test/formats", "@type": "owl:Ontology" },
+        { "@id": "ex:Animal", "@type": "owl:Class", "rdfs:label": { "@value": "Animal", "@language": "en" } },
+        { "@id": "ex:Dog", "@type": "owl:Class", "subClassOf": "ex:Animal" },
+        { "@id": "ex:Cat", "@type": "owl:Class", "subClassOf": "ex:Animal" },
+        {
+            "@id": "ex:chases",
+            "@type": "owl:ObjectProperty",
+            "domain": { "@type": "owl:Class", "unionOf": ["ex:Dog", "ex:Cat"] },
+            "range": "ex:Animal"
+        },
+        { "@id": "ex:age", "@type": "owl:DatatypeProperty", "domain": "ex:Animal", "range": "xsd:integer" },
+        {
+            "@id": "ex:rex",
+            "@type": ["owl:NamedIndividual", "ex:Dog"],
+            "rdfs:comment": "A dog & his \"toy\" <ball>.",
+            "age": "3",
+            "chases": "ex:tom"
+        },
+        { "@id": "ex:tom", "@type": ["owl:NamedIndividual", "ex:Cat"] }
+    ]
+}

@@ -1,0 +1,48 @@
+name: ci
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+
+permissions:
+    contents: read
+
+jobs:
+    check:
+        # This is a versioned runner label; GitHub-managed runner contents are not content-addressed.
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  fetch-depth: 0
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+              with:
+                  version: 10.15.0
+                  run_install: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+                  cache: pnpm
+                  cache-dependency-path: pnpm-lock.yaml
+            - run: pnpm run bootstrap:workspace
+            # The engine binaries are never committed. Each is built from source as its mint builds it (twice, in the
+            # pinned builder image on Linux) and installed only when byte-identical to its pin; the cache holds the
+            # verified erden-shacl binary per crate source, verified again before use.
+            - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+              with:
+                  path: shacl/linux-x64-gnu/bin
+                  key: erden-shacl-linux-x64-gnu-${{ hashFiles('shacl/erden-shacl/**', 'shacl/Cargo.*', 'shacl/rust-toolchain.toml', 'shacl/distribution/src/artifacts.js') }}
+            - run: node shacl/qualification/build-from-source.mjs
+            # The reasoner built in its mint's builder image, cached per build input; build-from-source.mjs keeps a
+            # restored build only if it is of this source, and once the anchors pin this platform, only if it is the pin.
+            - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+              with:
+                  path: reasoner/source-build
+                  key: erden-reasoner-x86_64-unknown-linux-gnu-${{ hashFiles('reasoner/erden-reasoner/**', 'reasoner/Cargo.*', 'reasoner/rust-toolchain.toml', 'reasoner/distribution/src/artifacts.js') }}
+            - name: Build the reasoner in its mint's builder image
+              run: |
+                  pnpm run reasoner:build:linux
+                  echo "ERDEN_REASONER_BIN=$PWD/reasoner/source-build/x86_64-unknown-linux-gnu/erden-reasoner" >> "$GITHUB_ENV"
+            - run: pnpm run check:distribution:closure
+            - run: pnpm run check:workspace

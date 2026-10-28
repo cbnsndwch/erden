@@ -1,0 +1,22 @@
+[workspace]
+members = ["erden-reasoner"]
+resolver = "3"
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.96.0"
+license = "Apache-2.0"
+
+[workspace.dependencies]
+purrdf-core = { git = "https://github.com/Blackcat-Informatics/purrdf", rev = "dfb1df73199668720116dfbc737c0585e23afb5e", version = "=0.12.0" }
+purrdf-entail = { git = "https://github.com/Blackcat-Informatics/purrdf", rev = "dfb1df73199668720116dfbc737c0585e23afb5e", version = "=0.12.0" }
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = { version = "=1.0.145", features = ["std", "raw_value"] }
+sha2 = "=0.10.9"
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+opt-level = 3
+panic = "abort"
+strip = "symbols"

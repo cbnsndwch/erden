@@ -1,0 +1,37 @@
+{
+    "name": "@erden/cli",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Erden CLI (erden / den): init, check, doctor, pack, and publish ontology projects.",
+    "license": "Apache-2.0",
+    "bin": {
+        "den": "./dist/bin.js",
+        "erden": "./dist/bin.js"
+    },
+    "files": [
+        "src",
+        "dist",
+        "NOTICE"
+    ],
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "development": "./src/index.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "node ../../scripts/build-typescript-package.mjs",
+        "prepack": "pnpm run build"
+    },
+    "dependencies": {
+        "@erden/client": "workspace:0.0.0",
+        "@erden/contracts": "workspace:0.0.0",
+        "@erden/project": "workspace:0.0.0",
+        "effect": "4.0.0-rc.111"
+    },
+    "engines": {
+        "node": "^24"
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "name": "@erden/shacl-win32-x64-msvc",
+    "version": "0.1.0+purrdf.3.0.1",
+    "description": "Qualified Erden SHACL engine for Windows x64 (MSVC)",
+    "license": "Apache-2.0",
+    "bin": {
+        "erden-shacl": "bin/erden-shacl.exe"
+    },
+    "files": [
+        "bin",
+        "metadata.json",
+        "README.md",
+        "LICENSE",
+        "NOTICE",
+        "THIRD-PARTY-NOTICES.md"
+    ],
+    "os": [
+        "win32"
+    ],
+    "cpu": [
+        "x64"
+    ],
+    "type": "module",
+    "engines": {
+        "node": "^24"
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "name": "@erden/client",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Client for the Erden registry API: publish, read, and download releases.",
+    "license": "Apache-2.0",
+    "files": [
+        "src",
+        "dist",
+        "NOTICE"
+    ],
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "development": "./src/index.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "node ../../scripts/build-typescript-package.mjs",
+        "prepack": "pnpm run build"
+    },
+    "dependencies": {
+        "@erden/contracts": "workspace:0.0.0",
+        "effect": "4.0.0-rc.111"
+    },
+    "engines": {
+        "node": "^24"
+    }
+}

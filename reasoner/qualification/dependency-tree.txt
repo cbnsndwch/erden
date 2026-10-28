@@ -1,0 +1,109 @@
+# Locked Cargo normal/build dependency graph (stable CycloneDX bom-ref identities)
+pkg:cargo/ahash@0.8.12 -[normal]-> pkg:cargo/cfg-if@1.0.4
+pkg:cargo/ahash@0.8.12 -[normal]-> pkg:cargo/once_cell@1.21.4
+pkg:cargo/ahash@0.8.12 -[build]-> pkg:cargo/version_check@0.9.5
+pkg:cargo/ahash@0.8.12 -[normal]-> pkg:cargo/zerocopy@0.8.56
+pkg:cargo/allocator-api2@0.2.21 ->
+pkg:cargo/arrayvec@0.7.8 ->
+pkg:cargo/blake3@1.8.7 -[normal]-> pkg:cargo/arrayvec@0.7.8
+pkg:cargo/blake3@1.8.7 -[build]-> pkg:cargo/cc@1.4.4
+pkg:cargo/blake3@1.8.7 -[normal]-> pkg:cargo/cfg-if@1.0.4
+pkg:cargo/blake3@1.8.7 -[normal]-> pkg:cargo/constant_time_eq@0.4.2
+pkg:cargo/blake3@1.8.7 -[normal]-> pkg:cargo/cpufeatures@0.3.0
+pkg:cargo/blake3@1.8.7 -[normal]-> pkg:cargo/rayon-core@1.13.0
+pkg:cargo/block-buffer@0.10.4 -[normal]-> pkg:cargo/generic-array@0.14.7
+pkg:cargo/cc@1.4.4 -[normal]-> pkg:cargo/find-msvc-tools@0.1.11
+pkg:cargo/cc@1.4.4 -[normal]-> pkg:cargo/shlex@2.0.1
+pkg:cargo/cfg-if@1.0.4 ->
+pkg:cargo/constant_time_eq@0.4.2 ->
+pkg:cargo/cpufeatures@0.2.17 -[normal]-> pkg:cargo/libc@0.2.189
+pkg:cargo/cpufeatures@0.3.0 -[normal]-> pkg:cargo/libc@0.2.189
+pkg:cargo/crossbeam-deque@0.8.7 -[normal]-> pkg:cargo/crossbeam-epoch@0.9.20
+pkg:cargo/crossbeam-deque@0.8.7 -[normal]-> pkg:cargo/crossbeam-utils@0.8.22
+pkg:cargo/crossbeam-epoch@0.9.20 -[normal]-> pkg:cargo/crossbeam-utils@0.8.22
+pkg:cargo/crossbeam-utils@0.8.22 ->
+pkg:cargo/crypto-common@0.1.7 -[normal]-> pkg:cargo/generic-array@0.14.7
+pkg:cargo/crypto-common@0.1.7 -[normal]-> pkg:cargo/typenum@1.20.1
+pkg:cargo/csv-core@0.1.13 -[normal]-> pkg:cargo/memchr@2.8.3
+pkg:cargo/csv@1.4.0 -[normal]-> pkg:cargo/csv-core@0.1.13
+pkg:cargo/csv@1.4.0 -[normal]-> pkg:cargo/itoa@1.0.18
+pkg:cargo/csv@1.4.0 -[normal]-> pkg:cargo/ryu@1.0.23
+pkg:cargo/csv@1.4.0 -[normal]-> pkg:cargo/serde_core@1.0.228
+pkg:cargo/digest@0.10.7 -[normal]-> pkg:cargo/block-buffer@0.10.4
+pkg:cargo/digest@0.10.7 -[normal]-> pkg:cargo/crypto-common@0.1.7
+pkg:cargo/either@1.18.0 ->
+pkg:cargo/equivalent@1.0.2 ->
+pkg:cargo/erden-reasoner@0.1.0 -[normal]-> pkg:cargo/purrdf-core@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e
+pkg:cargo/erden-reasoner@0.1.0 -[normal]-> pkg:cargo/purrdf-entail@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e
+pkg:cargo/erden-reasoner@0.1.0 -[normal]-> pkg:cargo/serde_json@1.0.145
+pkg:cargo/erden-reasoner@0.1.0 -[normal]-> pkg:cargo/serde@1.0.228
+pkg:cargo/erden-reasoner@0.1.0 -[normal]-> pkg:cargo/sha2@0.10.9
+pkg:cargo/find-msvc-tools@0.1.11 ->
+pkg:cargo/foldhash@0.1.5 ->
+pkg:cargo/generic-array@0.14.7 -[normal]-> pkg:cargo/typenum@1.20.1
+pkg:cargo/generic-array@0.14.7 -[build]-> pkg:cargo/version_check@0.9.5
+pkg:cargo/hashbrown@0.15.5 -[normal]-> pkg:cargo/allocator-api2@0.2.21
+pkg:cargo/hashbrown@0.15.5 -[normal]-> pkg:cargo/equivalent@1.0.2
+pkg:cargo/hashbrown@0.15.5 -[normal]-> pkg:cargo/foldhash@0.1.5
+pkg:cargo/itoa@1.0.18 ->
+pkg:cargo/libc@0.2.189 ->
+pkg:cargo/memchr@2.8.3 ->
+pkg:cargo/once_cell@1.21.4 ->
+pkg:cargo/oxilangtag@0.1.6 ->
+pkg:cargo/proc-macro2@1.0.107 -[normal]-> pkg:cargo/unicode-ident@1.0.24
+pkg:cargo/purrdf-core@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/ahash@0.8.12
+pkg:cargo/purrdf-core@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/csv@1.4.0
+pkg:cargo/purrdf-core@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/hashbrown@0.15.5
+pkg:cargo/purrdf-core@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/oxilangtag@0.1.6
+pkg:cargo/purrdf-core@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/purrdf-events@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e
+pkg:cargo/purrdf-core@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/purrdf-iri@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e
+pkg:cargo/purrdf-core@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/sha2@0.10.9
+pkg:cargo/purrdf-core@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/smallvec@1.15.2
+pkg:cargo/purrdf-datalog@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/ahash@0.8.12
+pkg:cargo/purrdf-datalog@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/blake3@1.8.7
+pkg:cargo/purrdf-datalog@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/hashbrown@0.15.5
+pkg:cargo/purrdf-datalog@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/rayon@1.12.0
+pkg:cargo/purrdf-datalog@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/smallvec@1.15.2
+pkg:cargo/purrdf-entail@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/ahash@0.8.12
+pkg:cargo/purrdf-entail@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/blake3@1.8.7
+pkg:cargo/purrdf-entail@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/hashbrown@0.15.5
+pkg:cargo/purrdf-entail@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/purrdf-core@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e
+pkg:cargo/purrdf-entail@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/purrdf-datalog@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e
+pkg:cargo/purrdf-entail@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/purrdf-xsd@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e
+pkg:cargo/purrdf-entail@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e -[normal]-> pkg:cargo/roxmltree@0.20.0
+pkg:cargo/purrdf-events@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e ->
+pkg:cargo/purrdf-iri@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e ->
+pkg:cargo/purrdf-xsd@0.12.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FBlackcat-Informatics%2Fpurrdf%3Frev%3Ddfb1df73199668720116dfbc737c0585e23afb5e%23dfb1df73199668720116dfbc737c0585e23afb5e ->
+pkg:cargo/quote@1.0.47 -[normal]-> pkg:cargo/proc-macro2@1.0.107
+pkg:cargo/rayon-core@1.13.0 -[normal]-> pkg:cargo/crossbeam-deque@0.8.7
+pkg:cargo/rayon-core@1.13.0 -[normal]-> pkg:cargo/crossbeam-utils@0.8.22
+pkg:cargo/rayon@1.12.0 -[normal]-> pkg:cargo/either@1.18.0
+pkg:cargo/rayon@1.12.0 -[normal]-> pkg:cargo/rayon-core@1.13.0
+pkg:cargo/roxmltree@0.20.0 ->
+pkg:cargo/ryu@1.0.23 ->
+pkg:cargo/serde_core@1.0.228 -[normal]-> pkg:cargo/serde_derive@1.0.228
+pkg:cargo/serde_derive@1.0.228 -[normal]-> pkg:cargo/proc-macro2@1.0.107
+pkg:cargo/serde_derive@1.0.228 -[normal]-> pkg:cargo/quote@1.0.47
+pkg:cargo/serde_derive@1.0.228 -[normal]-> pkg:cargo/syn@2.0.119
+pkg:cargo/serde_json@1.0.145 -[normal]-> pkg:cargo/itoa@1.0.18
+pkg:cargo/serde_json@1.0.145 -[normal]-> pkg:cargo/memchr@2.8.3
+pkg:cargo/serde_json@1.0.145 -[normal]-> pkg:cargo/ryu@1.0.23
+pkg:cargo/serde_json@1.0.145 -[normal]-> pkg:cargo/serde_core@1.0.228
+pkg:cargo/serde_json@1.0.145 -[normal]-> pkg:cargo/serde@1.0.228
+pkg:cargo/serde@1.0.228 -[normal]-> pkg:cargo/serde_core@1.0.228
+pkg:cargo/serde@1.0.228 -[normal]-> pkg:cargo/serde_derive@1.0.228
+pkg:cargo/sha2@0.10.9 -[normal]-> pkg:cargo/cfg-if@1.0.4
+pkg:cargo/sha2@0.10.9 -[normal]-> pkg:cargo/cpufeatures@0.2.17
+pkg:cargo/sha2@0.10.9 -[normal]-> pkg:cargo/digest@0.10.7
+pkg:cargo/shlex@2.0.1 ->
+pkg:cargo/smallvec@1.15.2 ->
+pkg:cargo/syn@2.0.119 -[normal]-> pkg:cargo/proc-macro2@1.0.107
+pkg:cargo/syn@2.0.119 -[normal]-> pkg:cargo/quote@1.0.47
+pkg:cargo/syn@2.0.119 -[normal]-> pkg:cargo/unicode-ident@1.0.24
+pkg:cargo/typenum@1.20.1 ->
+pkg:cargo/unicode-ident@1.0.24 ->
+pkg:cargo/version_check@0.9.5 ->
+pkg:cargo/zerocopy-derive@0.8.56 -[normal]-> pkg:cargo/proc-macro2@1.0.107
+pkg:cargo/zerocopy-derive@0.8.56 -[normal]-> pkg:cargo/quote@1.0.47
+pkg:cargo/zerocopy-derive@0.8.56 -[normal]-> pkg:cargo/syn@2.0.119
+pkg:cargo/zerocopy@0.8.56 -[normal]-> pkg:cargo/zerocopy-derive@0.8.56

@@ -1,0 +1,624 @@
+{
+    "schema": "erden.reasoner-datatype-cases/v1",
+    "note": "One valid lexical form per built-in datatype of the normalizer (44 entries). 'range' and 'literal' record what the reasoner 0.1.0+purrdf.0.12.0.dfb1df7 does with each usage: 'range' is the datatype as a data-property or annotation-property range, 'literal' is a literal of the datatype as a data-property or annotation assertion value. 'decided' means a trusted complete decision; 'boundary' means PurRDF reports a semantic boundary (refused boundary-exhausted); 'inconsistent' means the request is inconsistent (refused uncheckable-inconsistency). 'v0.2' records the 0.2.0 decision procedure (A-S7), which sends a data range to PurRDF only together with the literals asserted under it and gives annotations no semantics: 'range' is a data-property range with no assertion, 'dataAssertion' a data-property assertion of the literal, 'annotation' an annotation assertion of it, 'annotationRange' an annotation-property range, 'rangedAssertion' a data-property whose range is the datatype asserting the literal, and 'rangedStringAssertion' the same property asserting \"x\"^^xsd:string instead. The normalizer refuses, per bundled release, exactly the usages this table records as 'boundary' (packages/ontology/src/reasoner/datatypes.ts): under 0.1.0 every 'range' and 'literal' boundary; under 0.2.0 every 'dataAssertion' boundary, and every range whose 'rangedStringAssertion' is a boundary once the property has an asserted value. reasoner/qualification/adapter.test.ts re-runs the 'v0.2' column against ERDEN_REASONER_BIN, and packages/ontology/test/reasoner-datatypes.test.ts runs every refused usage of the bundled release against the bundled executable.",
+    "datatypes": [
+        {
+            "iri": "http://www.w3.org/2000/01/rdf-schema#Literal",
+            "lexical": "x",
+            "range": "decided",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "decided"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "lexical": "x",
+            "language": "en",
+            "range": "boundary",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral",
+            "lexical": "<a/>",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#HTML",
+            "lexical": "<p>x</p>",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON",
+            "lexical": "{}",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#string",
+            "lexical": "x",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "decided"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#boolean",
+            "lexical": "true",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#decimal",
+            "lexical": "1.5",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#float",
+            "lexical": "1.5",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#double",
+            "lexical": "1.5",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#duration",
+            "lexical": "P1D",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#dateTime",
+            "lexical": "2026-01-01T00:00:00",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#time",
+            "lexical": "12:00:00",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#date",
+            "lexical": "2026-01-01",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#gYearMonth",
+            "lexical": "2026-01",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#gYear",
+            "lexical": "2026",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#gMonthDay",
+            "lexical": "--01-01",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#gDay",
+            "lexical": "---01",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#gMonth",
+            "lexical": "--01",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#hexBinary",
+            "lexical": "0A",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#base64Binary",
+            "lexical": "AA==",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#anyURI",
+            "lexical": "https://example.test/",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#normalizedString",
+            "lexical": "x",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#token",
+            "lexical": "x",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#language",
+            "lexical": "en",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#Name",
+            "lexical": "x",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#NCName",
+            "lexical": "x",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#NMTOKEN",
+            "lexical": "x",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#integer",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#nonPositiveInteger",
+            "lexical": "-1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#negativeInteger",
+            "lexical": "-1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#long",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#int",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#short",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#byte",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#unsignedLong",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#unsignedInt",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#unsignedShort",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#unsignedByte",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#positiveInteger",
+            "lexical": "1",
+            "range": "decided",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "decided",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "inconsistent"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#yearMonthDuration",
+            "lexical": "P1Y",
+            "range": "boundary",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#dayTimeDuration",
+            "lexical": "P1D",
+            "range": "boundary",
+            "literal": "decided",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "decided",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        },
+        {
+            "iri": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+            "lexical": "2026-01-01T00:00:00Z",
+            "range": "boundary",
+            "literal": "boundary",
+            "v0.2": {
+                "range": "decided",
+                "dataAssertion": "boundary",
+                "annotation": "decided",
+                "rangedAssertion": "boundary",
+                "annotationRange": "decided",
+                "rangedStringAssertion": "boundary"
+            }
+        }
+    ],
+    "measuredWith": "0.1.0+purrdf.0.12.0.dfb1df7"
+}

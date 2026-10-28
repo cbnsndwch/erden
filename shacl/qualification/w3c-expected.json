@@ -1,0 +1,20 @@
+{
+  "comment": "The W3C SHACL 1.0 suite gate (shacl/qualification/harness/suite.mjs --expect). Every verdict must be right. The engine's own results are isomorphic to the expected report on all but the 12 SPARQL tests whose expected report has sh:sourceConstraint, which PurRDF does not emit (W3 found the same 12); the report Erden writes adds it where the result determines it and is isomorphic on all 120. Any other outcome fails the gate.",
+  "suiteTree": "57ca544debba0dca11306266ee43116a848d2290",
+  "tests": 120,
+  "notFullEngine": [
+    "sparql/node/prefixes-001",
+    "sparql/node/sparql-001",
+    "sparql/node/sparql-002",
+    "sparql/node/sparql-003",
+    "sparql/pre-binding/pre-binding-001",
+    "sparql/pre-binding/pre-binding-002",
+    "sparql/pre-binding/pre-binding-003",
+    "sparql/pre-binding/pre-binding-004",
+    "sparql/pre-binding/pre-binding-005",
+    "sparql/pre-binding/pre-binding-007",
+    "sparql/pre-binding/shapesGraph-001",
+    "sparql/property/sparql-001"
+  ],
+  "notFullErden": []
+}

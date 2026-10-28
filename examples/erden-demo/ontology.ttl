@@ -1,0 +1,22 @@
+@prefix demo: <https://example.invalid/erden/demo#> .
+@prefix ev: <https://erden.cbnsndwch.dev/onto/evidence#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://example.invalid/erden/demo> a owl:Ontology .
+
+demo:Artifact a owl:Class .
+demo:PublishedArtifact a owl:Class ;
+  rdfs:subClassOf demo:Artifact .
+
+ev:sourcePath a owl:AnnotationProperty .
+ev:sourceRoot a owl:AnnotationProperty .
+prov:wasGeneratedBy a owl:ObjectProperty .
+
+demo:example a demo:PublishedArtifact ;
+  prov:wasGeneratedBy demo:readmeObservation .
+
+demo:readmeObservation
+  ev:sourcePath "README.md" ;
+  ev:sourceRoot "default" .

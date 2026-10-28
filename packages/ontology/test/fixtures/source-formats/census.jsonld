@@ -1,0 +1,39 @@
+{
+    "@context": {
+        "ex": "https://example.test/formats#",
+        "owl": "http://www.w3.org/2002/07/owl#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "dct": "http://purl.org/dc/terms/",
+        "subClassOf": { "@id": "rdfs:subClassOf", "@type": "@id" },
+        "propertyDisjointWith": { "@id": "owl:propertyDisjointWith", "@type": "@id" },
+        "domain": { "@id": "rdfs:domain", "@type": "@id" },
+        "range": { "@id": "rdfs:range", "@type": "@id" },
+        "onProperty": { "@id": "owl:onProperty", "@type": "@id" },
+        "minCardinality": { "@id": "owl:minCardinality", "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger" }
+    },
+    "@graph": [
+        {
+            "@id": "https://example.test/formats",
+            "@type": "owl:Ontology",
+            "dct:title": "Census",
+            "owl:versionInfo": "1.0"
+        },
+        { "@id": "ex:Animal", "@type": "owl:Class" },
+        {
+            "@id": "ex:Dog",
+            "@type": "owl:Class",
+            "subClassOf": [
+                "ex:Animal",
+                { "@type": "owl:Restriction", "onProperty": "ex:chases", "minCardinality": "2" }
+            ]
+        },
+        {
+            "@id": "ex:chases",
+            "@type": ["owl:ObjectProperty", "owl:AsymmetricProperty"],
+            "domain": "ex:Animal",
+            "range": "ex:Animal",
+            "propertyDisjointWith": "ex:near"
+        },
+        { "@id": "ex:near", "@type": "owl:ObjectProperty", "domain": "ex:Animal", "range": "ex:Animal" }
+    ]
+}

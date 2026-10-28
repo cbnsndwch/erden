@@ -1,0 +1,110 @@
+{
+  "adapterIdentity": {
+    "adapterDigest": "sha256:7940dfe4682674e2248348932cbecfe886a1a72b4448603c1c94d463736f3462",
+    "calculusDigest": "sha256:830c38b936bb8a3655bcc15a1af4141384465a62a5f3c7993e067f77a8ddb3fd",
+    "name": "erden-reasoner",
+    "version": "0.2.0+purrdf.0.12.0.dfb1df7"
+  },
+  "artifacts": [
+    {
+      "bytes": 1350144,
+      "packagePath": "reasoner/win32-x64-msvc/bin/erden-reasoner.exe",
+      "platform": "x86_64-pc-windows-msvc",
+      "sha256": "sha256:9e6b2487706fc5406becce8e3fbb01c1456243fb66f4519e2e00147906e37051"
+    },
+    {
+      "bytes": 1556160,
+      "packagePath": "reasoner/linux-x64-gnu/bin/erden-reasoner",
+      "platform": "x86_64-unknown-linux-gnu",
+      "sha256": "sha256:a5deaeecf3568101cfc981a2194f0af9edc1590c506f50b8b61cda4c4c1d571a"
+    },
+    {
+      "bytes": 1315512,
+      "packagePath": "reasoner/linux-arm64-gnu/bin/erden-reasoner",
+      "platform": "aarch64-unknown-linux-gnu",
+      "sha256": "sha256:657a3b5f6e526404d1c87e5adb3e05eb800f7936702af433c093fcc21b0d5ace"
+    },
+    {
+      "bytes": 1231872,
+      "packagePath": "reasoner/darwin-arm64/bin/erden-reasoner",
+      "platform": "aarch64-apple-darwin",
+      "sha256": "sha256:5f4e5b2c6b123acadeccd606b20d8ed73a6a0c7da1dd285640e03d8b94cdfb9e"
+    }
+  ],
+  "evidence": [
+    {
+      "bytes": 12217,
+      "path": "../Cargo.lock",
+      "sha256": "sha256:ed8f5e514476629d704a85c3363d5f15039a8f3646244fc63aaa19c287e3f211"
+    },
+    {
+      "bytes": 57122,
+      "path": "sbom.json",
+      "sha256": "sha256:e02f8cfd5b4d19dd63014c2f64197fcad4184ee6ef037ab8936181bfc515da3b"
+    },
+    {
+      "bytes": 336,
+      "path": "sbom-validation.json",
+      "sha256": "sha256:00537690df3a73ffbbfcab075c6249e5c1d1bbb034584d3957ec54ea1c24143b"
+    },
+    {
+      "bytes": 22639,
+      "path": "THIRD-PARTY-NOTICES.md",
+      "sha256": "sha256:50c557d5d9478486ea93761c32f316840289df48fe2ef3847927f15fd2c0e5e3"
+    },
+    {
+      "bytes": 617,
+      "path": "advisories.json",
+      "sha256": "sha256:dd32ce5e076b6283324cec512c52bd23c146aecf5d0117992552a06f305cdbd5"
+    },
+    {
+      "bytes": 11246,
+      "path": "dependency-tree.txt",
+      "sha256": "sha256:c1f2091c1cbcd3852368b3147947b3d34749e693b923d6b2ecb39649fd6129ca"
+    },
+    {
+      "bytes": 1231,
+      "path": "license-policy.json",
+      "sha256": "sha256:10ab14863d4f0d0fbc52e6a14b2677f468df34456f5cd856f8d35c08866bce60"
+    },
+    {
+      "bytes": 11485,
+      "path": "evidence-reproducibility.json",
+      "sha256": "sha256:304f49902a85584c43383012750a9715b620b40cc781dff5943ddfe538cd56aa"
+    },
+    {
+      "bytes": 9223,
+      "path": "binary-reproducibility.json",
+      "sha256": "sha256:ae500f66b4a821446ca13722342b24f9593339596c35fa8f1ea70127123a3ef1"
+    }
+  ],
+  "linuxBuilder": {
+    "image": "rust@sha256:5e2214abe154fe26e39f64488952e5c991eeed1d6d6da7cc8381ae83927f0cfc"
+  },
+  "profile": {
+    "digest": "sha256:0bc7dec03b01761e9762f4bc8d44b23c2f8288228cd8913d791771536bf179e5",
+    "id": "erden-required-constructs-v1"
+  },
+  "proofChecker": {
+    "digest": "sha256:0d62b1aebc8fb10617c63cf6ce18d0bc43d7126e6832beb341ccd83c5e2d45a2",
+    "id": "erden-proof-checker-v2"
+  },
+  "purrdf": {
+    "commit": "dfb1df73199668720116dfbc737c0585e23afb5e",
+    "crateVersion": "0.12.0",
+    "repository": "https://github.com/Blackcat-Informatics/purrdf"
+  },
+  "qualificationBaseCommit": "8c6db97adaf46fe76e628036d36bf18de906ec4b",
+  "qualificationSourceCommit": "8c6db97adaf46fe76e628036d36bf18de906ec4b",
+  "qualificationStatus": "selected-for-erden-v1",
+  "schemaVersion": 3,
+  "sourceIdentity": {
+    "adapterCrateSourceTree": "777932ce458b61fdf624f14d4fb2fb4da7930169",
+    "qualificationReasonerCommitTree": "01f45cd6075a053bf40cd6ab591243eb9597325f"
+  },
+  "toolchain": {
+    "rustc": "1.96.0",
+    "commit": "ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96",
+    "llvm": "22.1.2"
+  }
+}

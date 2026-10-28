@@ -1,0 +1,29 @@
+{
+    "name": "@erden/shacl-distribution",
+    "version": "0.1.0+purrdf.3.0.1",
+    "description": "Offline resolver and integrity doctor for the qualified Erden SHACL engine",
+    "license": "Apache-2.0",
+    "files": [
+        "src",
+        "fixtures",
+        "README.md",
+        "LICENSE",
+        "NOTICE"
+    ],
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./src/index.d.ts",
+            "default": "./src/index.js"
+        }
+    },
+    "optionalDependencies": {
+        "@erden/shacl-darwin-arm64": "workspace:0.1.0+purrdf.3.0.1",
+        "@erden/shacl-linux-arm64-gnu": "workspace:0.1.0+purrdf.3.0.1",
+        "@erden/shacl-linux-x64-gnu": "workspace:0.1.0+purrdf.3.0.1",
+        "@erden/shacl-win32-x64-msvc": "workspace:0.1.0+purrdf.3.0.1"
+    },
+    "engines": {
+        "node": "^24"
+    }
+}

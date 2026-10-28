@@ -1,0 +1,92 @@
+{
+    "schema": "erden.open-tree-audit/v1",
+    "description": "What scripts/audit-open-tree.mjs allows in the public repository: each allow entry is a file (or a directory ending in /), an expression the whole hit matches and the reason it is not private.",
+    "identity": {
+        "name": "cbnsndwch LLC",
+        "email": "8313760+cbnsndwch@users.noreply.github.com"
+    },
+    "images": {
+        "gitleaks": "docker.io/zricethezav/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f",
+        "reuse": "docker.io/fsfe/reuse:6.2.0@sha256:85462a75c0f8efda09ddd190b92816b70e7662577c8427429e11e1b9f25a992e"
+    },
+    "containerMemory": "2g",
+    "maxFileBytes": 5000000,
+    "binaryAllowlist": [
+        {
+            "path": "reasoner/qualification/determinism/captured/prov-o-complete.request.json.br",
+            "encoding": "brotli",
+            "reason": "a captured reasoner request for the W3C PROV-O ontology, compressed; its text is audited too"
+        },
+        {
+            "path": "reasoner/qualification/determinism/captured/skos-complete.request.json.br",
+            "encoding": "brotli",
+            "reason": "a captured reasoner request for the W3C SKOS ontology, compressed; its text is audited too"
+        }
+    ],
+    "allow": [
+        {
+            "path": "scripts/open-tree-audit.json",
+            "pattern": ".*",
+            "reason": "this file: the expressions of its allowed hits"
+        },
+        {
+            "path": "scripts/test/audit-open-tree.test.mjs",
+            "pattern": ".*",
+            "reason": "the audit's own tests: the made-up hits they check it finds"
+        },
+        {
+            "check": "home-path",
+            "path": "packages/package-format/src/extraction.ts",
+            "pattern": "C:\\\\Users\\\\RUNNER",
+            "reason": "a comment's example of a Windows 8.3 short name, on a CI runner's account"
+        },
+        {
+            "check": "home-path",
+            "path": "packages/project/src/init/operation.ts",
+            "pattern": "C:\\\\Users\\\\RUNNER",
+            "reason": "a comment's example of a Windows 8.3 short name, on a CI runner's account"
+        },
+        {
+            "check": "home-path",
+            "path": "packages/project/test/local-package-store-marker.test.ts",
+            "pattern": "/home/alice",
+            "reason": "test data: a placeholder user's home directory"
+        },
+        {
+            "check": "home-path",
+            "path": "packages/project/test/store-path.test.ts",
+            "pattern": "/home/alice",
+            "reason": "test data: a placeholder user's home directory"
+        },
+        {
+            "check": "home-path",
+            "path": "reasoner/qualification/verify-binary-reproducible.test.ts",
+            "pattern": "/Users/u",
+            "reason": "test data: a placeholder macOS home directory for the Cargo home"
+        },
+        {
+            "check": "private-ip",
+            "path": "packages/project/test/manifest.test.ts",
+            "pattern": "192\\.168\\.1\\.20",
+            "reason": "test data: a LAN registry origin the manifest parser must accept"
+        },
+        {
+            "check": "email",
+            "path": "reasoner/qualification/determinism/captured/prov-o-complete.request.json.br",
+            "pattern": "public-prov-comments(?:-request)?@w3\\.org",
+            "reason": "the W3C mailing list the PROV-O ontology names for comments"
+        },
+        {
+            "check": "email",
+            "path": "shacl/qualification/w3c/data-shapes-test-suite/",
+            "pattern": "john@doe\\.com",
+            "reason": "W3C SHACL test suite data: a placeholder address"
+        },
+        {
+            "check": "email",
+            "path": "shacl/qualification/licenses/",
+            "pattern": "site-policy@w3\\.org|paudley@blackcatinformatics\\.ca",
+            "reason": "third-party license texts, copied byte for byte: the W3C's policy contact and an upstream author's address"
+        }
+    ]
+}

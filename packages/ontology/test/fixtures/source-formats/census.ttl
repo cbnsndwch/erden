@@ -1,0 +1,29 @@
+@prefix ex: <https://example.test/formats#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Constructs outside the V2 profile, as an upstream publishes them: header vocabulary, an undeclared annotation,
+# a minimum-cardinality restriction, a property characteristic and a property disjointness.
+<https://example.test/formats> a owl:Ontology ;
+    dct:title "Census" ;
+    owl:versionInfo "1.0" .
+
+ex:Animal a owl:Class .
+
+ex:Dog a owl:Class ;
+    rdfs:subClassOf ex:Animal , [
+        a owl:Restriction ;
+        owl:onProperty ex:chases ;
+        owl:minCardinality "2"^^xsd:nonNegativeInteger
+    ] .
+
+ex:chases a owl:ObjectProperty , owl:AsymmetricProperty ;
+    rdfs:domain ex:Animal ;
+    rdfs:range ex:Animal ;
+    owl:propertyDisjointWith ex:near .
+
+ex:near a owl:ObjectProperty ;
+    rdfs:domain ex:Animal ;
+    rdfs:range ex:Animal .

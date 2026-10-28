@@ -1,0 +1,16 @@
+{
+  "schema": "erden.reasoner-captured-requests/v1",
+  "description": "Reasoner requests captured on 2026-10-10 from the real check service (makeCheckProjectService with a recording reasoner port): the complete SKOS and PROV-O mirrors checked with outsideProfile report. Each file is the exact request wire, brotli-compressed; sha256 and bytes describe the decompressed request.",
+  "requests": {
+    "prov-o-complete": {
+      "bytes": 516336,
+      "sha256": "sha256:358202a63c737d205ddc863c487c780f77aa7d02e2a9231236057418cd097409",
+      "outsideProfile": "report"
+    },
+    "skos-complete": {
+      "bytes": 94460,
+      "sha256": "sha256:d74b9ed95ea36309b68d2a85ee21422034639a5e2765e80600f3cd5780451748",
+      "outsideProfile": "report"
+    }
+  }
+}

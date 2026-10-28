@@ -1,0 +1,12 @@
+node_modules/
+coverage/
+**/dist/
+.erden/
+.turbo/
+
+# The erden-shacl binaries are never committed. The platform packages carry only their pins (metadata.json and the
+# resolver anchors); a binary is built from source by shacl/qualification/build-from-source.mjs, and later comes from a
+# tools release (release.yml).
+shacl/*/bin/
+reasoner/*/bin/
+reasoner/source-build/

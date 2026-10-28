@@ -1,0 +1,39 @@
+{
+    "name": "@erden/ontology",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Local ontology assembly, reasoning, SHACL validation, and competency-question checks for Erden.",
+    "license": "Apache-2.0",
+    "files": [
+        "src",
+        "dist",
+        "NOTICE"
+    ],
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "development": "./src/index.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "node ../../scripts/build-typescript-package.mjs",
+        "prepack": "pnpm run build"
+    },
+    "dependencies": {
+        "@erden/reasoner-distribution": "workspace:0.3.0+purrdf.0.12.0.dfb1df7",
+        "@erden/reasoner-protocol": "workspace:0.0.0",
+        "@erden/shacl-distribution": "workspace:0.1.0+purrdf.3.0.1",
+        "effect": "4.0.0-rc.111",
+        "n3": "2.1.1",
+        "oxigraph": "0.5.9",
+        "rdf-canonize": "5.0.0"
+    },
+    "devDependencies": {
+        "@types/n3": "1.26.1"
+    },
+    "engines": {
+        "node": "^24"
+    }
+}

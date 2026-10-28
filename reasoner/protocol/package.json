@@ -1,0 +1,30 @@
+{
+    "name": "@erden/reasoner-protocol",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Versioned JSON protocol and proof-checker contract for the Erden reasoner.",
+    "license": "Apache-2.0",
+    "files": [
+        "src",
+        "dist",
+        "NOTICE"
+    ],
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "development": "./src/index.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "node ../../scripts/build-typescript-package.mjs",
+        "prepack": "pnpm run build"
+    },
+    "dependencies": {
+        "effect": "4.0.0-rc.111"
+    },
+    "engines": {
+        "node": "^24"
+    }
+}

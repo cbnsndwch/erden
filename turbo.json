@@ -1,0 +1,16 @@
+{
+    "$schema": "https://turborepo.dev/schema.json",
+    "globalDependencies": [
+        ".node-version",
+        "scripts/build-typescript-package.mjs",
+        "scripts/lib/runtime-build.mjs",
+        "scripts/lib/runtime-package-files.mjs",
+        "tsconfig.base.json"
+    ],
+    "tasks": {
+        "build": {
+            "dependsOn": ["^build"],
+            "outputs": ["dist/**", "build/**"]
+        }
+    }
+}

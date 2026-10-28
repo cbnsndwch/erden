@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "status": "integrated-and-qualified",
+  "sourcePackage": "@erden/reasoner-linux-x64-gnu",
+  "packageVersion": "0.2.0+purrdf.0.12.0.dfb1df7",
+  "sourcePath": "bin/erden-reasoner",
+  "target": "x86_64-unknown-linux-gnu",
+  "bytes": 1556160,
+  "sha256": "sha256:a5deaeecf3568101cfc981a2194f0af9edc1590c506f50b8b61cda4c4c1d571a",
+  "destinationPath": "/opt/erden-reasoner/erden-reasoner",
+  "imagePlatform": "linux/amd64-glibc",
+  "knownAnswer": {
+    "responseBytes": 2299,
+    "responseSha256": "sha256:8248a224ed33ee4ebc8826eb19efd758b8eb2aed8ca60bf984ea6727113f005d"
+  },
+  "requiredImageBehavior": {
+    "copyFromInstalledPackage": true,
+    "verifyBeforeUse": true,
+    "destinationPathOwnedByRootAndNonWritable": true,
+    "testFinalImageArtifact": true
+  }
+}

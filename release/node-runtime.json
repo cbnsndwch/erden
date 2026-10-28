@@ -1,0 +1,32 @@
+{
+    "schema": "erden.node-runtime/v1",
+    "description": "The official Node.js runtime each CLI archive ships, pinned by size and SHA-256. The digests are from the release's SHASUMS256.txt and the sizes from nodejs.org; build-cli-archive.mjs refuses any other file.",
+    "version": "24.17.0",
+    "baseUrl": "https://nodejs.org/dist/v24.17.0/",
+    "platforms": {
+        "darwin-arm64": {
+            "file": "node-v24.17.0-darwin-arm64.tar.gz",
+            "bytes": 51886390,
+            "sha256": "sha256:4fc3266a3702eebc39cc37661cf4eeceeade307e242ab64e4d7ce7949197e11f",
+            "executable": "bin/node"
+        },
+        "linux-arm64": {
+            "file": "node-v24.17.0-linux-arm64.tar.xz",
+            "bytes": 30386680,
+            "sha256": "sha256:67324b9e515e7d13da72571a5dd522bb23145a820f7dde15497897e466759ab3",
+            "executable": "bin/node"
+        },
+        "linux-x64": {
+            "file": "node-v24.17.0-linux-x64.tar.xz",
+            "bytes": 31426020,
+            "sha256": "sha256:ab343a1b747c7cbf3630dfd7dbf818c5423fab2eb4f5ad1afc896f6bd121a917",
+            "executable": "bin/node"
+        },
+        "win32-x64": {
+            "file": "node-v24.17.0-win-x64.zip",
+            "bytes": 36948900,
+            "sha256": "sha256:f2aa33b35b75aca5f3f7b85675a6f6423201053e9381911e64961f3bda2528ab",
+            "executable": "node.exe"
+        }
+    }
+}

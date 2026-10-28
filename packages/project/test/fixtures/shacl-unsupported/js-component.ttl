@@ -1,0 +1,23 @@
+@prefix demo: <https://example.invalid/erden/demo#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+demo:PublishedArtifactShape a sh:NodeShape ;
+  sh:targetClass demo:PublishedArtifact ;
+  sh:property [
+    sh:path rdf:type ;
+    sh:hasValue demo:Artifact ;
+    sh:message "published artifacts must inherit the Artifact type"
+  ] .
+
+# A constraint component the shapes declare with a SHACL-JS validator, used by a shape.
+demo:NoGeneratorJs a sh:ConstraintComponent ;
+  sh:parameter [ sh:path demo:noGeneratorJs ] ;
+  sh:validator [ a sh:JSValidator ; sh:jsFunctionName "noGenerator" ; sh:jsLibrary [ sh:jsLibraryURL "https://example.invalid/no-generator.js" ] ] .
+
+demo:JsComponentShape a sh:NodeShape ;
+  sh:targetClass demo:PublishedArtifact ;
+  demo:noGeneratorJs true .

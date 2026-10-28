@@ -1,0 +1,23 @@
+{
+    "name": "@erden/reasoner-distribution",
+    "version": "0.3.0+purrdf.0.12.0.dfb1df7",
+    "description": "Offline resolver and integrity doctor for the Erden reasoner",
+    "license": "Apache-2.0",
+    "files": [
+        "src",
+        "fixtures",
+        "README.md",
+        "LICENSE",
+        "NOTICE"
+    ],
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./src/index.d.ts",
+            "default": "./src/index.js"
+        }
+    },
+    "engines": {
+        "node": "^24"
+    }
+}

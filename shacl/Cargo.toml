@@ -1,0 +1,26 @@
+[workspace]
+members = ["erden-shacl"]
+resolver = "3"
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.98.0"
+license = "Apache-2.0"
+
+# PurRDF's SHACL engine at the exact release Erden's qualification measured (crates.io, published 2026-10-02, tag
+# rust-v3.0.1, commit dcd24b1). PurRDF 3.x is offered under MIT OR Apache-2.0 OR MulanPSL-2.0; Erden takes it under
+# MIT OR Apache-2.0 (shacl/qualification/license-policy.json). An upgrade is a new qualification (shacl/qualification).
+[workspace.dependencies]
+purrdf-rdf = "=3.0.1"
+purrdf-shapes = "=3.0.1"
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = { version = "=1.0.145", features = ["std"] }
+sha2 = "=0.11.0"
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+opt-level = 3
+# Unwinding, so a panic inside the engine becomes a structured refusal instead of a lost answer.
+panic = "unwind"
+strip = "symbols"

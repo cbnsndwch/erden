@@ -1,0 +1,3 @@
+# Check out every text file with the committed LF bytes, on every platform and whatever core.autocrlf says.
+# Qualification gates hash checked-out files (reasoner/Cargo.lock, evidence JSON) against recorded digests.
+* text=auto eol=lf

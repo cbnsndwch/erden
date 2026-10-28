@@ -1,0 +1,48 @@
+// Written by reasoner/qualification/finalize-artifacts.mjs from the reasoner-build run recorded in
+// reasoner/qualification/mint.json. Do not edit by hand. A platform whose pins are null has no released binary.
+export const QUALIFIED_REASONER_ARTIFACTS = Object.freeze({
+    'linux:x64:glibc': Object.freeze({
+        packageName: '@erden/reasoner-linux-x64-gnu',
+        description: 'Erden reasoner for Linux x64 (glibc)',
+        runtime: Object.freeze({ os: 'linux', cpu: 'x64', libc: 'glibc' }),
+        target: 'x86_64-unknown-linux-gnu',
+        binaryPath: 'bin/erden-reasoner',
+        bytes: null,
+        sha256: null,
+        responseBytes: null,
+        responseSha256: null,
+    }),
+    'linux:arm64:glibc': Object.freeze({
+        packageName: '@erden/reasoner-linux-arm64-gnu',
+        description: 'Erden reasoner for Linux arm64 (glibc)',
+        runtime: Object.freeze({ os: 'linux', cpu: 'arm64', libc: 'glibc' }),
+        target: 'aarch64-unknown-linux-gnu',
+        binaryPath: 'bin/erden-reasoner',
+        bytes: null,
+        sha256: null,
+        responseBytes: null,
+        responseSha256: null,
+    }),
+    'darwin:arm64': Object.freeze({
+        packageName: '@erden/reasoner-darwin-arm64',
+        description: 'Erden reasoner for macOS arm64 (Apple silicon)',
+        runtime: Object.freeze({ os: 'darwin', cpu: 'arm64' }),
+        target: 'aarch64-apple-darwin',
+        binaryPath: 'bin/erden-reasoner',
+        bytes: null,
+        sha256: null,
+        responseBytes: null,
+        responseSha256: null,
+    }),
+    'win32:x64': Object.freeze({
+        packageName: '@erden/reasoner-win32-x64-msvc',
+        description: 'Erden reasoner for Windows x64 (MSVC)',
+        runtime: Object.freeze({ os: 'win32', cpu: 'x64' }),
+        target: 'x86_64-pc-windows-msvc',
+        binaryPath: 'bin/erden-reasoner.exe',
+        bytes: null,
+        sha256: null,
+        responseBytes: null,
+        responseSha256: null,
+    }),
+});

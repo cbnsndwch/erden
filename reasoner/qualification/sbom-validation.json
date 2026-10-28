@@ -1,0 +1,7 @@
+{
+  "image": "cyclonedx/cyclonedx-cli@sha256:252c2e26f468c25fea1e63ecde1bc3198ad6e9dbb57f5ed3236bddcb2281b3a7",
+  "result": "Validating JSON BOM...\nBOM validated successfully.",
+  "schemaVersion": "CycloneDX 1.6 JSON",
+  "validator": "CycloneDX/cyclonedx-cli",
+  "validatorVersion": "0.33.1+b3cfa4b0edc356dad07e0b6e7ab6da0a94af0246"
+}

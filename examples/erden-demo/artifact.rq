@@ -1,0 +1,6 @@
+# @ask     Which resources are inferred to be artifacts?
+# @expect  rows == 1
+# @from    PublishedArtifact is a subclass of Artifact, so the reasoner supplies this type.
+SELECT ?artifact WHERE {
+  ?artifact a <https://example.invalid/erden/demo#Artifact>
+}
