@@ -368,3 +368,33 @@ describe.runIf(current !== undefined)('the bundled engine on this platform', () 
         },
     );
 });
+
+describe('the ERDEN_SHACL_BIN source build', () => {
+    it('refuses relative, missing and non-executable paths, and fails the known answer of a stand-in', () => {
+        const runtime = runtimes.darwinArm64;
+        const directory = mkdtempSync(join(tmpdir(), 'shacl-source-build-'));
+        try {
+            const code = (sourceBuild: string) => {
+                try {
+                    resolveBundledShaclEngine({ runtime, sourceBuild });
+                } catch (error) {
+                    return (error as BundledShaclEngineError).code;
+                }
+                return undefined;
+            };
+            expect(code('erden-shacl')).toBe(ERROR_CODES.binaryMissing);
+            expect(code(join(directory, 'missing'))).toBe(ERROR_CODES.binaryMissing);
+            const standIn = join(directory, 'erden-shacl');
+            writeFileSync(standIn, '#!/bin/sh\necho nope\n');
+            chmodSync(standIn, 0o644);
+            expect(code(standIn)).toBe(ERROR_CODES.binaryNotExecutable);
+            chmodSync(standIn, 0o755);
+            expect(resolveBundledShaclEngine({ runtime, sourceBuild: standIn }).path).toBe(standIn);
+            expect(() => runBundledShaclEngineKnownAnswer({ runtime, sourceBuild: standIn })).toThrow(
+                BundledShaclEngineError,
+            );
+        } finally {
+            rmSync(directory, { recursive: true, force: true });
+        }
+    });
+});

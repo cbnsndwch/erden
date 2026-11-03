@@ -4,6 +4,8 @@
 // is how a checkout or a CI job gets the engine.
 //
 //   node shacl/qualification/build-from-source.mjs [--commit <sha>]
+//   node shacl/qualification/build-from-source.mjs --output <abs-path>   (host toolchain differs from the mint's: keep
+//                                                  the build at <abs-path> and point ERDEN_SHACL_BIN at it)
 //   node shacl/qualification/build-from-source.mjs --check     (refuses unless the pinned binary is installed)
 //
 // One clean build with the mint's plan and directory layout (verify-binary-reproducible.mjs, its build A): the
@@ -13,7 +15,7 @@
 import { createHash } from 'node:crypto';
 import { chmodSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { execFileSync } from 'node:child_process';
 
@@ -44,7 +46,7 @@ function matchesPin(path, anchor) {
 }
 
 function main() {
-    const { values } = parseArgs({ options: { commit: { type: 'string' }, check: { type: 'boolean', default: false } } });
+    const { values } = parseArgs({ options: { commit: { type: 'string' }, check: { type: 'boolean', default: false }, output: { type: 'string' } } });
     const platform = PLATFORMS.find((entry) => entry.runtime.os === process.platform && entry.runtime.cpu === process.arch);
     if (platform === undefined) throw new Error(`erden-shacl has no qualified target for ${process.platform}/${process.arch}`);
     const anchor = QUALIFIED_SHACL_ARTIFACTS[platform.key];
@@ -71,11 +73,23 @@ function main() {
         const lock = sha256(readFileSync(join(source, 'Cargo.lock')));
         if (lock !== CARGO_LOCK_SHA256) throw new Error(`The exported Cargo.lock is ${lock}, not the qualified ${CARGO_LOCK_SHA256}`);
         const build = buildOnce(platform.target, source, join(temporary, BUILD_LAYOUT.a.target), DEFAULT_SOURCE_DATE_EPOCH);
+        if (values.output !== undefined) {
+            if (!isAbsolute(values.output)) throw new Error('--output must be an absolute path');
+            mkdirSync(dirname(values.output), { recursive: true });
+            copyFileSync(build.binary, values.output);
+            chmodSync(values.output, 0o755);
+            const status = matchesPin(build.binary, anchor) ? 'byte-identical to the pin' : 'not the pinned bytes';
+            process.stdout.write(
+                `${platform.target}: built from ${commit} (${status}) at ${values.output}; set ERDEN_SHACL_BIN to that path to use it\n`,
+            );
+            return;
+        }
         if (!matchesPin(build.binary, anchor)) {
             const bytes = readFileSync(build.binary);
             throw new Error(
                 `The ${platform.target} build from ${commit} is ${sha256(bytes)} (${String(bytes.length)} bytes), not the pinned ` +
-                    `${anchor.sha256} (${String(anchor.bytes)} bytes); it is not installed`,
+                    `${anchor.sha256} (${String(anchor.bytes)} bytes); it is not installed; ` +
+                    'if only the host toolchain differs from the mint\'s, rerun with `--output <absolute path>` and set ERDEN_SHACL_BIN to it',
             );
         }
         mkdirSync(join(shacl, platform.directory, 'bin'), { recursive: true });

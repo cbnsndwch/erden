@@ -49,6 +49,8 @@ export interface RuntimeIdentity {
 
 export interface ResolverOptions {
     readonly runtime?: RuntimeIdentity;
+    /** Absolute path of a source-built engine; defaults to the ERDEN_SHACL_BIN environment variable. */
+    readonly sourceBuild?: string;
     readonly locatePackage?: (packageName: string) => string | ReadonlyArray<string> | undefined;
 }
 
