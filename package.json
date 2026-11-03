@@ -11,6 +11,7 @@
         "build:runtime": "turbo run build",
         "build:shacl": "node shacl/qualification/build-from-source.mjs",
         "check:shacl:engine": "node shacl/qualification/build-from-source.mjs --check",
+        "shacl:build": "cd shacl && cargo build --release --locked",
         "reasoner:build": "cd reasoner && cargo build --release --locked",
         "reasoner:build:linux": "node reasoner/qualification/build-from-source.mjs",
         "check:boundaries": "node scripts/check-boundaries.mjs",

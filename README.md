@@ -69,6 +69,11 @@ On macOS arm64 and Windows x64, install the toolchain in `reasoner/rust-toolchai
 with `pnpm run reasoner:build`, then run `pnpm run build:shacl` and `pnpm test`. The CLI finds that native
 reasoner in `reasoner/target/release/` without an environment override.
 
+If `pnpm run build:shacl` refuses its macOS or Windows build as not the pinned one, the host's Xcode or MSVC differs
+from the mint runner's. Build an unqualified local engine with `pnpm run shacl:build` and set
+`ERDEN_SHACL_BIN="$PWD/shacl/target/release/erden-shacl"`; it is used only while the variable is set, and only after it
+passes the pinned known answer (see [`shacl/distribution/README.md`](shacl/distribution/README.md)).
+
 `pnpm test` runs the workspace gate: the repository guards, formatting, lint, typecheck, the package packs, a packed
 CLI install, and every test.
 
