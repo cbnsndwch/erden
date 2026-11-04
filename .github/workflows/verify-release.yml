@@ -1,0 +1,51 @@
+name: verify-release
+
+# Installs a published release from its own assets on all four platforms and runs it (release/verify-published.mjs).
+# The release workflow calls this after publishing; a manual run checks any tag again. It writes nothing anywhere.
+on:
+    workflow_dispatch:
+        inputs:
+            tag:
+                description: The published tag to check, for example v0.1.0
+                required: true
+                type: string
+    workflow_call:
+        inputs:
+            tag:
+                description: The published tag to check
+                required: true
+                type: string
+
+permissions:
+    contents: read
+
+jobs:
+    verify:
+        name: verify ${{ matrix.platform }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    # These are versioned runner labels; GitHub-managed runner contents are not content-addressed.
+                    - platform: linux-x64
+                      runner: ubuntu-24.04
+                    - platform: linux-arm64
+                      runner: ubuntu-24.04-arm
+                    - platform: darwin-arm64
+                      runner: macos-15
+                    - platform: win32-x64
+                      runner: windows-2025
+        runs-on: ${{ matrix.runner }}
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  ref: ${{ inputs.tag }}
+                  persist-credentials: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - name: Install the published release and run it
+              shell: bash
+              env:
+                  TAG: ${{ inputs.tag }}
+              run: node release/verify-published.mjs --tag "$TAG"

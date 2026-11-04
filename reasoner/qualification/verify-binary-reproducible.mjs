@@ -316,6 +316,8 @@ export function buildOnce(target, source, targetDirectory, sourceDateEpoch) {
     assertToolchain(output);
     return { plan, binary: join(targetDirectory, plan.binaryRelativePath) };
   }
+  // A runner with no Cargo home yet: Cargo would create it during the build, and the path remap needs its real path now.
+  mkdirSync(process.env.CARGO_HOME ?? join(homedir(), '.cargo'), { recursive: true });
   const cargoHome = realpathSync(process.env.CARGO_HOME ?? join(homedir(), '.cargo'));
   const plan = planBuild(target, host, { sourceDirectory: source, cargoHome }, sourceDateEpoch);
   const configuration = cargoConfigurationFiles(source, cargoHome);

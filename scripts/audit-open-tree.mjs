@@ -13,7 +13,9 @@
 //
 // In a Git working tree the audited files are the tracked ones; otherwise every file under the directory.
 //
-// Usage: node scripts/audit-open-tree.mjs <directory> [--denylist <file>] [--paths <file>] [--commit]
+// - with `--history`, a commit of HEAD by anyone but the config's identity, unless the config lists it by SHA.
+//
+// Usage: node scripts/audit-open-tree.mjs <directory> [--denylist <file>] [--paths <file>] [--commit] [--history]
 //        [--no-containers] [--report <file>]
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -235,6 +237,51 @@ export function commitFindings(directory, identity, patterns) {
     return findings;
 }
 
+/** GitHub commits a rebase merge, keeping its author. */
+const GITHUB_COMMITTER = Object.freeze({ name: 'GitHub', email: 'noreply@github.com' });
+
+/**
+ * The findings of the history check on a Git working tree: every commit of HEAD by the config's identity, committed by it
+ * or by GitHub's rebase merge, with no trailer and a message that passes every pattern. Only the commits the config lists
+ * by full SHA may keep another identity, because public history is not rewritten.
+ */
+export function historyFindings(directory, config, patterns) {
+    const findings = [];
+    const excepted = new Set((config.historyIdentityExceptions ?? []).map((exception) => exception.sha));
+    for (const sha of git(directory, ['rev-list', 'HEAD']).split('\n').filter(Boolean)) {
+        function add(hit) {
+            findings.push({ check: 'history', path: sha, hit });
+        }
+        const [authorName, authorEmail, committerName, committerEmail] = git(directory, [
+            'log',
+            '-1',
+            '--format=%an%n%ae%n%cn%n%ce',
+            sha,
+        ]).split('\n');
+        const { identity } = config;
+        if (!excepted.has(sha)) {
+            if (authorName !== identity.name || authorEmail !== identity.email) {
+                add(`the author is "${String(authorName)} <${String(authorEmail)}>"`);
+            }
+            const committer = [identity, GITHUB_COMMITTER].some(
+                (allowed) => allowed.name === committerName && allowed.email === committerEmail,
+            );
+            if (!committer) {
+                add(`the committer is "${String(committerName)} <${String(committerEmail)}>"`);
+            }
+        }
+        const message = git(directory, ['log', '-1', '--format=%B', sha]).trimEnd();
+        const paragraphs = message.split(/\n\s*\n/u);
+        if (paragraphs.length > 1 && /^[A-Za-z][A-Za-z0-9-]*:\s/mu.test(paragraphs.at(-1) ?? '')) {
+            add('the commit message ends in a trailer');
+        }
+        for (const finding of scanText('.git/COMMIT_MESSAGE', message, patterns, [])) {
+            add(`the commit message holds "${finding.hit}" (${finding.check})`);
+        }
+    }
+    return findings;
+}
+
 function container(tool, directory, args, config) {
     const image = config.images[tool];
     const uid =
@@ -344,6 +391,9 @@ export function auditOpenTree(directoryArgument, options = {}) {
     if (options.commit === true) {
         findings.push(...commitFindings(directory, config.identity, patterns));
     }
+    if (options.history === true) {
+        findings.push(...historyFindings(directory, config, patterns));
+    }
     if (options.containers !== false) {
         findings.push(...gitleaksFindings(directory, config), ...reuseFindings(directory, config));
     }
@@ -358,6 +408,7 @@ export function auditOpenTree(directoryArgument, options = {}) {
             ...(options.denylist === undefined ? [] : ['denylist']),
             ...(options.paths === undefined ? [] : ['paths']),
             ...(options.commit === true ? ['commit'] : []),
+            ...(options.history === true ? ['history'] : []),
             ...(options.containers === false ? [] : ['gitleaks', 'reuse']),
         ],
         findings,
@@ -381,7 +432,7 @@ if (process.argv[1] !== undefined && resolve(process.argv[1]) === fileURLToPath(
     const directory = args[0];
     if (directory === undefined || directory.startsWith('--')) {
         console.error(
-            'Usage: node scripts/audit-open-tree.mjs <directory> [--denylist <file>] [--paths <file>] [--commit] [--no-containers] [--report <file>]',
+            'Usage: node scripts/audit-open-tree.mjs <directory> [--denylist <file>] [--paths <file>] [--commit] [--history] [--no-containers] [--report <file>]',
         );
         process.exit(2);
     }
@@ -392,6 +443,7 @@ if (process.argv[1] !== undefined && resolve(process.argv[1]) === fileURLToPath(
         denylist: denylistPath === undefined ? undefined : readFileSync(denylistPath, 'utf8'),
         paths: pathsPath === undefined ? undefined : JSON.parse(readFileSync(pathsPath, 'utf8')),
         commit: args.includes('--commit'),
+        history: args.includes('--history'),
         containers: !args.includes('--no-containers'),
     });
     if (reportPath !== undefined) {

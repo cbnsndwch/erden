@@ -6,10 +6,10 @@
     "engineDigest": "sha256:026b0ef70f4bd68cbe0fff535b8287eb804825c057f46cc116ae1f2087b427cc"
   },
   "workflow": ".github/workflows/shacl-build.yml",
-  "workflowRunId": 38269278263,
-  "sourceCommit": "3fbf20a315de757936fd09cab1d757ea99b78b82",
+  "workflowRunId": 41718338058,
+  "sourceCommit": "14dc17ecffc9c9632e2c451762289bd8cff21ad4",
   "sourceCommitNote": "pull request merge commit on GitHub; its shacl/ tree is the recorded one",
-  "crateSourceTree": "e5bdb4a63590f075a0d6d34ffad2b88015ac6dab",
+  "crateSourceTree": "ccc291f006dab553c804e0e5c0d12f7efe50320a",
   "cargoLockDigest": "sha256:4f85d22854b0747423c286fd019533a6caf08a9dc3d4770ddbb637d307713244",
   "toolchain": {
     "rustc": "1.98.0",
@@ -20,9 +20,9 @@
   "targets": {
     "x86_64-unknown-linux-gnu": {
       "schemaVersion": 1,
-      "sourceCommit": "3fbf20a315de757936fd09cab1d757ea99b78b82",
-      "shaclCommitTree": "0e9d5d58140875c30c1d3896cd8eb4734c9cde5f",
-      "crateSourceTree": "e5bdb4a63590f075a0d6d34ffad2b88015ac6dab",
+      "sourceCommit": "14dc17ecffc9c9632e2c451762289bd8cff21ad4",
+      "shaclCommitTree": "93e663e6e5794d7cbc3bd1f8def605910e4156f9",
+      "crateSourceTree": "ccc291f006dab553c804e0e5c0d12f7efe50320a",
       "cargoLockDigest": "sha256:4f85d22854b0747423c286fd019533a6caf08a9dc3d4770ddbb637d307713244",
       "sourceDateEpoch": 1785703783,
       "toolchain": {
@@ -59,14 +59,14 @@
       },
       "result": "byte-identical",
       "runner": "ubuntu-24.04",
-      "workflowRunId": 38269278263,
+      "workflowRunId": 41718338058,
       "package": "shacl/linux-x64-gnu/bin/erden-shacl"
     },
     "aarch64-unknown-linux-gnu": {
       "schemaVersion": 1,
-      "sourceCommit": "3fbf20a315de757936fd09cab1d757ea99b78b82",
-      "shaclCommitTree": "0e9d5d58140875c30c1d3896cd8eb4734c9cde5f",
-      "crateSourceTree": "e5bdb4a63590f075a0d6d34ffad2b88015ac6dab",
+      "sourceCommit": "14dc17ecffc9c9632e2c451762289bd8cff21ad4",
+      "shaclCommitTree": "93e663e6e5794d7cbc3bd1f8def605910e4156f9",
+      "crateSourceTree": "ccc291f006dab553c804e0e5c0d12f7efe50320a",
       "cargoLockDigest": "sha256:4f85d22854b0747423c286fd019533a6caf08a9dc3d4770ddbb637d307713244",
       "sourceDateEpoch": 1785703783,
       "toolchain": {
@@ -103,14 +103,14 @@
       },
       "result": "byte-identical",
       "runner": "ubuntu-24.04-arm",
-      "workflowRunId": 38269278263,
+      "workflowRunId": 41718338058,
       "package": "shacl/linux-arm64-gnu/bin/erden-shacl"
     },
     "aarch64-apple-darwin": {
       "schemaVersion": 1,
-      "sourceCommit": "3fbf20a315de757936fd09cab1d757ea99b78b82",
-      "shaclCommitTree": "0e9d5d58140875c30c1d3896cd8eb4734c9cde5f",
-      "crateSourceTree": "e5bdb4a63590f075a0d6d34ffad2b88015ac6dab",
+      "sourceCommit": "14dc17ecffc9c9632e2c451762289bd8cff21ad4",
+      "shaclCommitTree": "93e663e6e5794d7cbc3bd1f8def605910e4156f9",
+      "crateSourceTree": "ccc291f006dab553c804e0e5c0d12f7efe50320a",
       "cargoLockDigest": "sha256:4f85d22854b0747423c286fd019533a6caf08a9dc3d4770ddbb637d307713244",
       "sourceDateEpoch": 1785703783,
       "toolchain": {
@@ -145,14 +145,14 @@
       },
       "result": "byte-identical",
       "runner": "macos-15",
-      "workflowRunId": 38269278263,
+      "workflowRunId": 41718338058,
       "package": "shacl/darwin-arm64/bin/erden-shacl"
     },
     "x86_64-pc-windows-msvc": {
       "schemaVersion": 1,
-      "sourceCommit": "3fbf20a315de757936fd09cab1d757ea99b78b82",
-      "shaclCommitTree": "0e9d5d58140875c30c1d3896cd8eb4734c9cde5f",
-      "crateSourceTree": "e5bdb4a63590f075a0d6d34ffad2b88015ac6dab",
+      "sourceCommit": "14dc17ecffc9c9632e2c451762289bd8cff21ad4",
+      "shaclCommitTree": "93e663e6e5794d7cbc3bd1f8def605910e4156f9",
+      "crateSourceTree": "ccc291f006dab553c804e0e5c0d12f7efe50320a",
       "cargoLockDigest": "sha256:4f85d22854b0747423c286fd019533a6caf08a9dc3d4770ddbb637d307713244",
       "sourceDateEpoch": 1785703783,
       "toolchain": {
@@ -171,23 +171,23 @@
           "label": "clean-target-a",
           "sourcePath": "git-archive-a",
           "bytes": 13892608,
-          "sha256": "sha256:c7ee9a4bff6d0e2cba6d089aa25a81af79c4fe4aee992643db7ef5f8148901a5"
+          "sha256": "sha256:c50d84c18c3587adfc9ddcd76052030c15d55370b13237e9aa947e2a63122b1e"
         },
         {
           "label": "clean-target-b",
           "sourcePath": "git-archive-b",
           "bytes": 13892608,
-          "sha256": "sha256:c7ee9a4bff6d0e2cba6d089aa25a81af79c4fe4aee992643db7ef5f8148901a5"
+          "sha256": "sha256:c50d84c18c3587adfc9ddcd76052030c15d55370b13237e9aa947e2a63122b1e"
         }
       ],
       "knownAnswer": {
         "fixture": "core-and-sparql",
         "responseBytes": 2202,
-        "responseSha256": "sha256:4d0dbccc6d44917f870550c71a75291447f479140623ce23064ae93597de8cb8"
+        "responseSha256": "sha256:554ae41554f2376b046d05f58a49423eb1c3aaeafaf8ddf06c7b0e91cb0b2cd7"
       },
       "result": "byte-identical",
       "runner": "windows-2025",
-      "workflowRunId": 38269278263,
+      "workflowRunId": 41718338058,
       "package": "shacl/win32-x64-msvc/bin/erden-shacl.exe"
     }
   },
@@ -201,7 +201,7 @@
       "x86_64-unknown-linux-gnu": "sha256:6ec761d9ead6f40dd747da972f1be7cd45e212321ea7c8dd134eb38bc42f06a9",
       "aarch64-unknown-linux-gnu": "sha256:798293023e6f89d1de07f8e3fff198a8e484ead2675ad29b4d040e4af7ed8332",
       "aarch64-apple-darwin": "sha256:f96a8ddac5e32c2e9be0c5261626b7439bf5bd4de5a36d4dbfd627b2dfb4ad4f",
-      "x86_64-pc-windows-msvc": "sha256:c7ee9a4bff6d0e2cba6d089aa25a81af79c4fe4aee992643db7ef5f8148901a5"
+      "x86_64-pc-windows-msvc": "sha256:c50d84c18c3587adfc9ddcd76052030c15d55370b13237e9aa947e2a63122b1e"
     }
   }
 }

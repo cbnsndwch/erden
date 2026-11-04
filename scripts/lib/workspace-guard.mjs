@@ -273,6 +273,12 @@ const unmintedWorkspaceProfile = Object.freeze({
     packagePins: new Map(),
     /** External packages no workspace member may be named after. */
     architectureExternalPackages: new Set(REQUIRED_PINS.keys()),
+    /**
+     * Members deployed on their own, outside the runtime and the tools: they are never packed, have no runtime layout
+     * and keep their own external versions, exact like everyone's. Identity, privacy, engines, the workspace protocol
+     * and dependency direction still apply.
+     */
+    independentPackages: new Set(),
 });
 
 /** The first mint adds four source-only platform packages and the resolver's exact optional dependencies. */
@@ -349,6 +355,7 @@ export function extendWorkspaceProfile(base, extension) {
             ...base.architectureExternalPackages,
             ...(extension.architectureExternalPackages ?? []),
         ]),
+        independentPackages: new Set([...base.independentPackages, ...(extension.independentPackages ?? [])]),
     });
 }
 
@@ -497,7 +504,9 @@ export function inspectWorkspace(root, profile = OPEN_WORKSPACE_PROFILE) {
             if (manifest.type !== 'module') {
                 failures.push(`${path}/package.json must use ESM`);
             }
-            if (profile.runtimeTypeScriptPackages.has(path)) {
+            if (profile.independentPackages.has(path)) {
+                // Deployed on its own: no packed layout to check.
+            } else if (profile.runtimeTypeScriptPackages.has(path)) {
                 const expectedExports = profile.runtimeExports.get(path) ?? RUNTIME_EXPORTS;
                 if (!isDeepStrictEqual(manifest.exports, expectedExports)) {
                     failures.push(
@@ -528,9 +537,11 @@ export function inspectWorkspace(root, profile = OPEN_WORKSPACE_PROFILE) {
                     failures.push(`${path}/package.json must pack only the src allowlist`);
                 }
             }
-            for (const requiredPath of ['src/index.ts', 'test/index.test.ts']) {
-                if (!existsSync(resolve(member.directory, requiredPath))) {
-                    failures.push(`${path}/${requiredPath} is missing`);
+            if (!profile.independentPackages.has(path)) {
+                for (const requiredPath of ['src/index.ts', 'test/index.test.ts']) {
+                    if (!existsSync(resolve(member.directory, requiredPath))) {
+                        failures.push(`${path}/${requiredPath} is missing`);
+                    }
                 }
             }
             const expectedBin = profile.bins.get(path);
@@ -561,6 +572,9 @@ export function inspectWorkspace(root, profile = OPEN_WORKSPACE_PROFILE) {
     ];
     const workspaceByName = new Map(members.map((member) => [member.manifest.name, member]));
     const workspaceNames = new Set(workspaceByName.keys());
+    const independentManifests = new Set(
+        members.filter((member) => profile.independentPackages.has(member.path)).map((member) => member.manifest),
+    );
     for (const { manifest, path } of manifests) {
         if (manifest.engines?.node !== EXPECTED_NODE_ENGINE_RANGE) {
             failures.push(`${path} must declare engines.node as ${EXPECTED_NODE_ENGINE_RANGE}`);
@@ -597,7 +611,7 @@ export function inspectWorkspace(root, profile = OPEN_WORKSPACE_PROFILE) {
                     failures.push(`${path} ${field}.${name} must use a literal exact version (found ${version})`);
                 }
                 const requiredVersion = profile.rootDevDependencyPins.get(name) ?? profile.packagePins.get(name);
-                if (requiredVersion && version !== requiredVersion) {
+                if (requiredVersion && version !== requiredVersion && !independentManifests.has(manifest)) {
                     failures.push(`${path} ${field}.${name} must be pinned to ${requiredVersion}`);
                 }
             }

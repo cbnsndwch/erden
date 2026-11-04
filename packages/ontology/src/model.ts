@@ -21,8 +21,8 @@ export const OWL = 'http://www.w3.org/2002/07/owl#';
 export const XSD = 'http://www.w3.org/2001/XMLSchema#';
 export const SHACL = 'http://www.w3.org/ns/shacl#';
 export const PROV = 'http://www.w3.org/ns/prov#';
-export const EVIDENCE = 'https://erden.cbnsndwch.dev/onto/evidence#';
-export const SHAPE_EXTENSIONS = 'https://erden.cbnsndwch.dev/onto/shapes#';
+export const EVIDENCE = 'https://erden.sh/o/erden/evidence#';
+export const SHAPE_EXTENSIONS = 'https://erden.sh/o/erden/shapes#';
 
 export type ProjectRole = 'root' | 'dependency';
 export type RequiredStage = 'source' | 'shacl' | 'competency-questions';

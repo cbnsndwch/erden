@@ -1,5 +1,5 @@
 @prefix demo: <https://example.invalid/erden/demo#> .
-@prefix ev: <https://erden.cbnsndwch.dev/onto/evidence#> .
+@prefix ev: <https://erden.sh/o/erden/evidence#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .

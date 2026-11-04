@@ -37,6 +37,7 @@ import {
 } from '@erden/contracts';
 import {
     decodePackProjectReport,
+    DEFAULT_REGISTRY_ORIGIN,
     loadManifest,
     PackProjectError,
     renderPackProjectError,
@@ -51,8 +52,17 @@ export const HTTP_CREDENTIAL_WARNING =
 const PUBLICATION_POLL_INTERVAL_MILLISECONDS = 1_000;
 const PUBLICATION_WAIT_MILLISECONDS = 5 * 60 * 1_000;
 const PUBLICATION_MAXIMUM_POLLS = PUBLICATION_WAIT_MILLISECONDS / PUBLICATION_POLL_INTERVAL_MILLISECONDS + 1;
-const PUBLICATION_UPLOAD_MILLISECONDS = 5 * 60 * 1_000;
+// The bytes go straight to object storage, at the publisher's own bandwidth, so this only bounds a stuck run.
+const PUBLICATION_UPLOAD_MILLISECONDS = 2 * 60 * 60 * 1_000;
 const ARCHIVE_CHUNK_BYTES = 64 * 1_024;
+// `erden publish` stays until the registry decides. A large package can take an hour on a small host, so the bound is
+// generous and only stops a run that would otherwise wait forever on a registry with no worker.
+const PUBLISH_WAIT_MILLISECONDS = 2 * 60 * 60 * 1_000;
+const PUBLISH_POLL_MILLISECONDS = 2_000;
+const PUBLISH_PROGRESS_MILLISECONDS = 60_000;
+// A registry restart answers errors for a while without saying anything about the publication.
+const PUBLISH_POLL_FAILURE_MILLISECONDS = 5 * 60 * 1_000;
+const PUBLISH_POLL_REQUEST_MILLISECONDS = 30_000;
 
 export class CliRegistryUsageError extends Error {
     constructor(message: string) {
@@ -446,6 +456,7 @@ interface PublishArguments {
     readonly visibility?: 'private' | 'public';
     readonly yes: boolean;
     readonly json: boolean;
+    readonly wait: boolean;
 }
 
 function parsePublishArguments(arguments_: ReadonlyArray<string>): PublishArguments {
@@ -457,14 +468,17 @@ function parsePublishArguments(arguments_: ReadonlyArray<string>): PublishArgume
     let visibility: 'private' | 'public' | undefined;
     let yes = false;
     let json = false;
+    let wait = true;
     for (let index = 0; index < arguments_.length; index += 1) {
         const argument = arguments_[index] as string;
-        if (argument === '--create' || argument === '--yes' || argument === '--json') {
+        if (argument === '--create' || argument === '--yes' || argument === '--json' || argument === '--no-wait') {
             markOnce(seen, argument);
             if (argument === '--create') {
                 create = true;
             } else if (argument === '--yes') {
                 yes = true;
+            } else if (argument === '--no-wait') {
+                wait = false;
             } else {
                 json = true;
             }
@@ -515,6 +529,7 @@ function parsePublishArguments(arguments_: ReadonlyArray<string>): PublishArgume
         ...(visibility === undefined ? {} : { visibility }),
         yes,
         json,
+        wait,
     });
 }
 
@@ -647,11 +662,25 @@ function emitWarning(origin: string, stderr: CliRegistryTextSink): void {
     }
 }
 
+// The attempt carries a closed code and not the check's message, so the CLI says what the code means.
+const REASONER_SIZE_REFUSALS: Readonly<Record<string, string>> = Object.freeze({
+    CHECK_REQUEST_TOO_LARGE:
+        "The ontology is too large to reason on this registry: its reasoner request is over the registry's size limit, ERDEN_REASONER_MAX_REQUEST_BYTES. Only the registry's operator can raise it, and `erden check` here may pass under a higher limit.",
+    CHECK_STDOUT_OVERFLOW:
+        "The ontology is too large to reason on this registry: the reasoner's answer is over the registry's size limit, ERDEN_REASONER_MAX_REQUEST_BYTES. Only the registry's operator can raise it, and `erden check` here may pass under a higher limit.",
+});
+
 function renderAttempt(attempt: PublicationAttemptView): string {
+    const refusal =
+        attempt.failure === null
+            ? undefined
+            : (Object.getOwnPropertyDescriptor(REASONER_SIZE_REFUSALS, attempt.failure.code)?.value as
+                  | string
+                  | undefined);
     const failure =
         attempt.failure === null
             ? ''
-            : `\nFailure: ${terminalText(attempt.failure.kind)}/${terminalText(attempt.failure.code)}`;
+            : `\nFailure: ${terminalText(attempt.failure.kind)}/${terminalText(attempt.failure.code)}${refusal === undefined ? '' : `\n${refusal}`}`;
     return `Publication ${terminalText(attempt.attemptId)}: ${terminalText(attempt.state)}\nProject: ${terminalText(attempt.project.preferredAlias)}@${terminalText(attempt.version)} (${terminalText(attempt.project.canonicalIri)})\nVisibility: ${attempt.project.visibility}${failure}\n`;
 }
 
@@ -696,6 +725,70 @@ function canonicalCombinedOutput(attempt: PublicationAttemptView, report: Public
 function publishGuidance(cause: unknown): string {
     const guidance = toolchainGuidance(cause);
     return guidance === null ? '' : `Next step: ${guidance}\n`;
+}
+
+/**
+ * Follows an accepted publication until the registry decides. Progress goes to stderr, so stdout stays the one final
+ * result, and `--json` stays quiet. A failed poll is not a failed publication: it says nothing about the job, so polling
+ * continues until the failures alone have lasted too long. If the wait runs out, it returns the last state it knows.
+ */
+async function followPublication(
+    runtime: CliPublicationRuntime,
+    accepted: PublicationAttemptView,
+    registryOrigin: string,
+    bearer: string,
+    stderr: CliRegistryTextSink,
+    quiet: boolean,
+): Promise<Readonly<{ attempt: PublicationAttemptView; finished: boolean }>> {
+    let attempt = accepted;
+    const started = safeTime(runtime.now());
+    const deadline = safeTime(started + PUBLISH_WAIT_MILLISECONDS);
+    let lastAnswer = started;
+    let lastProgress = started;
+    function progress(text: string): void {
+        if (!quiet) {
+            stderr.write(`${text}\n`);
+        }
+    }
+    if (active(attempt)) {
+        progress(`Waiting for ${attempt.attemptId} (${attempt.state}). Use --no-wait to return without waiting.`);
+    }
+    while (active(attempt)) {
+        const now = safeTime(runtime.now());
+        if (now >= deadline || now - lastAnswer >= PUBLISH_POLL_FAILURE_MILLISECONDS) {
+            return Object.freeze({ attempt, finished: false });
+        }
+        await runtime.sleep(Math.min(PUBLISH_POLL_MILLISECONDS, deadline - now));
+        let next: PublicationAttemptView;
+        try {
+            next = await runtime.getAttempt(
+                Object.freeze({
+                    registryOrigin,
+                    attemptId: accepted.attemptId,
+                    bearer,
+                    signal: AbortSignal.timeout(PUBLISH_POLL_REQUEST_MILLISECONDS),
+                }),
+            );
+        } catch {
+            continue;
+        }
+        if (next.attemptId !== accepted.attemptId) {
+            throw new Error('publication response mismatch');
+        }
+        const answered = safeTime(runtime.now());
+        lastAnswer = answered;
+        if (next.state !== attempt.state) {
+            progress(`${accepted.attemptId}: ${next.state}`);
+            lastProgress = answered;
+        } else if (answered - lastProgress >= PUBLISH_PROGRESS_MILLISECONDS) {
+            progress(
+                `${accepted.attemptId}: still ${next.state} after ${String(Math.round((answered - started) / 1_000))} s`,
+            );
+            lastProgress = answered;
+        }
+        attempt = next;
+    }
+    return Object.freeze({ attempt, finished: true });
 }
 
 export async function runPublishCommand(
@@ -776,6 +869,9 @@ export async function runPublishCommand(
                     idempotencyKey,
                     archiveSha256: report.archive.sha256,
                     byteSize: report.archive.byteSize,
+                    canonicalIri: report.project.canonicalIri,
+                    preferredAlias: report.project.alias,
+                    version: report.version,
                     open: openArchive,
                     signal: cancellation.signal,
                 }),
@@ -791,12 +887,21 @@ export async function runPublishCommand(
         ) {
             throw new Error('publication response mismatch');
         }
+        const followed = options.wait
+            ? await followPublication(runtime, attempt, registryOrigin, bearer, context.stderr, options.json)
+            : Object.freeze({ attempt, finished: true });
         context.stdout.write(
             options.json
-                ? new TextDecoder().decode(encodePublicationAttemptView(attempt))
-                : `${renderAttempt(attempt)}${renderReportPage(registryOrigin, attempt)}`,
+                ? new TextDecoder().decode(encodePublicationAttemptView(followed.attempt))
+                : `${renderAttempt(followed.attempt)}${renderReportPage(registryOrigin, followed.attempt)}`,
         );
-        return attempt.state === 'failed' ? 1 : 0;
+        if (!followed.finished) {
+            context.stderr.write(
+                `Erden publication wait expired [CLI_PUBLICATION_TIMEOUT]\nThe publication may still finish. Check it with: erden publication ${followed.attempt.attemptId} --registry ${registryOrigin} --wait\n`,
+            );
+            return 3;
+        }
+        return followed.attempt.state === 'failed' ? 1 : 0;
     } catch (cause) {
         // A local packing refusal (for example a stale erden.lock) is the author's to fix, so it keeps its own
         // message and remedy; nothing has been uploaded.
@@ -813,7 +918,13 @@ function publicationOrigin(explicit: string | undefined, cwd: string): string {
     if (explicit !== undefined) {
         return explicit;
     }
-    return registryFromManifest(loadManifest({ from: cwd }));
+    let manifest: ReturnType<typeof loadManifest>;
+    try {
+        manifest = loadManifest({ from: cwd });
+    } catch {
+        return DEFAULT_REGISTRY_ORIGIN;
+    }
+    return manifest.manifest.registry === undefined ? DEFAULT_REGISTRY_ORIGIN : registryFromManifest(manifest);
 }
 
 function active(attempt: PublicationAttemptView): boolean {

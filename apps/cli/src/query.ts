@@ -27,7 +27,7 @@ import {
     type ReleaseQueryResultEnvelopeV1,
     type ReleaseQueryResultTerm,
 } from '@erden/contracts';
-import { loadManifest } from '@erden/project';
+import { DEFAULT_REGISTRY_ORIGIN, loadManifest } from '@erden/project';
 
 import { CliRegistryUsageError, HTTP_CREDENTIAL_WARNING, terminalText, type CliRegistryTextSink } from './registry.js';
 
@@ -163,8 +163,11 @@ function queryOrigin(explicit: string | undefined, cwd: string): string {
     } catch {
         registry = undefined;
     }
-    if (registry === undefined || normalizeRegistryOrigin(registry) !== registry) {
-        throw new CliRegistryUsageError('query requires --registry or a nearest project registry');
+    if (registry === undefined) {
+        return DEFAULT_REGISTRY_ORIGIN;
+    }
+    if (normalizeRegistryOrigin(registry) !== registry) {
+        throw new CliRegistryUsageError('the nearest project registry is not one canonical HTTP(S) origin');
     }
     return registry;
 }

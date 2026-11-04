@@ -20,7 +20,13 @@ jobs:
             - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
               with:
                   persist-credentials: false
+                  # The history check below reads every commit.
+                  fetch-depth: 0
             - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
               with:
                   node-version-file: .node-version
             - run: node scripts/audit-open-tree.mjs .
+            # A pull request's head is GitHub's merge of it, so the history is checked once it lands.
+            - name: Check every commit's identity
+              if: github.event_name == 'push'
+              run: node scripts/audit-open-tree.mjs . --history --no-containers

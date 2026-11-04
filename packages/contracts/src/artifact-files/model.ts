@@ -159,9 +159,13 @@ export interface AuthorizedArtifactFileRecord extends AuthorizedArtifactIdentity
     readonly previewBytes: Readonly<Uint8Array>;
 }
 
-export interface AuthorizedArtifactRawRecord extends AuthorizedArtifactIdentity, ArtifactFileEntryV1 {
-    readonly bytes: Readonly<Uint8Array>;
+/** What a raw response needs before any byte: all of it comes from the release's authenticated file index. */
+export interface AuthorizedArtifactRawDescription extends AuthorizedArtifactIdentity, ArtifactFileEntryV1 {
     readonly mediaSignature: ArtifactMediaSignature;
+}
+
+export interface AuthorizedArtifactRawRecord extends AuthorizedArtifactRawDescription {
+    readonly bytes: Readonly<Uint8Array>;
 }
 
 type Plain = Readonly<Record<string, unknown>>;
@@ -547,6 +551,41 @@ export function decodeAuthorizedArtifactFile(input: unknown): AuthorizedArtifact
         complete,
         mediaSignature: signature(field(value, 'mediaSignature', 'ARTIFACT_FILE_STATE_CONFLICT')),
         previewBytes: Uint8Array.from(rawBytes),
+    });
+}
+
+export function decodeArtifactMediaSignature(input: unknown): ArtifactMediaSignature {
+    return signature(input);
+}
+
+export function decodeAuthorizedArtifactRawDescription(input: unknown): AuthorizedArtifactRawDescription {
+    const value = exact(
+        input,
+        [
+            'access',
+            'archiveSha256',
+            'audienceKey',
+            'byteSize',
+            'canonicalIri',
+            'indexSha256',
+            'mediaSignature',
+            'path',
+            'policyEpoch',
+            'registryOrigin',
+            'releaseId',
+            'sha256',
+            'version',
+        ],
+        'ARTIFACT_FILE_STATE_CONFLICT',
+    );
+    return Object.freeze({
+        ...identity(value),
+        ...decodeArtifactFileEntry({
+            byteSize: field(value, 'byteSize', 'ARTIFACT_FILE_STATE_CONFLICT'),
+            path: field(value, 'path', 'ARTIFACT_FILE_STATE_CONFLICT'),
+            sha256: field(value, 'sha256', 'ARTIFACT_FILE_STATE_CONFLICT'),
+        }),
+        mediaSignature: signature(field(value, 'mediaSignature', 'ARTIFACT_FILE_STATE_CONFLICT')),
     });
 }
 

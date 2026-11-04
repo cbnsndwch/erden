@@ -4,7 +4,7 @@ GitHub for ontologies: versioned, proof-checked company knowledge that AI agents
 
 Open-source local tools for Erden: the `erden`/`den` CLI, registry client, contracts, local checking, package format, reasoner protocol, and both engines. Apache-2.0.
 
-The local tools in this repository are Apache-2.0 (see [LICENSE](/LICENSE)). The hosted Erden registry is closed source and not part of this repository. Publishing, discovery, and the web UI are provided by the hosted service at [erden.sh](https://erden.sh). Self-hosting isn't offered. The name "Erden" is a trademark of cbnsndwch LLC (see [TRADEMARKS.md](/TRADEMARKS.md)).
+The local tools in this repository are Apache-2.0 (see [LICENSE](/LICENSE)). The hosted Erden registry is closed source and not part of this repository. Publishing, discovery, and the web UI are provided by the hosted service at [erden.sh](https://erden.sh). Self-hosting isn't offered. The name "Erden" is a trademark of Ingenio Ventures Inc (see [TRADEMARKS.md](/TRADEMARKS.md)).
 
 ## What is here
 
@@ -24,12 +24,11 @@ source.
 
 ## Installing
 
-The first public release is being prepared. Until its archives are published, use the source build below.
-
 Each release has one archive per platform: Linux x64 and arm64 (glibc), macOS arm64 and Windows x64. An archive
 holds the `erden` CLI, the Node.js runtime it runs on, and both engines. Each release also has `install.sh`,
 `install.ps1` and `SHA256SUMS`. An install script carries its release's archive digests and refuses any other
-file. It installs for the current user, with no administrator rights, to `~/.local/share/erden/<version>/` with
+file. The tool uses the hosted registry at `https://registry.erden.sh` unless `--registry` or a project's manifest names
+another. It installs for the current user, with no administrator rights, to `~/.local/share/erden/<version>/` with
 `erden` and `den` linked into `~/.local/bin` (Windows: `%LOCALAPPDATA%\Programs\Erden\<version>\`).
 
 ```bash

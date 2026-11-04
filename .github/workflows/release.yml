@@ -228,3 +228,11 @@ jobs:
                   gh release download "$GITHUB_REF_NAME" --dir uploaded
                   (cd uploaded && sha256sum -c ../assets/SHA256SUMS)
                   gh release edit "$GITHUB_REF_NAME" --draft=false
+
+    # Installs the release just published from its own assets, on every platform.
+    verify:
+        name: verify the published release
+        needs: publish
+        uses: ./.github/workflows/verify-release.yml
+        with:
+            tag: ${{ github.ref_name }}
