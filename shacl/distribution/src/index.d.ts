@@ -34,6 +34,7 @@ export declare const ERROR_CODES: Readonly<{
     packageMissing: string;
     pathEscape: string;
     selfTestFailed: string;
+    sourceBuildMissing: string;
     symlinkDisallowed: string;
     unsupportedLibc: string;
     unsupportedPlatform: string;
@@ -47,9 +48,14 @@ export interface RuntimeIdentity {
     readonly libc?: string;
 }
 
+export declare const SOURCE_BUILD: 'source-build';
+export declare const SOURCE_BUILD_VARIABLE: 'ERDEN_SHACL_BIN';
+
 export interface ResolverOptions {
     readonly runtime?: RuntimeIdentity;
     readonly locatePackage?: (packageName: string) => string | ReadonlyArray<string> | undefined;
+    /** The absolute path of a source build to use instead of the platform package, in place of ERDEN_SHACL_BIN. */
+    readonly sourceBuild?: string;
 }
 
 export interface InspectOptions extends ResolverOptions {

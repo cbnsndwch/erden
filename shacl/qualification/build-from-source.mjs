@@ -17,7 +17,11 @@ import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { execFileSync } from 'node:child_process';
 
-import { QUALIFIED_SHACL_ARTIFACTS } from '../distribution/src/index.js';
+import {
+    QUALIFIED_SHACL_ARTIFACTS,
+    SOURCE_BUILD_VARIABLE,
+    runBundledShaclEngineKnownAnswer,
+} from '../distribution/src/index.js';
 import { PLATFORMS } from './finalize-artifacts.mjs';
 import {
     BUILD_LAYOUT,
@@ -43,6 +47,18 @@ function matchesPin(path, anchor) {
     return bytes.length === anchor.bytes && sha256(bytes) === anchor.sha256;
 }
 
+// A native macOS or Windows build links with the host's toolchain (Xcode or MSVC), so a host whose toolchain differs
+// from the mint runner's cannot reproduce the pin; it can still run an unqualified source build held to the known
+// answer.
+function sourceBuildGuidance(platform) {
+    if (platform.runtime.os === 'linux') return '';
+    return (
+        ` On ${platform.runtime.os} the host linker is part of the build, so a toolchain other than the mint runner's ` +
+        'cannot reproduce the pin. To use an unqualified local engine instead, run `pnpm run shacl:build` and set ' +
+        `${SOURCE_BUILD_VARIABLE} to the absolute path of shacl/target/release/${executableName(platform.target)}.`
+    );
+}
+
 function main() {
     const { values } = parseArgs({ options: { commit: { type: 'string' }, check: { type: 'boolean', default: false } } });
     const platform = PLATFORMS.find((entry) => entry.runtime.os === process.platform && entry.runtime.cpu === process.arch);
@@ -53,11 +69,19 @@ function main() {
         process.stdout.write(`${platform.target}: the installed binary is the pinned ${anchor.sha256}\n`);
         return;
     }
+    const sourceBuild = process.env[SOURCE_BUILD_VARIABLE];
+    if (values.check && sourceBuild !== undefined && sourceBuild !== '') {
+        runBundledShaclEngineKnownAnswer();
+        process.stdout.write(
+            `${platform.target}: using the unqualified source build ${SOURCE_BUILD_VARIABLE}=${sourceBuild}, which passed the pinned known answer\n`,
+        );
+        return;
+    }
     if (values.check) {
         process.stderr.write(
             `The ${platform.target} erden-shacl binary is not installed, or is not the pinned one. Build it once with ` +
                 '`pnpm run build:shacl` (Docker on Linux, rustup 1.98.0 on macOS and Windows); the tools release (TS-6) ' +
-                'will ship it instead.\n',
+                `will ship it instead.${sourceBuildGuidance(platform)}\n`,
         );
         process.exitCode = 1;
         return;
@@ -75,7 +99,7 @@ function main() {
             const bytes = readFileSync(build.binary);
             throw new Error(
                 `The ${platform.target} build from ${commit} is ${sha256(bytes)} (${String(bytes.length)} bytes), not the pinned ` +
-                    `${anchor.sha256} (${String(anchor.bytes)} bytes); it is not installed`,
+                    `${anchor.sha256} (${String(anchor.bytes)} bytes); it is not installed.${sourceBuildGuidance(platform)}`,
             );
         }
         mkdirSync(join(shacl, platform.directory, 'bin'), { recursive: true });
