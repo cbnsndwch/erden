@@ -34,6 +34,7 @@ import {
     type PublicationAttemptView,
     type PublicationReportSummaryV1,
     type RegistryReleaseIndexReaderShape,
+    ManifestNotFoundError,
 } from '@erden/contracts';
 import {
     decodePackProjectReport,
@@ -921,8 +922,11 @@ function publicationOrigin(explicit: string | undefined, cwd: string): string {
     let manifest: ReturnType<typeof loadManifest>;
     try {
         manifest = loadManifest({ from: cwd });
-    } catch {
-        return DEFAULT_REGISTRY_ORIGIN;
+    } catch (cause) {
+        if (cause instanceof ManifestNotFoundError) {
+            return DEFAULT_REGISTRY_ORIGIN;
+        }
+        throw cause;
     }
     return manifest.manifest.registry === undefined ? DEFAULT_REGISTRY_ORIGIN : registryFromManifest(manifest);
 }

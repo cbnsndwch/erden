@@ -26,6 +26,7 @@ import {
     type RegistryReleaseIndexEntryV1,
     type ReleaseQueryResultEnvelopeV1,
     type ReleaseQueryResultTerm,
+    ManifestNotFoundError,
 } from '@erden/contracts';
 import { DEFAULT_REGISTRY_ORIGIN, loadManifest } from '@erden/project';
 
@@ -160,7 +161,10 @@ function queryOrigin(explicit: string | undefined, cwd: string): string {
     let registry: string | undefined;
     try {
         registry = loadManifest({ from: cwd }).manifest.registry;
-    } catch {
+    } catch (cause) {
+        if (!(cause instanceof ManifestNotFoundError)) {
+            throw new CliRegistryUsageError('the nearest project manifest could not be read');
+        }
         registry = undefined;
     }
     if (registry === undefined) {

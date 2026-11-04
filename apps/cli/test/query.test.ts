@@ -373,6 +373,14 @@ describe('erden query', () => {
         expect(run.queries[0]?.registryOrigin).toBe('https://registry.erden.sh');
     });
 
+    it('refuses a project manifest it cannot read rather than falling back to the hosted registry', async () => {
+        const root = tempRoot();
+        writeFileSync(join(root, 'erden.config.json'), '{ not json');
+        const run = harness({ cwd: root });
+        expect(await runCli(['query', `${ALIAS}@1.2.3`, '--stdin'], run.runtime)).toBe(CLI_EXIT.usage);
+        expect(run.queries).toEqual([]);
+    });
+
     it('treats empty query text as a usage error', async () => {
         const run = harness({ stdin: new Uint8Array(0) });
         expect(await runCli(['query', `${ALIAS}@1.2.3`, '--stdin', '--registry', ORIGIN], run.runtime)).toBe(2);
