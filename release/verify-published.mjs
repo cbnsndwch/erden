@@ -84,7 +84,13 @@ function erdenCommand(home, version, args) {
     if (process.platform === 'win32') {
         return [
             process.env.ComSpec ?? 'cmd.exe',
-            ['/d', '/s', '/c', `"${join(installedTarget(home, version), 'bin', 'erden.cmd')}" ${args.join(' ')}`],
+            // `/s /c` takes off the outer quotes; each part keeps its own, for paths with spaces.
+            [
+                '/d',
+                '/s',
+                '/c',
+                `""${join(installedTarget(home, version), 'bin', 'erden.cmd')}" ${args.map((arg) => `"${arg}"`).join(' ')}"`,
+            ],
         ];
     }
     return [join(home, '.local', 'bin', 'erden'), args];
@@ -174,14 +180,22 @@ function main(values) {
         if (manifest.registry !== REGISTRY) {
             throw new Error(`erden init wrote the registry ${String(manifest.registry)}`);
         }
-        const add = spawnSync(...erdenCommand(home, version, ['add', '@erden-release-check/absent@^1.0.0', '--json']), {
+        // The CLI reports any failed resolution alike, so the registry itself says this alias is absent.
+        const alias = '@erden-release-check/absent';
+        const absent = await fetch(`${REGISTRY}/api/v1/registry/layers?alias=${encodeURIComponent(alias)}`, {
+            headers: { accept: 'application/json', 'user-agent': USER_AGENT },
+        });
+        if (absent.status !== 404) {
+            throw new Error(`The registry answered ${String(absent.status)} for an absent alias`);
+        }
+        const add = spawnSync(...erdenCommand(home, version, ['add', `${alias}@1.0.0`, '--json']), {
             cwd: project,
             encoding: 'utf8',
             env: environment,
             windowsHide: true,
             windowsVerbatimArguments: process.platform === 'win32',
         });
-        if (add.status === 0 || !/NOT_FOUND|not found/iu.test(`${add.stdout}${add.stderr}`)) {
+        if (add.status !== 3 || !`${add.stdout}${add.stderr}`.includes('PROJECT_DEPENDENCIES_RESOLUTION_FAILED')) {
             throw new Error(`erden add of an absent alias: ${String(add.status)}\n${add.stderr}${add.stdout}`);
         }
         console.log('erden add of an absent alias: the live registry answered not found');

@@ -25,6 +25,7 @@ import {
     isCanonicalOntologyIri,
     isScopedAlias,
     normalizeRegistryOrigin,
+    ManifestNotFoundError,
 } from '@erden/contracts';
 import {
     DoctorOperationalError,
@@ -336,10 +337,14 @@ async function retryCliAuthentication<Value>(
 }
 
 function nearestProjectRegistry(cwd: string): string | undefined {
+    // No project is the one reason to fall back: a project that cannot be read must not send a credential elsewhere.
     try {
         return loadManifest({ from: cwd }).manifest.registry;
-    } catch {
-        return undefined;
+    } catch (cause) {
+        if (cause instanceof ManifestNotFoundError) {
+            return undefined;
+        }
+        throw cause;
     }
 }
 
