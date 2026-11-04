@@ -255,6 +255,40 @@ function validateMetadata(metadata, expected, details) {
     }
 }
 
+/**
+ * An opt-in erden-shacl built from this source on a host whose toolchain differs from the mint's (so its bytes cannot
+ * match the pin): `ERDEN_SHACL_BIN`, an absolute path to a regular executable file. Its digest is not pinned, but the
+ * known answer still must come back byte-identical to the qualified response once the binary's own digest is
+ * substituted, so the behavior is verified even though the linked bytes are not.
+ */
+function inspectSourceBuild(configured, expected, runtime) {
+    const details = { expectedPackage: expected.packageName, runtime };
+    if (!isAbsolute(configured)) {
+        fail(ERROR_CODES.binaryMissing, 'ERDEN_SHACL_BIN must be an absolute path', details);
+    }
+    let stat;
+    try {
+        stat = lstatSync(configured);
+    } catch {
+        fail(ERROR_CODES.binaryMissing, 'The ERDEN_SHACL_BIN binary is missing', details);
+    }
+    if (stat.isSymbolicLink()) {
+        fail(ERROR_CODES.symlinkDisallowed, 'The ERDEN_SHACL_BIN binary must not be a symbolic link', details);
+    }
+    if (!stat.isFile()) {
+        fail(ERROR_CODES.binaryNotRegular, 'The ERDEN_SHACL_BIN binary must be a regular file', details);
+    }
+    details.actualSize = stat.size;
+    if (runtime.platform !== 'win32' && (stat.mode & 0o111) === 0) {
+        fail(ERROR_CODES.binaryNotExecutable, 'The ERDEN_SHACL_BIN binary is not executable', details);
+    }
+    const digest = sha256(readFileSync(configured));
+    details.actualDigest = digest;
+    const manifest = { name: 'source-build', version: PACKAGE_VERSION };
+    const metadata = { target: expected.target };
+    return Object.freeze({ binaryPath: configured, digest, expected, manifest, metadata, runtime, size: stat.size });
+}
+
 function inspectAvailable(options = {}) {
     const runtime = options.runtime ?? detectRuntime();
     const expected = selectExpected(runtime);
@@ -267,6 +301,10 @@ function inspectAvailable(options = {}) {
                 runtime,
             },
         );
+    }
+    const configured = options.sourceBuild ?? process.env.ERDEN_SHACL_BIN;
+    if (configured !== undefined && configured !== '') {
+        return inspectSourceBuild(configured, expected, runtime);
     }
     const located = (options.locatePackage ?? defaultLocatePackage)(expected.packageName);
     const candidates = located === undefined ? [] : Array.isArray(located) ? located : [located];
