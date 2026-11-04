@@ -1,4 +1,5 @@
 import { randomBytes } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 import { Effect } from 'effect';
@@ -88,6 +89,7 @@ import {
     type StoreMaintenanceServiceShape,
     type StorePathServiceShape,
     isProjectDependenciesError,
+    DEFAULT_REGISTRY_ORIGIN,
     parseAddDependencySpec,
     loadManifest,
     parseReasonerLimits,
@@ -115,6 +117,11 @@ export const CLI_EXIT = Object.freeze({
     operational: 3,
 } as const);
 
+function cliVersion(): string {
+    return (JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { version: string })
+        .version;
+}
+
 export const CLI_HELP = `Erden CLI: check, package, and publish ontologies (also available as den)
 
 Usage:
@@ -125,7 +132,7 @@ Usage:
   erden remove <identifier> [--config <file>] [--json]
   erden update [identifier] [--config <file>] [--json]
   erden pack <version> [project-dir] [--config <file>] [--output <file>] [--json]
-  erden publish <version> [project-dir] [--config <file>] [--output <file>] [--create [--visibility public|private] [--yes]] [--json]
+  erden publish <version> [project-dir] [--config <file>] [--output <file>] [--create [--visibility public|private] [--yes]] [--no-wait] [--json]
   erden publication <attempt-id> [--registry <origin>] [--wait] [--report] [--json]
   erden query <identifier>@<version> (--file <path> | --stdin) [--registry <origin>] [--json | --sparql-json]
   erden path <layer> [--config <file>] [--json]
@@ -136,9 +143,11 @@ Usage:
   erden login [--registry <origin>]
   erden logout [--registry <origin>]
   erden help
+  erden --version
 
 Use den in place of erden for any command.
 Docs: https://erden.sh
+Registry: https://registry.erden.sh, unless --registry or the nearest project's manifest names another.
 
 Registry transport:
   Add, install, login, logout, publish, publication status, and query use one origin-scoped credential when present.
@@ -326,11 +335,16 @@ async function retryCliAuthentication<Value>(
     throw new RegistryClientError('CLIENT_TRANSPORT');
 }
 
-function authenticationOrigin(explicit: string | undefined, runtime: CliRuntime): string {
-    const raw = explicit ?? loadManifest({ from: runtime.cwd() }).manifest.registry;
-    if (raw === undefined) {
-        throw new CliUsageError('login/logout requires --registry or a nearest project registry');
+function nearestProjectRegistry(cwd: string): string | undefined {
+    try {
+        return loadManifest({ from: cwd }).manifest.registry;
+    } catch {
+        return undefined;
     }
+}
+
+function authenticationOrigin(explicit: string | undefined, runtime: CliRuntime): string {
+    const raw = explicit ?? nearestProjectRegistry(runtime.cwd()) ?? DEFAULT_REGISTRY_ORIGIN;
     const origin = normalizeRegistryOrigin(raw);
     if (origin !== raw) {
         throw new CliUsageError('registry must be one canonical HTTP(S) origin');
@@ -1012,6 +1026,10 @@ async function storeCommand(arguments_: ReadonlyArray<string>, runtime: CliRunti
 
 export async function runCli(arguments_: ReadonlyArray<string>, runtime: CliRuntime = nodeCliRuntime): Promise<number> {
     const command = arguments_[0];
+    if (command === '--version' || command === '-V' || command === 'version') {
+        runtime.stdout.write(`${cliVersion()}\n`);
+        return CLI_EXIT.success;
+    }
     if (command === undefined || command === 'help' || command === '--help' || command === '-h') {
         if (arguments_.length > 1) {
             return usageFailure(runtime, 'help does not accept additional arguments');

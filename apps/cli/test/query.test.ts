@@ -359,13 +359,18 @@ describe('erden query', () => {
         ['a duplicate flag', ['query', `${ALIAS}@1.2.3`, '--stdin', '--stdin', '--registry', ORIGIN]],
         ['an unknown flag', ['query', `${ALIAS}@1.2.3`, '--stdin', '--registry', ORIGIN, '--query']],
         ['a noncanonical registry', ['query', `${ALIAS}@1.2.3`, '--stdin', '--registry', `${ORIGIN}/`]],
-        ['no registry', ['query', `${ALIAS}@1.2.3`, '--stdin']],
     ])('treats %s as a usage error', async (_name, arguments_) => {
         const run = harness();
         expect(await runCli(arguments_, run.runtime)).toBe(CLI_EXIT.usage);
         expect(run.stderr.join('')).toContain('Erden usage error:');
         expect(run.stderr.join('')).not.toContain('SELECT * WHERE');
         expect(run.queries).toEqual([]);
+    });
+
+    it('uses the hosted registry when neither --registry nor a project names one', async () => {
+        const run = harness({ cwd: tempRoot() });
+        expect(await runCli(['query', `${ALIAS}@1.2.3`, '--stdin'], run.runtime)).toBe(0);
+        expect(run.queries[0]?.registryOrigin).toBe('https://registry.erden.sh');
     });
 
     it('treats empty query text as a usage error', async () => {

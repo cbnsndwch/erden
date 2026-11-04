@@ -21,6 +21,8 @@ import { decodeInitProjectReport, INIT_REPORT_VERSION, type InitProjectReport } 
 
 export const DEFAULT_INIT_CANONICAL_IRI = 'https://example.invalid/erden/project' as const;
 export const DEFAULT_INIT_ALIAS = '@example/project' as const;
+/** The hosted registry: what a new project's manifest names, and what the CLI uses with no registry named at all. */
+export const DEFAULT_REGISTRY_ORIGIN = 'https://registry.erden.sh' as const;
 
 const FORMAT_FILE: Readonly<Record<ManifestSerializationFormat, string>> = Object.freeze({
     json: 'erden.config.json',
@@ -677,6 +679,7 @@ function runInitProject(
                 normalizeManifestV1({
                     schemaVersion: 1,
                     canonicalIri,
+                    registry: DEFAULT_REGISTRY_ORIGIN,
                     alias,
                     ownedIriPrefixes,
                     title: 'Erden project',

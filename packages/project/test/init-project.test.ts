@@ -169,6 +169,15 @@ describe('InitProject application operation', () => {
         expect(readdirSync(join(parent, 'project')).some((entry) => entry.startsWith('.erden-init-owner-'))).toBe(true);
     });
 
+    it('names the hosted registry in a new project', async () => {
+        const parent = tempRoot();
+        await runInit(parent, 'project', {});
+        const manifest = JSON.parse(readFileSync(join(parent, 'project', 'erden.config.json'), 'utf8')) as {
+            registry?: string;
+        };
+        expect(manifest.registry).toBe('https://registry.erden.sh');
+    });
+
     it('normalizes one identity model and immediately passes the real offline CheckProject', async () => {
         const parent = tempRoot();
         const report = await runInit(parent, 'project', {

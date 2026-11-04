@@ -6,7 +6,7 @@ version = 1
 [[annotations]]
 path = "**"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2026 cbnsndwch LLC"
+SPDX-FileCopyrightText = "2026 Ingenio Ventures Inc"
 SPDX-License-Identifier = "Apache-2.0"
 
 # W3C RDF Dataset Canonicalization test fixtures, under the W3C 3-clause BSD License (see LICENSE.txt there).
@@ -37,7 +37,7 @@ SPDX-License-Identifier = "W3C-20150513"
 [[annotations]]
 path = "packages/ontology/src/shacl-engine/messages.ts"
 precedence = "override"
-SPDX-FileCopyrightText = ["2026 cbnsndwch LLC", "2020 Zazuko GmbH"]
+SPDX-FileCopyrightText = ["2026 Ingenio Ventures Inc", "2020 Zazuko GmbH"]
 SPDX-License-Identifier = "Apache-2.0 AND MIT"
 
 # The standard MIT text, used for a dependency that ships no license file of its own (release/license-policy.json).

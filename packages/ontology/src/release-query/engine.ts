@@ -39,6 +39,8 @@ export interface ConfinedWorkerRun {
     readonly timedOut: boolean;
     readonly cancelled: boolean;
     readonly spawnFailed: boolean;
+    /** The worker wrote a whole, valid response but never exited, so the parent killed it (see `framedResponse`). */
+    readonly exitStuck: boolean;
 }
 
 export interface ConfinedWorkerRequest {
@@ -47,6 +49,29 @@ export interface ConfinedWorkerRequest {
     readonly input: ReadonlyArray<Uint8Array>;
     readonly signal: AbortSignal;
     readonly milliseconds: number;
+    /** Stop waiting for the exit of a worker whose whole response has arrived and decodes as a valid one. */
+    readonly framedResponse?: boolean;
+}
+
+/**
+ * How long a worker may take to exit after its whole, valid response has arrived. A workaround: `process.exit` itself was
+ * seen to hang on Linux arm64 in about 2% of runs, with the response already written; the cause in Node is undetermined.
+ * The run's own budget stays authoritative: if it fires first the run is a time limit, whatever has arrived.
+ */
+const WORKER_EXIT_GRACE_MILLISECONDS = 1_000;
+
+/** The byte length of the framed response `stdout` starts with, once its header line has arrived. */
+function framedResponseLength(stdout: Buffer): number | null {
+    const newline = stdout.indexOf(10);
+    if (newline < 1) {
+        return null;
+    }
+    try {
+        const header = JSON.parse(stdout.subarray(0, newline).toString('utf8')) as { resultBytes?: unknown };
+        return newline + 1 + (typeof header.resultBytes === 'number' ? header.resultBytes : 0);
+    } catch {
+        return null;
+    }
 }
 
 /** Arguments for one confined worker: permission model, reads confined to the engine directory, fixed memory caps. */
@@ -71,6 +96,9 @@ export function runConfinedReleaseQueryWorker(request: ConfinedWorkerRequest): P
         let timedOut = false;
         let cancelled = false;
         let settled = false;
+        let exitStuck = false;
+        let framedLength: number | null = null;
+        let exitGrace: ReturnType<typeof setTimeout> | undefined;
         let child: ReturnType<typeof spawn>;
         function settle(code: number | null, signal: NodeJS.Signals | null, spawnFailed: boolean): void {
             if (settled) {
@@ -78,6 +106,7 @@ export function runConfinedReleaseQueryWorker(request: ConfinedWorkerRequest): P
             }
             settled = true;
             clearTimeout(timer);
+            clearTimeout(exitGrace);
             request.signal.removeEventListener('abort', abort);
             resolvePromise(
                 Object.freeze({
@@ -89,6 +118,7 @@ export function runConfinedReleaseQueryWorker(request: ConfinedWorkerRequest): P
                     timedOut,
                     cancelled,
                     spawnFailed,
+                    exitStuck,
                 }),
             );
         }
@@ -144,6 +174,17 @@ export function runConfinedReleaseQueryWorker(request: ConfinedWorkerRequest): P
                 return;
             }
             stdout.push(chunk);
+            if (request.framedResponse !== true) {
+                return;
+            }
+            framedLength ??= framedResponseLength(Buffer.concat(stdout, stdoutBytes));
+            clearTimeout(exitGrace);
+            if (framedLength === stdoutBytes && isValidFrame(Buffer.concat(stdout, stdoutBytes))) {
+                exitGrace = setTimeout(() => {
+                    exitStuck = true;
+                    kill();
+                }, WORKER_EXIT_GRACE_MILLISECONDS);
+            }
         });
         child.stderr?.on('data', (chunk: Buffer) => {
             // Counted, never retained or logged.
@@ -171,17 +212,31 @@ function decodeResponse(run: ConfinedWorkerRun): ReleaseQueryEngineResult {
     if (run.stdoutOverflow || run.signal === 'SIGABRT' || run.signal === 'SIGTRAP' || run.code === 134) {
         return Object.freeze({ outcome: 'resource-limit' });
     }
-    if (run.spawnFailed || run.code !== 0 || run.signal !== null || run.stderrOverflow) {
+    if (run.spawnFailed || run.stderrOverflow || (!run.exitStuck && (run.code !== 0 || run.signal !== null))) {
         throw new ReleaseQueryEngineError('ENGINE_UNAVAILABLE');
     }
-    const newline = run.stdout.indexOf(10);
+    return decodeFrame(run.stdout);
+}
+
+function isValidFrame(stdout: Buffer): boolean {
+    try {
+        decodeFrame(stdout);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+/** The one validation of a worker's response bytes, whether its worker exited or got stuck exiting. */
+function decodeFrame(stdout: Buffer): ReleaseQueryEngineResult {
+    const newline = stdout.indexOf(10);
     if (newline < 1) {
         throw new ReleaseQueryEngineError('ENGINE_UNAVAILABLE');
     }
     const decoder = new TextDecoder('utf-8', { fatal: true });
     let value: unknown;
     try {
-        value = JSON.parse(decoder.decode(run.stdout.subarray(0, newline)));
+        value = JSON.parse(decoder.decode(stdout.subarray(0, newline)));
     } catch {
         throw new ReleaseQueryEngineError('ENGINE_UNAVAILABLE');
     }
@@ -199,7 +254,7 @@ function decodeResponse(run: ConfinedWorkerRun): ReleaseQueryEngineResult {
     ) {
         throw new ReleaseQueryEngineError('ENGINE_UNAVAILABLE');
     }
-    const body = run.stdout.subarray(newline + 1);
+    const body = stdout.subarray(newline + 1);
     if (outcome !== 'complete') {
         if (body.byteLength !== 0) {
             throw new ReleaseQueryEngineError('ENGINE_UNAVAILABLE');
@@ -312,6 +367,8 @@ export interface NodeReleaseQueryEngineOptions {
     readonly skipKnownAnswer?: boolean;
     /** Test-only: substitute the engine directory resolution. */
     readonly directory?: () => string | null;
+    /** Called for each worker killed for not exiting after its whole, valid response, so a rise stays visible. */
+    readonly onWorkerExitForced?: () => void;
 }
 
 /** Child-process adapter: one fresh confined process per query, at most two at once, no queue. */
@@ -350,6 +407,7 @@ export function makeNodeReleaseQueryEngine(options: NodeReleaseQueryEngineOption
             input: parts,
             signal: controller.signal,
             milliseconds,
+            framedResponse: true,
         });
         const entry = { controller, exited };
         running.add(entry);
@@ -359,7 +417,11 @@ export function makeNodeReleaseQueryEngine(options: NodeReleaseQueryEngineOption
             running.delete(entry);
             signal.removeEventListener('abort', forward);
         });
-        return decodeResponse(await exited);
+        const completed = await exited;
+        if (completed.exitStuck && !completed.timedOut && !completed.cancelled) {
+            options.onWorkerExitForced?.();
+        }
+        return decodeResponse(completed);
     }
 
     async function start(): Promise<boolean> {

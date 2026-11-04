@@ -6,7 +6,14 @@ import { dirname, join, resolve } from 'node:path';
 import { test } from 'node:test';
 import { brotliCompressSync, gzipSync } from 'node:zlib';
 
-import { auditOpenTree, binaryKind, parseDenylist, pathFindings, scanText } from '../audit-open-tree.mjs';
+import {
+    auditOpenTree,
+    binaryKind,
+    historyFindings,
+    parseDenylist,
+    pathFindings,
+    scanText,
+} from '../audit-open-tree.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
 const CONFIG = JSON.parse(readFileSync(join(root, 'scripts/open-tree-audit.json'), 'utf8'));
@@ -232,4 +239,35 @@ test('the config pins both tool images by version and digest, and every allowed 
         assert.ok(typeof entry.reason === 'string' && entry.reason.length > 10, JSON.stringify(entry));
     }
     assert.equal(CONFIG.maxFileBytes, 5_000_000);
+});
+
+test('the history check accepts the identity and listed commits, and refuses any other identity', () => {
+    const good = gitRepository({ 'a.txt': 'a\n' }, 'first');
+    const someone = { name: 'Someone', email: 'someone@users.noreply.github.com' };
+    const stranger = gitRepository({ 'a.txt': 'a\n' }, 'first', someone);
+    try {
+        assert.deepEqual(historyFindings(good.directory, CONFIG, []), []);
+        const sha = spawnSync('git', ['-C', stranger.directory, 'rev-parse', 'HEAD'], {
+            encoding: 'utf8',
+        }).stdout.trim();
+        assert.deepEqual(
+            historyFindings(stranger.directory, CONFIG, []).map((finding) => finding.hit),
+            [`the author is "Someone <${someone.email}>"`, `the committer is "Someone <${someone.email}>"`],
+        );
+        assert.deepEqual(
+            historyFindings(
+                stranger.directory,
+                { ...CONFIG, historyIdentityExceptions: [{ sha, reason: 'listed' }] },
+                [],
+            ),
+            [],
+        );
+        assert.equal(
+            historyFindings(stranger.directory, { ...CONFIG, historyIdentityExceptions: [{ sha: 'x' }] }, []).length,
+            2,
+        );
+    } finally {
+        rmSync(good.directory, { recursive: true, force: true });
+        rmSync(stranger.directory, { recursive: true, force: true });
+    }
 });

@@ -46,3 +46,113 @@ jobs:
                   echo "ERDEN_REASONER_BIN=$PWD/reasoner/source-build/x86_64-unknown-linux-gnu/erden-reasoner" >> "$GITHUB_ENV"
             - run: pnpm run check:distribution:closure
             - run: pnpm run check:workspace
+
+    distribution-windows:
+        # This is a versioned runner label; GitHub-managed runner contents are not content-addressed.
+        runs-on: windows-2025
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  # Qualification closure resolves the fixed source commit/tree, not an ambient shallow HEAD.
+                  fetch-depth: 0
+            # The runner's TEMP is an 8.3 alias of the profile directory, which resolves to a different real path.
+            # Erden refuses aliased target parents, so tests take their temporary roots from RUNNER_TEMP instead.
+            - name: Use the runner's canonical temporary directory
+              shell: pwsh
+              run: |
+                  "TEMP=$env:RUNNER_TEMP" >> $env:GITHUB_ENV
+                  "TMP=$env:RUNNER_TEMP" >> $env:GITHUB_ENV
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+              with:
+                  version: 10.15.0
+                  run_install: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+                  cache: pnpm
+                  cache-dependency-path: pnpm-lock.yaml
+            - run: pnpm run bootstrap:workspace
+            # erden-shacl from source, as in the Linux job: rustup 1.98.0 here, installed only if byte-identical to its pin.
+            - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+              with:
+                  path: shacl/win32-x64-msvc/bin
+                  key: erden-shacl-win32-x64-msvc-${{ hashFiles('shacl/erden-shacl/**', 'shacl/Cargo.*', 'shacl/rust-toolchain.toml', 'shacl/distribution/src/artifacts.js') }}
+            - run: rustup toolchain install 1.98.0 --profile minimal --target x86_64-pc-windows-msvc
+            - run: node shacl/qualification/build-from-source.mjs
+            # The workspace tests run the reasoner built from this commit's source with the pinned toolchain.
+            - name: Build the reasoner from source with the pinned toolchain
+              run: rustup toolchain install 1.96.0 --profile minimal && pnpm run reasoner:build
+            - run: pnpm run check:distribution:closure
+            - run: pnpm run check:workspace
+              env:
+                  ERDEN_REASONER_BIN: ${{ github.workspace }}\reasoner\target\release\erden-reasoner.exe
+            - run: pnpm run test:distribution:clean
+            - run: pnpm run test:distribution:clean:pnpm
+
+    distribution-linux-arm64:
+        # This is a versioned runner label; GitHub-managed runner contents are not content-addressed.
+        runs-on: ubuntu-24.04-arm
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  # Qualification closure resolves the fixed source commit/tree, not an ambient shallow HEAD.
+                  fetch-depth: 0
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+              with:
+                  version: 10.15.0
+                  run_install: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+                  cache: pnpm
+                  cache-dependency-path: pnpm-lock.yaml
+            - run: pnpm run bootstrap:workspace
+            # erden-shacl from source, as in the Linux x64 job (the pinned arm64 builder image).
+            - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+              with:
+                  path: shacl/linux-arm64-gnu/bin
+                  key: erden-shacl-linux-arm64-gnu-${{ hashFiles('shacl/erden-shacl/**', 'shacl/Cargo.*', 'shacl/rust-toolchain.toml', 'shacl/distribution/src/artifacts.js') }}
+            - run: node shacl/qualification/build-from-source.mjs
+            - run: pnpm run check:distribution:closure
+            - run: pnpm run test:distribution:clean
+            - run: pnpm run test:distribution:clean:pnpm
+            # The workspace tests with the native reasoner, apart from check-main-reports.json, which records the Linux
+            # x64 report bytes, which name that executable's digest. The reasoner-build workflow compares the platforms'
+            # answers instead.
+            # The workspace tests run the reasoner built from this commit's source with the pinned toolchain.
+            - name: Build the reasoner from source with the pinned toolchain
+              run: rustup toolchain install 1.96.0 --profile minimal && pnpm run reasoner:build
+            - name: Run the workspace tests with the native Linux arm64 reasoner
+              run: >-
+                  pnpm run build:runtime && pnpm exec vitest run
+                  --exclude packages/project/test/check-main-reports.test.ts
+              env:
+                  ERDEN_REASONER_BIN: ${{ github.workspace }}/reasoner/target/release/erden-reasoner
+
+    distribution-macos-arm64:
+        # This is a versioned runner label; GitHub-managed runner contents are not content-addressed.
+        runs-on: macos-15
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  # Qualification closure resolves the fixed source commit/tree, not an ambient shallow HEAD.
+                  fetch-depth: 0
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+              with:
+                  version: 10.15.0
+                  run_install: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            # bootstrap:workspace restores workspace file modes only on Linux and Windows, so this job runs the
+            # platform-local distribution gates, which need Node, pnpm and Git but no workspace install.
+            # erden-shacl from source, as in the Linux job: rustup 1.98.0 here, installed only if byte-identical to its pin.
+            - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+              with:
+                  path: shacl/darwin-arm64/bin
+                  key: erden-shacl-darwin-arm64-${{ hashFiles('shacl/erden-shacl/**', 'shacl/Cargo.*', 'shacl/rust-toolchain.toml', 'shacl/distribution/src/artifacts.js') }}
+            - run: rustup toolchain install 1.98.0 --profile minimal --target aarch64-apple-darwin
+            - run: node shacl/qualification/build-from-source.mjs
+            - run: pnpm run check:distribution:closure
+            - run: pnpm run test:distribution:clean
+            - run: pnpm run test:distribution:clean:pnpm

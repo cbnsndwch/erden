@@ -67,6 +67,8 @@ export const PUBLICATION_FAILURE_RULES = Object.freeze({
     CHECK_PUBLICATION_CANDIDATE_CONSUMED: Object.freeze({ kind: 'candidate', validation: 'null' }),
     CHECK_PUBLICATION_CANDIDATE_INVALID: Object.freeze({ kind: 'candidate', validation: 'null' }),
     CHECK_PUBLICATION_DEPENDENCY_INVALID: Object.freeze({ kind: 'candidate', validation: 'null' }),
+    CHECK_REQUEST_TOO_LARGE: Object.freeze({ kind: 'candidate', validation: 'null' }),
+    CHECK_STDOUT_OVERFLOW: Object.freeze({ kind: 'candidate', validation: 'null' }),
     PUBLICATION_CANDIDATE_INVALID: Object.freeze({ kind: 'candidate', validation: 'null' }),
     PUBLICATION_CANDIDATE_OBJECT_INVALID: Object.freeze({ kind: 'candidate', validation: 'null' }),
     PUBLICATION_CANDIDATE_VALIDATION_FAILED: Object.freeze({ kind: 'candidate', validation: 'null' }),
@@ -75,6 +77,14 @@ export const PUBLICATION_FAILURE_RULES = Object.freeze({
     PUBLICATION_PREFLIGHT_DEFECT: Object.freeze({ kind: 'operational', validation: 'null' }),
     PUBLICATION_PREFLIGHT_RETRY_EXHAUSTED: Object.freeze({ kind: 'operational-exhausted', validation: 'null' }),
     PUBLICATION_SEMANTIC_VALIDATION_FAILED: Object.freeze({ kind: 'semantic', validation: 'failed' }),
+    PUBLICATION_UPLOAD_ACTIVE_ATTEMPT: Object.freeze({ kind: 'policy', validation: 'null' }),
+    PUBLICATION_UPLOAD_DIGEST_MISMATCH: Object.freeze({ kind: 'candidate', validation: 'null' }),
+    PUBLICATION_UPLOAD_EXPIRED: Object.freeze({ kind: 'candidate', validation: 'null' }),
+    PUBLICATION_UPLOAD_IDENTITY_MISMATCH: Object.freeze({ kind: 'candidate', validation: 'null' }),
+    PUBLICATION_UPLOAD_MISSING: Object.freeze({ kind: 'candidate', validation: 'null' }),
+    PUBLICATION_UPLOAD_RETRY_EXHAUSTED: Object.freeze({ kind: 'operational-exhausted', validation: 'null' }),
+    PUBLICATION_UPLOAD_SIZE_MISMATCH: Object.freeze({ kind: 'candidate', validation: 'null' }),
+    PUBLICATION_UPLOAD_UNAUTHORIZED: Object.freeze({ kind: 'policy', validation: 'null' }),
     PUBLICATION_VALIDATION_RESULT_INVALID: Object.freeze({ kind: 'candidate', validation: 'null' }),
     PUBLICATION_VALIDATION_RESULT_MISMATCH: Object.freeze({ kind: 'candidate', validation: 'null' }),
     PUBLICATION_VALIDATION_RETRY_EXHAUSTED: Object.freeze({ kind: 'operational-exhausted', validation: 'null' }),
@@ -1409,4 +1419,124 @@ export function isLeaseLive(claim: PublicationClaim, databaseTime: number): bool
 
 export function isActiveAttempt(attempt: PublicationAttempt): boolean {
     return attempt.state === 'queued' || attempt.state === 'validating';
+}
+
+/**
+ * What a client declares to start a direct upload. The identity lets the registry apply publishing authority before
+ * a byte moves; capture later refuses a package whose manifest disagrees with it.
+ */
+export interface PublicationUploadRequest {
+    readonly archiveSha256: string;
+    readonly byteSize: number;
+    readonly canonicalIri: string;
+    readonly idempotencyKey: string;
+    readonly preferredAlias: string;
+    readonly version: string;
+}
+
+/** The only headers a signed PUT may carry; each is covered by its signature and none is a credential. */
+export const PUBLICATION_SIGNED_PUT_HEADERS = Object.freeze([
+    'content-length',
+    'if-none-match',
+    'x-amz-checksum-sha256',
+]);
+
+const MAX_SIGNED_PUT_URL_BYTES = 8_192;
+
+export interface PublicationSignedPut {
+    readonly url: string;
+    readonly headers: Readonly<Record<string, string>>;
+    readonly expiresAt: number;
+}
+
+/** `put` is null when the registry already holds this upload, so only finalizing remains. */
+export interface PublicationUploadGrant {
+    readonly schema: 'erden.publication-upload/v1';
+    readonly uploadId: string;
+    readonly put: PublicationSignedPut | null;
+}
+
+export function decodePublicationUploadRequest(input: unknown): PublicationUploadRequest {
+    try {
+        const value = record(input, [
+            'archiveSha256',
+            'byteSize',
+            'canonicalIri',
+            'idempotencyKey',
+            'preferredAlias',
+            'version',
+        ]);
+        const key = value['idempotencyKey'];
+        const canonicalIri = boundedScalar(value['canonicalIri']);
+        const preferredAlias = boundedScalar(value['preferredAlias']);
+        if (
+            typeof key !== 'string' ||
+            !key.isWellFormed() ||
+            !IDEMPOTENCY_KEY.test(key) ||
+            textEncoder.encode(key).byteLength > PUBLICATION_LIMITS.maxIdempotencyKeyBytes ||
+            !isCanonicalOntologyIri(canonicalIri) ||
+            !isScopedAlias(preferredAlias)
+        ) {
+            throw publicationInputInvalid();
+        }
+        return Object.freeze({
+            archiveSha256: sha256(value['archiveSha256']),
+            byteSize: positiveBounded(value['byteSize'], Number.MAX_SAFE_INTEGER),
+            canonicalIri,
+            idempotencyKey: key,
+            preferredAlias,
+            version: exactVersion(value['version']),
+        });
+    } catch {
+        throw publicationInputInvalid();
+    }
+}
+
+function decodeSignedPut(input: unknown): PublicationSignedPut {
+    const value = record(input, ['expiresAt', 'headers', 'url']);
+    const url = value['url'];
+    if (typeof url !== 'string' || textEncoder.encode(url).byteLength > MAX_SIGNED_PUT_URL_BYTES) {
+        throw publicationInputInvalid();
+    }
+    const parsed = new URL(url);
+    if (
+        (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') ||
+        parsed.username !== '' ||
+        parsed.password !== '' ||
+        parsed.hash !== ''
+    ) {
+        throw publicationInputInvalid();
+    }
+    const headers = record(value['headers'], PUBLICATION_SIGNED_PUT_HEADERS);
+    for (const name of PUBLICATION_SIGNED_PUT_HEADERS) {
+        if (typeof headers[name] !== 'string') {
+            throw publicationInputInvalid();
+        }
+    }
+    return Object.freeze({
+        url,
+        headers: Object.freeze(headers as Record<string, string>),
+        expiresAt: nonnegative(value['expiresAt']),
+    });
+}
+
+/** Failures never carry the input: a signed URL must not reach an error message. */
+export function decodePublicationUploadGrant(input: unknown): PublicationUploadGrant {
+    try {
+        const value = record(input, ['put', 'schema', 'uploadId']);
+        if (value['schema'] !== 'erden.publication-upload/v1') {
+            throw publicationInputInvalid();
+        }
+        return Object.freeze({
+            schema: 'erden.publication-upload/v1',
+            uploadId: opaque(value['uploadId']),
+            put: value['put'] === null ? null : decodeSignedPut(value['put']),
+        });
+    } catch {
+        throw publicationInputInvalid();
+    }
+}
+
+export function encodePublicationUploadGrant(input: unknown): Uint8Array {
+    return encodeCanonicalPublicationJson(decodePublicationUploadGrant(input));
 }

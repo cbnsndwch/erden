@@ -443,6 +443,7 @@ for (const required of [
     "openSync(stage, 'wx', 0o600)",
     'deleteStoredCliCredentialRevision',
     'uploadPublication',
+    'putToSignedUrl',
     'getPublicationAttempt',
     'getPublicationReport',
     'resolveRegistryAlias',
@@ -452,7 +453,6 @@ for (const required of [
     'retryRegistryTransport',
     'hash.digest',
     'reader.cancel',
-    'application/vnd.erden.package.v1',
 ]) {
     if (!clientSource.includes(required)) {
         failures.push(`Registry client is missing its accepted transport/file invariant: ${required}`);
@@ -525,7 +525,8 @@ function walkMarkdown(directory) {
             continue;
         }
         const absolutePath = resolve(directory, entry.name);
-        if (entry.isDirectory()) {
+        // A Worker's Markdown links to the URLs it serves, not to repository files.
+        if (entry.isDirectory() && !existsSync(resolve(absolutePath, 'wrangler.jsonc'))) {
             paths.push(...walkMarkdown(absolutePath));
         }
         if (entry.isFile() && extname(entry.name) === '.md') {

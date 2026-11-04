@@ -111,6 +111,19 @@ async function initFixture(parent: string): Promise<string> {
 }
 
 describe('erden CLI adapter', () => {
+    it.each(['--version', '-V', 'version'])('prints the package version for %s', async (flag) => {
+        const captured = captureRuntime(tempRoot());
+        expect(await runCli([flag], captured.runtime)).toBe(CLI_EXIT.success);
+        expect(captured.stdout).toEqual(['0.1.0\n']);
+        expect(captured.stderr).toEqual([]);
+    });
+
+    it('names the hosted docs and registry in its help, and never self-hosting', () => {
+        expect(CLI_HELP).toContain('Docs: https://erden.sh');
+        expect(CLI_HELP).toContain('Registry: https://registry.erden.sh');
+        expect(CLI_HELP.toLowerCase()).not.toContain('self-host');
+    });
+
     it('renders deterministic help on stdout', async () => {
         const captured = captureRuntime(tempRoot());
         expect(await runCli(['--help'], captured.runtime)).toBe(CLI_EXIT.success);
@@ -375,6 +388,22 @@ describe('erden CLI adapter', () => {
         expect(visible).not.toContain(credential);
     });
 
+    it('asks the hosted registry when --registry is omitted outside any project', async () => {
+        const captured = captureRuntime(tempRoot());
+        const origins: string[] = [];
+        const authentication = {
+            begin: (registryOrigin: string) => {
+                origins.push(registryOrigin);
+                return Promise.reject(new RegistryClientError('CLIENT_TRANSPORT'));
+            },
+            sleep: () => Promise.resolve(),
+            requestId: () => 'ERERERERERERERERERERERERERERERERERERERERERE',
+            now: () => 0,
+        } as unknown as CliAuthenticationRuntime;
+        await runCli(['login'], { ...captured.runtime, authentication });
+        expect(new Set(origins)).toEqual(new Set(['https://registry.erden.sh']));
+    });
+
     it('uses the nearest project manifest registry when --registry is omitted', async () => {
         const parent = tempRoot();
         const project = await initFixture(parent);
@@ -596,7 +625,7 @@ describe('erden CLI adapter', () => {
         };
         expect(report.outcome).toBe('packed');
         expect(report.output.path).toBe(join(parent, 'example-project-1.2.3.erdenpkg'));
-        expect(report.archive.sha256).toBe('d4ff65542958e0c20264c191227984783bd3b93e6e5e1e3f51405ff9aac72462');
+        expect(report.archive.sha256).toBe('bb99509b93ec8dada8748c170fa5e74abcd8a6c8c1db8fbc2aef117e66167ff6');
     });
 
     it('walks up to the nearest manifest and honors an explicit config from unrelated CWD', async () => {

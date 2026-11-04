@@ -723,7 +723,7 @@ ex:Shape a sh:NodeShape ; sh:targetClass ex:A ;
     it('reports citation metadata ambiguity as actionable semantic failure', async () => {
         const { report } = await runNodeProject({
             ontology: `${PREFIXES}
-@prefix ev: <https://erden.cbnsndwch.dev/onto/evidence#> .
+@prefix ev: <https://erden.sh/o/erden/evidence#> .
 ev:sourcePath a owl:AnnotationProperty .
 ev:sourceRoot a owl:AnnotationProperty .
 ex:observation ev:sourcePath "evidence.txt" ; ev:sourceRoot "a", "b" .`,
@@ -737,14 +737,12 @@ ex:observation ev:sourcePath "evidence.txt" ; ev:sourceRoot "a", "b" .`,
             blocking: true,
             metadataDiagnostics: [expect.objectContaining({ values: ['a', 'b'] })],
         });
-        expect(renderCheckProjectReport(report)).toContain(
-            'ambiguous https://erden.cbnsndwch.dev/onto/evidence#sourceRoot',
-        );
+        expect(renderCheckProjectReport(report)).toContain('ambiguous https://erden.sh/o/erden/evidence#sourceRoot');
     });
 
     it('surfaces no-root and no-Git citation checks as deterministic nonblocking warnings', async () => {
         const ontologyText = `${PREFIXES}
-@prefix ev: <https://erden.cbnsndwch.dev/onto/evidence#> .
+@prefix ev: <https://erden.sh/o/erden/evidence#> .
 ev:sourcePath a owl:AnnotationProperty .
 ex:observation ev:sourcePath "evidence.txt" .`;
         const noRoot = await runNodeProject({ ontology: ontologyText });
@@ -768,7 +766,7 @@ ex:observation ev:sourcePath "evidence.txt" .`;
     it('truthfully represents empty well-formed citation literals without a construction defect', async () => {
         const { report } = await runNodeProject({
             ontology: `${PREFIXES}
-@prefix ev: <https://erden.cbnsndwch.dev/onto/evidence#> .
+@prefix ev: <https://erden.sh/o/erden/evidence#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 ev:sourcePath a owl:AnnotationProperty . ev:sourceRoot a owl:AnnotationProperty .
 ev:atCommit a owl:AnnotationProperty . ev:inRepository a owl:AnnotationProperty .
@@ -820,7 +818,7 @@ SELECT ?s WHERE { ?s a <https://example.test/root#A> }
             'citation',
             {
                 ontology: `${PREFIXES}
-@prefix ev: <https://erden.cbnsndwch.dev/onto/evidence#> .
+@prefix ev: <https://erden.sh/o/erden/evidence#> .
 ev:sourcePath a owl:AnnotationProperty .
 ex:observation ev:sourcePath "missing.txt" .
 `,

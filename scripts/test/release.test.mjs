@@ -121,14 +121,17 @@ test('archives of the same tree are byte-identical, sorted, with fixed owners, m
         assert.deepEqual(first, second);
         const listing = spawnSync('tar', ['-tvzf', join(out, 'a.tar.gz')], { encoding: 'utf8' });
         assert.equal(listing.status, 0, listing.stderr);
-        const lines = listing.stdout.trim().split('\n');
+        const lines = listing.stdout.trim().split(/\r?\n/u);
+        // GNU tar lists owner and group as `0/0`; bsdtar, on macOS and Windows, as link count, owner and group columns.
+        const rootOwned = String.raw`\s+(?:0\/0|\d+\s+0\s+0)\s`;
         assert.match(
             lines.find((line) => line.endsWith('bin/erden')),
-            /^-rwxr-xr-x 0\/0 /u,
+            // Windows has no executable bit to read, and it ships the zip, whose modes nothing there uses.
+            new RegExp(`^${process.platform === 'win32' ? '-rw-r--r--' : '-rwxr-xr-x'}${rootOwned}`, 'u'),
         );
         assert.match(
             lines.find((line) => line.endsWith('/LICENSE')),
-            /^-rw-r--r-- 0\/0 /u,
+            new RegExp(`^-rw-r--r--${rootOwned}`, 'u'),
         );
         assert.ok(
             lines.some((line) => line.endsWith(`${'b'.repeat(60)}/index.js`)),

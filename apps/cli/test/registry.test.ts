@@ -167,6 +167,7 @@ function emptySource(): ReturnType<PublicationUploadInput['open']> {
 }
 
 function runtime(overrides: Partial<CliPublicationRuntime> = {}): CliPublicationRuntime {
+    let time = 0;
     return {
         readCredential: (origin) => credential(origin),
         upload: () => Promise.resolve(attempt()),
@@ -175,8 +176,11 @@ function runtime(overrides: Partial<CliPublicationRuntime> = {}): CliPublication
         archiveSource: () => Promise.resolve(emptySource),
         interactive: () => false,
         confirmCreate: () => Promise.resolve(false),
-        now: () => 0,
-        sleep: () => Promise.resolve(),
+        now: () => time,
+        sleep: (milliseconds) => {
+            time += milliseconds;
+            return Promise.resolve();
+        },
         ...overrides,
     };
 }
@@ -425,7 +429,7 @@ describe('CLI publication workflow', () => {
             }),
         );
 
-        expect(await runPublishCommand(['1.2.3', '--json'], captured.context)).toBe(0);
+        expect(await runPublishCommand(['1.2.3', '--json', '--no-wait'], captured.context)).toBe(0);
         expect(captured.packCalls()).toBe(1);
         expect(uploads).toHaveLength(1);
         expect(uploads[0]).toMatchObject({
@@ -455,11 +459,143 @@ describe('CLI publication workflow', () => {
             value,
             runtime({ upload: () => Promise.resolve(attempt('queued', { attemptId: 'attempt:uvI-plIBQUxz' })) }),
         );
-        expect(await runPublishCommand(['1.2.3'], captured.context)).toBe(0);
+        expect(await runPublishCommand(['1.2.3', '--no-wait'], captured.context)).toBe(0);
         expect(captured.stderr).toEqual([]);
         expect(captured.stdout).toEqual([
             'Publication attempt:uvI-plIBQUxz: queued\nProject: @example/project@1.2.3 (https://example.test/project)\nVisibility: private\nReport page: https://registry.example.test/publications/attempt%3AuvI-plIBQUxz/report\n',
         ]);
+    });
+
+    describe('waiting for the decision', () => {
+        it('follows the attempt to success, reporting progress on stderr and only the end on stdout', async () => {
+            const root = tempRoot();
+            writeManifest(root);
+            const states = [attempt('queued'), attempt('validating'), attempt('succeeded')];
+            const captured = context(
+                root,
+                report(join(root, 'project-1.2.3.erdenpkg')),
+                runtime({ getAttempt: () => Promise.resolve(states.shift() ?? attempt('succeeded')) }),
+            );
+            expect(await runPublishCommand(['1.2.3'], captured.context)).toBe(0);
+            expect(captured.stdout.join('')).toContain('attempt-1: succeeded');
+            expect(captured.stdout.join('')).not.toContain('queued');
+            const progress = captured.stderr.join('');
+            expect(progress).toContain('Waiting for attempt-1 (queued)');
+            expect(progress).toContain('attempt-1: validating');
+            expect(progress).toContain('attempt-1: succeeded');
+        });
+
+        it('exits 1 when the registry refuses the publication after accepting it', async () => {
+            const root = tempRoot();
+            writeManifest(root);
+            const captured = context(
+                root,
+                report(join(root, 'project-1.2.3.erdenpkg')),
+                runtime({ getAttempt: () => Promise.resolve(attempt('failed')) }),
+            );
+            expect(await runPublishCommand(['1.2.3'], captured.context)).toBe(1);
+            expect(captured.stdout.join('')).toContain('failed');
+        });
+
+        it('keeps stdout one JSON document and stderr silent with --json', async () => {
+            const root = tempRoot();
+            writeManifest(root);
+            const captured = context(
+                root,
+                report(join(root, 'project-1.2.3.erdenpkg')),
+                runtime({ getAttempt: () => Promise.resolve(attempt('succeeded')) }),
+            );
+            expect(await runPublishCommand(['1.2.3', '--json'], captured.context)).toBe(0);
+            expect(captured.stderr).toEqual([]);
+            expect(JSON.parse(captured.stdout.join(''))).toMatchObject({ state: 'succeeded' });
+        });
+
+        it('names the size limit when the registry refuses a package as too large to reason', async () => {
+            const root = tempRoot();
+            writeManifest(root);
+            const captured = context(
+                root,
+                report(join(root, 'project-1.2.3.erdenpkg')),
+                runtime({
+                    getAttempt: () =>
+                        Promise.resolve(
+                            attempt('failed', { failure: { kind: 'candidate', code: 'CHECK_REQUEST_TOO_LARGE' } }),
+                        ),
+                }),
+            );
+            expect(await runPublishCommand(['1.2.3'], captured.context)).toBe(1);
+            const output = captured.stdout.join('');
+            expect(output).toContain('Failure: candidate/CHECK_REQUEST_TOO_LARGE');
+            expect(output).toContain('ERDEN_REASONER_MAX_REQUEST_BYTES');
+        });
+
+        it('rides out a registry restart: a failed poll is not a failed publication', async () => {
+            const root = tempRoot();
+            writeManifest(root);
+            const answers = [
+                () => Promise.reject(new Error('503')),
+                () => Promise.reject(new Error('503')),
+                () => Promise.resolve(attempt('succeeded')),
+            ];
+            const captured = context(
+                root,
+                report(join(root, 'project-1.2.3.erdenpkg')),
+                runtime({ getAttempt: () => (answers.shift() as () => Promise<PublicationAttemptView>)() }),
+            );
+            expect(await runPublishCommand(['1.2.3'], captured.context)).toBe(0);
+            expect(answers).toEqual([]);
+        });
+
+        it('exits 3 and names the follow-up command once polls have failed for five minutes', async () => {
+            const root = tempRoot();
+            writeManifest(root);
+            const captured = context(
+                root,
+                report(join(root, 'project-1.2.3.erdenpkg')),
+                runtime({ getAttempt: () => Promise.reject(new Error('down')) }),
+            );
+            expect(await runPublishCommand(['1.2.3'], captured.context)).toBe(3);
+            expect(captured.stdout.join('')).toContain('attempt-1: queued');
+            const message = captured.stderr.join('');
+            expect(message).toContain('CLI_PUBLICATION_TIMEOUT');
+            expect(message).toContain(`erden publication attempt-1 --registry ${ORIGIN} --wait`);
+        });
+
+        it('exits 3 when a live publication outlasts the wait, without calling it failed', async () => {
+            const root = tempRoot();
+            writeManifest(root);
+            const captured = context(
+                root,
+                report(join(root, 'project-1.2.3.erdenpkg')),
+                runtime({ getAttempt: () => Promise.resolve(attempt('validating')) }),
+            );
+            expect(await runPublishCommand(['1.2.3'], captured.context)).toBe(3);
+            expect(captured.stdout.join('')).toContain('attempt-1: validating');
+            expect(captured.stderr.join('')).toContain('still validating after');
+        });
+
+        it('does not poll with --no-wait', async () => {
+            const root = tempRoot();
+            writeManifest(root);
+            const getAttempt = vi.fn(() => Promise.resolve(attempt('succeeded')));
+            const captured = context(root, report(join(root, 'project-1.2.3.erdenpkg')), runtime({ getAttempt }));
+            expect(await runPublishCommand(['1.2.3', '--no-wait'], captured.context)).toBe(0);
+            expect(getAttempt).not.toHaveBeenCalled();
+            expect(captured.stdout.join('')).toContain('attempt-1: queued');
+        });
+
+        it('does not poll an answer that is already final', async () => {
+            const root = tempRoot();
+            writeManifest(root);
+            const getAttempt = vi.fn(() => Promise.resolve(attempt('queued')));
+            const captured = context(
+                root,
+                report(join(root, 'project-1.2.3.erdenpkg')),
+                runtime({ upload: () => Promise.resolve(attempt('failed')), getAttempt }),
+            );
+            expect(await runPublishCommand(['1.2.3'], captured.context)).toBe(1);
+            expect(getAttempt).not.toHaveBeenCalled();
+        });
     });
 
     it('uses only the authenticated manifest registry and stable semantic idempotency parts', () => {
@@ -663,7 +799,7 @@ describe('CLI publication workflow', () => {
             }),
         );
         const pending = runPublishCommand(['1.2.3'], captured.context);
-        await vi.advanceTimersByTimeAsync(5 * 60 * 1_000);
+        await vi.advanceTimersByTimeAsync(2 * 60 * 60 * 1_000);
         expect(await pending).toBe(3);
         expect(observed?.aborted).toBe(true);
         expect(captured.stderr.join('')).not.toContain(BEARER);
