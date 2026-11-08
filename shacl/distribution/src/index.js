@@ -1,7 +1,8 @@
 // Offline resolver and integrity doctor for the bundled SHACL engine, erden-shacl. The reasoner's resolver
 // (reasoner/distribution/src/index.js) with this program's packages, identity and known answer: the same platform
 // selection, the same package and metadata contract, the same refusals and error codes. Nothing is downloaded,
-// installed or written; nothing runs before the binary's size and SHA-256 match the qualified mint.
+// installed or written; nothing runs before the binary's size and SHA-256 match the qualified mint, except a source
+// build named by ERDEN_SHACL_BIN, which is held to its known answer instead.
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { lstatSync, readFileSync, realpathSync } from 'node:fs';
@@ -20,6 +21,11 @@ const KNOWN_ANSWER_FIXTURE_URL = new URL('../fixtures/known-answer.request.json'
 const PLACEHOLDER_DIGEST = `sha256:${'0'.repeat(64)}`;
 const require = createRequire(import.meta.url);
 
+/** The platform package name a source build reports in place of an installed platform package. */
+export const SOURCE_BUILD = 'source-build';
+/** The variable naming the absolute path of an erden-shacl built from this source, used instead of the package. */
+export const SOURCE_BUILD_VARIABLE = 'ERDEN_SHACL_BIN';
+
 export const ERROR_CODES = Object.freeze({
     ambiguousPackage: 'AMBIGUOUS_PACKAGE',
     binaryDigestMismatch: 'BINARY_DIGEST_MISMATCH',
@@ -32,6 +38,7 @@ export const ERROR_CODES = Object.freeze({
     packageMissing: 'PACKAGE_MISSING',
     pathEscape: 'PATH_ESCAPE',
     selfTestFailed: 'SELF_TEST_FAILED',
+    sourceBuildMissing: 'SOURCE_BUILD_MISSING',
     symlinkDisallowed: 'SYMLINK_DISALLOWED',
     unsupportedLibc: 'UNSUPPORTED_LIBC',
     unsupportedPlatform: 'UNSUPPORTED_PLATFORM',
@@ -255,9 +262,64 @@ function validateMetadata(metadata, expected, details) {
     }
 }
 
+/**
+ * A source build named by `ERDEN_SHACL_BIN` (or `options.sourceBuild`), for a host whose linker cannot reproduce the
+ * mint, such as macOS with an Xcode other than the mint runner's. It has no pinned digest, so it is held to what it
+ * answers: a regular, executable file that is not a link, whose known-answer response is byte-identical to the pinned
+ * response once its own executable digest stands where the qualified one does.
+ */
+function inspectSourceBuild(path, runtime, expected) {
+    const details = { expectedPackage: SOURCE_BUILD, runtime };
+    if (!isAbsolute(path)) {
+        fail(ERROR_CODES.sourceBuildMissing, `${SOURCE_BUILD_VARIABLE} must be an absolute path`, details);
+    }
+    let stat;
+    try {
+        stat = lstatSync(path);
+    } catch {
+        fail(
+            ERROR_CODES.sourceBuildMissing,
+            `${SOURCE_BUILD_VARIABLE} names no file; build one with \`pnpm run shacl:build\``,
+            details,
+        );
+    }
+    if (stat.isSymbolicLink()) {
+        fail(ERROR_CODES.symlinkDisallowed, 'SHACL engine source build must not be a symbolic link', details);
+    }
+    if (!stat.isFile()) {
+        fail(ERROR_CODES.binaryNotRegular, 'SHACL engine source build must be a regular file', details);
+    }
+    details.actualSize = stat.size;
+    if (runtime.platform !== 'win32' && (stat.mode & 0o111) === 0) {
+        fail(ERROR_CODES.binaryNotExecutable, 'SHACL engine source build is not executable', details);
+    }
+    const binaryPath = realpathSync(path);
+    const digest = sha256(readFileSync(binaryPath));
+    const available = Object.freeze({
+        binaryPath,
+        digest,
+        expected,
+        manifest: Object.freeze({ name: SOURCE_BUILD, version: PACKAGE_VERSION }),
+        metadata: Object.freeze({ target: expected.target }),
+        runtime,
+        size: stat.size,
+        sourceBuild: true,
+    });
+    return Object.freeze({ ...available, selfTest: knownAnswer(available) });
+}
+
 function inspectAvailable(options = {}) {
     const runtime = options.runtime ?? detectRuntime();
     const expected = selectExpected(runtime);
+    // The variable describes this host, so an injected runtime or package locator is resolved without it.
+    const sourceBuild =
+        options.sourceBuild ??
+        (options.runtime === undefined && options.locatePackage === undefined
+            ? process.env[SOURCE_BUILD_VARIABLE]
+            : undefined);
+    if (expected.sha256 !== null && sourceBuild !== undefined && sourceBuild !== '') {
+        return inspectSourceBuild(sourceBuild, runtime, expected);
+    }
     if (expected.sha256 === null) {
         fail(
             ERROR_CODES.notMinted,
@@ -375,12 +437,16 @@ function knownAnswer(available) {
     });
     const output = child.stdout ?? '';
     const outputDigest = sha256(output);
+    // The answer names the executable that gave it; a source build's is compared with its own digest put back to the
+    // qualified one, the same length, so every other byte must be the pinned answer's.
+    const comparable =
+        available.sourceBuild === true ? output.replaceAll(available.digest, available.expected.sha256) : output;
     if (
         child.error !== undefined ||
         child.status !== 0 ||
         child.stderr !== '' ||
-        Buffer.byteLength(output) !== available.expected.responseBytes ||
-        outputDigest !== available.expected.responseSha256
+        Buffer.byteLength(comparable) !== available.expected.responseBytes ||
+        sha256(comparable) !== available.expected.responseSha256
     ) {
         fail(
             ERROR_CODES.selfTestFailed,
@@ -406,7 +472,8 @@ export function resolveBundledShaclEngine(options = {}) {
 }
 
 export function runBundledShaclEngineKnownAnswer(options = {}) {
-    return knownAnswer(inspectAvailable(options));
+    const available = inspectAvailable(options);
+    return available.selfTest ?? knownAnswer(available);
 }
 
 export function inspectBundledShaclEngine(options = {}) {
@@ -414,10 +481,13 @@ export function inspectBundledShaclEngine(options = {}) {
     try {
         expected = selectExpected(options.runtime ?? detectRuntime());
         const available = inspectAvailable(options);
-        const selfTest = options.runSelfTest === true ? knownAnswer(available) : Object.freeze({ status: 'not-run' });
+        const selfTest =
+            available.selfTest ??
+            (options.runSelfTest === true ? knownAnswer(available) : Object.freeze({ status: 'not-run' }));
         return Object.freeze({
             availability: 'available',
-            expectedPlatformPackage: expected.packageName,
+            // As the reasoner's: a source build stands in for the platform package, so it is the one expected.
+            expectedPlatformPackage: available.sourceBuild === true ? SOURCE_BUILD : expected.packageName,
             actualPlatformPackage: available.manifest.name,
             packageVersion: available.manifest.version,
             toolVersion: TOOL_VERSION,

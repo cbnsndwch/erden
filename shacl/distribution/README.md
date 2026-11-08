@@ -11,4 +11,17 @@ regular-file status, size, SHA-256 and, outside Windows, the executable bits, ag
 `inspectBundledShaclEngine({ runSelfTest: true })` adds the committed known-answer request, whose answer bytes and
 SHA-256 are pinned per platform.
 
-There is no environment-variable path fallback; tests inject a runtime and package locator.
+## On a host that cannot reproduce the pin: the source build
+
+A native macOS or Windows build links with the host's toolchain, so an Xcode or MSVC other than the mint runner's
+(`macos-15`, `windows-2025`) produces a binary that works but is not byte-identical to the pin, and
+`pnpm run build:shacl` refuses to install it. `pnpm run shacl:build` (`cargo build --release --locked` in `shacl/`)
+writes `shacl/target/release/erden-shacl` instead, and `ERDEN_SHACL_BIN` may name the absolute path of such a build;
+a relative path is refused.
+
+A source build is opt-in and unqualified. With the variable set, the resolver uses it in place of the platform package,
+and holds it to what it answers: a regular, executable file that is not a link, whose known-answer response is
+byte-identical to the pinned response once its own SHA-256 stands where the qualified one does. It runs that known
+answer on every resolution, answers carry the build's own executable digest, and doctor reports it as the platform
+package `source-build`. The variable applies only to this host's own resolution; tests inject a runtime and package
+locator, or a source build path.

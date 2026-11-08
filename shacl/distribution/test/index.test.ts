@@ -24,6 +24,7 @@ import {
     resolveBundledShaclEngine,
     runBundledShaclEngineKnownAnswer,
     SHACL_ENGINE_DIGEST,
+    SOURCE_BUILD,
     SUPPORTED_PLATFORMS,
 } from '../src/index.js';
 
@@ -350,6 +351,86 @@ describe('fail-closed resolution', () => {
             ERROR_CODES.metadataInvalid,
         );
     });
+});
+
+describe('the source build', () => {
+    // `pnpm run shacl:build` writes it; the test that runs it is skipped without it.
+    const sourceBuild = resolve(root, 'shacl/target/release', basename(binaries[current ?? 'linux']));
+
+    it('refuses a relative, missing, linked, non-regular or non-executable source build', () => {
+        expectRefusal(
+            () => resolveBundledShaclEngine({ runtime: runtimes.linux, sourceBuild: 'target/release/erden-shacl' }),
+            ERROR_CODES.sourceBuildMissing,
+        );
+        expectRefusal(
+            () => resolveBundledShaclEngine({ runtime: runtimes.linux, sourceBuild: resolve(temporaryRoot, 'absent') }),
+            ERROR_CODES.sourceBuildMissing,
+        );
+        const directory = mkdtempSync(join(temporaryRoot, 'source-build-'));
+        expectRefusal(
+            () => resolveBundledShaclEngine({ runtime: runtimes.linux, sourceBuild: directory }),
+            ERROR_CODES.binaryNotRegular,
+        );
+        if (process.platform !== 'win32') {
+            const plain = resolve(directory, 'plain');
+            writeFileSync(plain, '#!/bin/sh\n', { mode: 0o644 });
+            expectRefusal(
+                () => resolveBundledShaclEngine({ runtime: runtimes.linux, sourceBuild: plain }),
+                ERROR_CODES.binaryNotExecutable,
+            );
+            const linked = resolve(directory, 'linked');
+            chmodSync(plain, 0o755);
+            symlinkSync(plain, linked);
+            expectRefusal(
+                () => resolveBundledShaclEngine({ runtime: runtimes.linux, sourceBuild: linked }),
+                ERROR_CODES.symlinkDisallowed,
+            );
+        }
+    });
+
+    it.skipIf(process.platform === 'win32')('refuses a source build whose known answer is not the pinned one', () => {
+        const impostor = resolve(mkdtempSync(join(temporaryRoot, 'source-build-')), 'erden-shacl');
+        writeFileSync(impostor, '#!/bin/sh\ncat >/dev/null\nprintf \'{"kind":"ShaclAnswer"}\\n\'\n', { mode: 0o755 });
+        expectRefusal(
+            () => resolveBundledShaclEngine({ runtime: runtimes.linux, sourceBuild: impostor }),
+            ERROR_CODES.selfTestFailed,
+        );
+        const doctor = inspectBundledShaclEngine({ runtime: runtimes.linux, sourceBuild: impostor });
+        expect(doctor).toMatchObject({ availability: 'unavailable', failureCode: ERROR_CODES.selfTestFailed });
+    });
+
+    it('is not consulted for an unsupported platform', () => {
+        expectRefusal(
+            () =>
+                resolveBundledShaclEngine({
+                    runtime: { platform: 'darwin', arch: 'x64' },
+                    sourceBuild: resolve(temporaryRoot, 'absent'),
+                }),
+            ERROR_CODES.unsupportedPlatform,
+        );
+    });
+
+    it.skipIf(current === undefined || !existsSync(sourceBuild))(
+        "resolves this platform's source build, held to the pinned known answer (skipped without `pnpm run shacl:build`)",
+        () => {
+            const digest = `sha256:${createHash('sha256').update(readFileSync(sourceBuild)).digest('hex')}`;
+            const resolved = resolveBundledShaclEngine({ sourceBuild });
+            expect(resolved.tool).toEqual({
+                name: 'erden-shacl',
+                version: PACKAGE_VERSION,
+                engineDigest: SHACL_ENGINE_DIGEST,
+                executableDigest: digest,
+            });
+            const doctor = inspectBundledShaclEngine({ sourceBuild });
+            expect(doctor).toMatchObject({
+                availability: 'available',
+                expectedPlatformPackage: SOURCE_BUILD,
+                actualPlatformPackage: SOURCE_BUILD,
+                digest,
+                selfTest: { status: 'passed', responseBytes: anchorOf(current ?? 'linux').responseBytes },
+            });
+        },
+    );
 });
 
 describe.runIf(current !== undefined)('the bundled engine on this platform', () => {
