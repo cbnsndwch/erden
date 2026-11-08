@@ -50,6 +50,9 @@ export function packFailures(root, profile = OPEN_WORKSPACE_PROFILE, packRules =
     const membersByName = new Map(members.map((member) => [member.manifest.name, member]));
 
     for (const member of members) {
+        if (profile.independentPackages.has(member.path)) {
+            continue;
+        }
         const realPack =
             profile.runtimeTypeScriptPackages.has(member.path) ||
             profile.distributionPackages.has(member.path) ||

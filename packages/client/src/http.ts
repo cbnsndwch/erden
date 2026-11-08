@@ -303,6 +303,124 @@ export async function openRegistryHttpResponse(
     }
 }
 
+export interface SignedPutRequest {
+    readonly url: string;
+    readonly headers: Readonly<Record<string, string>>;
+    readonly body: ReadableStream<Uint8Array>;
+    readonly signal?: AbortSignal;
+    /** How long the transfer may make no progress. It has no total deadline: a package's size sets its duration. */
+    readonly idleTimeoutMilliseconds: number;
+}
+
+export type SignedPutOutcome = 'already-present' | 'stored';
+
+/**
+ * The one request this client makes off the registry's origin: the archive bytes to the storage URL the registry just
+ * signed. It takes no credential and cannot be given one, and it follows no redirect, so nothing but those bytes and
+ * the signed headers can reach another host. A response is never read, and no failure repeats the URL.
+ */
+export async function putToSignedUrl(
+    raw: SignedPutRequest,
+    runtime: RegistryHttpRuntime = Object.freeze({ fetch }),
+): Promise<SignedPutOutcome> {
+    let url: URL;
+    try {
+        url = new URL(raw.url);
+    } catch {
+        throw new RegistryClientError('CLIENT_RESPONSE_INVALID');
+    }
+    const controller = new AbortController();
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    function touch(): void {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            controller.abort(new RegistryClientError('CLIENT_TIMEOUT'));
+        }, raw.idleTimeoutMilliseconds);
+        timer.unref();
+    }
+    const external = raw.signal;
+    function abort(): void {
+        controller.abort(new RegistryClientError('CLIENT_ABORTED'));
+    }
+    external?.addEventListener('abort', abort, { once: true });
+    const reader = raw.body.getReader();
+    const body = new ReadableStream<Uint8Array>({
+        pull: async (stream) => {
+            touch();
+            const next = await reader.read();
+            if (next.done) {
+                stream.close();
+            } else {
+                stream.enqueue(next.value);
+            }
+        },
+        cancel: async (reason) => {
+            await reader.cancel(reason);
+        },
+    });
+    try {
+        if (external?.aborted === true) {
+            throw new RegistryClientError('CLIENT_ABORTED');
+        }
+        touch();
+        const init: RequestInit & { duplex: 'half' } = {
+            method: 'PUT',
+            redirect: 'manual',
+            referrerPolicy: 'no-referrer',
+            cache: 'no-store',
+            credentials: 'omit',
+            signal: controller.signal,
+            headers: raw.headers,
+            body,
+            duplex: 'half',
+        };
+        const response = await runtime.fetch(url, init);
+        await cancelRegistryResponseBody(response);
+        let responseOrigin: string | undefined;
+        try {
+            responseOrigin = response.url === '' ? undefined : new URL(response.url).origin;
+        } catch {
+            throw new RegistryClientError('CLIENT_RESPONSE_INVALID');
+        }
+        if (
+            response.redirected ||
+            (response.status >= 300 && response.status < 400) ||
+            (responseOrigin !== undefined && responseOrigin !== url.origin)
+        ) {
+            throw new RegistryClientError('CLIENT_RESPONSE_INVALID');
+        }
+        if (response.status >= 200 && response.status < 300) {
+            return 'stored';
+        }
+        // The URL allows one write, so this is an earlier try that succeeded after its response was lost.
+        if (response.status === 412) {
+            return 'already-present';
+        }
+        // An expired URL is 403, and the next try starts from a fresh one.
+        if (response.status === 403 || response.status === 408 || response.status === 429 || response.status >= 500) {
+            throw new RegistryClientError('CLIENT_RETRYABLE');
+        }
+        throw new RegistryClientError('CLIENT_RESPONSE_INVALID');
+    } catch (error) {
+        if (external?.aborted === true) {
+            throw new RegistryClientError('CLIENT_ABORTED');
+        }
+        if (controller.signal.aborted) {
+            throw controller.signal.reason instanceof RegistryClientError
+                ? controller.signal.reason
+                : new RegistryClientError('CLIENT_TIMEOUT');
+        }
+        if (error instanceof RegistryClientError) {
+            throw error;
+        }
+        throw new RegistryClientError('CLIENT_TRANSPORT');
+    } finally {
+        clearTimeout(timer);
+        external?.removeEventListener('abort', abort);
+        reader.releaseLock();
+    }
+}
+
 export async function requestRegistryJsonWire(
     raw: RegistryJsonRequest,
     runtime: RegistryHttpRuntime = Object.freeze({ fetch }),

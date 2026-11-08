@@ -9,6 +9,7 @@ export type PackageCodecErrorCode =
     | 'destination-conflict'
     | 'destination-unsafe'
     | 'extraction-io'
+    | 'invalid-location'
     | 'extraction-rollback-unsafe';
 
 /** A deterministic, physical-path-free package codec failure. */

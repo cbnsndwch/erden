@@ -14,7 +14,7 @@
         "shacl:build": "cd shacl && cargo build --release --locked",
         "reasoner:build": "cd reasoner && cargo build --release --locked",
         "reasoner:build:linux": "node reasoner/qualification/build-from-source.mjs",
-        "check:boundaries": "node scripts/check-boundaries.mjs",
+        "check:boundaries": "node scripts/check-boundaries.mjs && node scripts/check-legal-entity.mjs",
         "check:dependency-pins": "node scripts/check-dependency-pins.mjs",
         "erden": "pnpm run build:runtime && node apps/cli/dist/bin.js",
         "check:package-packs": "pnpm run build:runtime && node scripts/check-package-packs.mjs",
@@ -47,6 +47,7 @@
         "oxlint-tsgolint": "7.0.2001",
         "turbo": "2.10.12",
         "typescript": "7.0.2",
+        "vite": "8.2.2",
         "vitest": "4.1.11"
     },
     "engines": {

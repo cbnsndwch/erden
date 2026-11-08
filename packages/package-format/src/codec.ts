@@ -10,6 +10,7 @@ import {
     GENERATED_MANIFEST_PATH,
     normalizePackagePath,
     PackageFixtureError,
+    PortablePathConflictTracker,
     REFERENCE_EXTRACTION_LIMITS,
     TAR_BLOCK_SIZE,
     type PackageFixtureErrorCode,
@@ -90,7 +91,8 @@ interface ParsedEntry {
 export interface PackageArchiveSink {
     readonly directory?: (path: string) => Promise<void>;
     readonly startFile?: (path: string, mode: 0o644 | 0o755) => Promise<void>;
-    readonly writeFile?: (path: string, bytes: Uint8Array) => Promise<void>;
+    /** `archiveOffset` is where `bytes` sit in the archive, as parsed: every piece lies within one stored block. */
+    readonly writeFile?: (path: string, bytes: Uint8Array, archiveOffset: number) => Promise<void>;
     readonly endFile?: (path: string, byteSize: number, sha256: string) => Promise<void>;
 }
 
@@ -422,6 +424,8 @@ class StreamingTarParser {
     readonly #sink: PackageArchiveSink;
     #buffer: Uint8Array = EMPTY_BYTES;
     #entries: ParsedEntry[] = [];
+    readonly #paths = new PortablePathConflictTracker();
+    #blockEnd = 0;
     #active: ActiveFile | undefined;
     #padding = 0;
     #zeroBlocks = 0;
@@ -438,10 +442,11 @@ class StreamingTarParser {
         return this.#entries;
     }
 
-    async write(chunk: Uint8Array): Promise<void> {
+    async write(chunk: Uint8Array, archiveOffset: number): Promise<void> {
         if (chunk.length === 0) {
             return;
         }
+        this.#blockEnd = archiveOffset + chunk.length;
         if (this.#terminated) {
             throw new PackageCodecError('invalid-header', 'Tar archive has data after its two-block terminator');
         }
@@ -459,7 +464,11 @@ class StreamingTarParser {
                     active.hash.update(bytes);
                     active.captured?.push(Uint8Array.from(bytes));
                     const writeFile = this.#sink.writeFile;
-                    await callSink(writeFile === undefined ? undefined : () => writeFile(active.path, bytes));
+                    // File bytes only ever follow a consumed header or padding, so they are a tail of the latest block.
+                    const archiveOffset = this.#blockEnd - this.#buffer.length;
+                    await callSink(
+                        writeFile === undefined ? undefined : () => writeFile(active.path, bytes, archiveOffset),
+                    );
                     active.remaining -= length;
                     this.#buffer = this.#buffer.subarray(length);
                     if (this.#active.remaining > 0) {
@@ -614,10 +623,7 @@ class StreamingTarParser {
         }
         const path = relative.length === 0 ? '.' : relative;
         try {
-            assertNoPortablePathConflicts([
-                ...this.#entries.map((entry) => ({ path: entry.path, kind: entry.kind })),
-                { path, kind: directory ? ('directory' as const) : ('file' as const) },
-            ]);
+            this.#paths.add({ path, kind: directory ? 'directory' : 'file' });
         } catch (error) {
             throw codecError(error);
         }
@@ -820,6 +826,7 @@ async function validatePackageArchiveStreamInternal(
         let decompressed = 0;
         let crc = 0xffffffff;
         let final = false;
+        let archiveOffset = GZIP_HEADER.length;
         while (!final) {
             const blockHeader = await reader.readExact(5, 'Stored DEFLATE block header');
             if ((blockHeader[0] ?? 0xff) > 1) {
@@ -844,7 +851,8 @@ async function validatePackageArchiveStreamInternal(
                 );
             }
             crc = updateCrc32(crc, bytes);
-            await parser.write(bytes);
+            await parser.write(bytes, archiveOffset + 5);
+            archiveOffset += 5 + bytes.length;
         }
         const footer = await reader.readExact(8, 'Gzip footer');
         const archiveSha256 = await reader.finish();
@@ -917,6 +925,7 @@ export function packageCodecErrorCode(error: unknown): PackageFixtureErrorCode |
         error.code !== 'destination-conflict' &&
         error.code !== 'destination-unsafe' &&
         error.code !== 'extraction-io' &&
+        error.code !== 'invalid-location' &&
         error.code !== 'extraction-rollback-unsafe'
         ? error.code
         : undefined;

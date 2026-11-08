@@ -179,6 +179,7 @@ export const RUNTIME_DIST_FILES = new Map([
                 'errors',
                 'extraction',
                 'ignore',
+                'location',
                 'index',
                 'reference-fixture',
                 'service',

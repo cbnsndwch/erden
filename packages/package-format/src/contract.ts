@@ -181,6 +181,62 @@ export interface PortablePathRecord {
     readonly kind: 'directory' | 'file';
 }
 
+/**
+ * The rules of `assertNoPortablePathConflicts`, one record at a time, for a reader that must refuse a conflicting entry
+ * before it accepts the entry's bytes. Each `add` costs the path's depth, so a package costs linear time in its entries.
+ */
+export class PortablePathConflictTracker {
+    readonly #exact = new Map<string, PortablePathRecord>();
+    readonly #canonical = new Map<string, string>();
+    readonly #folded = new Map<string, string>();
+    readonly #descendants = new Map<string, string>();
+
+    add(record: PortablePathRecord): void {
+        if (this.#exact.has(record.path)) {
+            throw new PackageFixtureError('duplicate-path', `Duplicate normalized package path: ${record.path}`);
+        }
+        const nfc = record.path.normalize('NFC');
+        const canonicallyConflicting = this.#canonical.get(nfc);
+        if (canonicallyConflicting !== undefined) {
+            throw new PackageFixtureError(
+                'unicode-conflict',
+                `Unicode-equivalent package paths conflict: ${canonicallyConflicting} and ${record.path}`,
+            );
+        }
+        const key = portablePathCollisionKey(nfc);
+        const conflicting = this.#folded.get(key);
+        if (conflicting !== undefined) {
+            throw new PackageFixtureError(
+                'case-conflict',
+                `Case-insensitive package paths conflict: ${conflicting} and ${record.path}`,
+            );
+        }
+        const segments = record.path.split('/');
+        for (let length = 1; length < segments.length; length += 1) {
+            const ancestorPath = segments.slice(0, length).join('/');
+            if (this.#exact.get(ancestorPath)?.kind === 'file') {
+                throw new PackageFixtureError(
+                    'conflicting-path',
+                    `File path ${ancestorPath} conflicts with descendant ${record.path}`,
+                );
+            }
+        }
+        const descendant = this.#descendants.get(record.path);
+        if (record.kind === 'file' && descendant !== undefined) {
+            throw new PackageFixtureError(
+                'conflicting-path',
+                `File path ${record.path} conflicts with descendant ${descendant}`,
+            );
+        }
+        this.#exact.set(record.path, record);
+        this.#canonical.set(nfc, record.path);
+        this.#folded.set(key, record.path);
+        for (let length = 1; length < segments.length; length += 1) {
+            this.#descendants.set(segments.slice(0, length).join('/'), record.path);
+        }
+    }
+}
+
 /** Reject exact, NFC, case-folded, and file-vs-descendant collisions. */
 export function assertNoPortablePathConflicts(records: ReadonlyArray<PortablePathRecord>): void {
     const exact = new Map<string, PortablePathRecord>();

@@ -4,7 +4,7 @@
 //! its SHA-256. One answer is one JSON object on one line: per data graph, the engine's verdict and every result with
 //! focus node, path, value, constraint component, source shape, severity and messages, or a structured refusal. The
 //! wire format is `erden.shacl/v1` (`packages/ontology/src/shacl-engine/protocol.ts` is the TypeScript side, and
-//! `docs/projects/shacl-engine/epics/E1-erden-shacl.md` the contract).
+//! `shacl/distribution` the resolver that runs this binary).
 //!
 //! The adapter adds no SHACL semantics of its own: shapes are parsed by `purrdf_shapes::shapes::from_dataset_with_base`
 //! with no import table and every data graph is validated by `purrdf_shapes::engine::validate_dataset` with the

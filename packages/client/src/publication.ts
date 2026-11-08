@@ -6,26 +6,27 @@ import {
     decodePublicationAttemptView,
     decodePublicationOpaqueId,
     decodePublicationReportSummary,
+    decodePublicationUploadGrant,
+    decodePublicationUploadRequest,
     normalizeRegistryOrigin,
     parseCliCredential,
     type PublicationAttemptView,
     type PublicationReportSummaryV1,
+    type PublicationSignedPut,
+    type PublicationUploadGrant,
+    type PublicationUploadRequest,
 } from '@erden/contracts';
 
 import {
-    cancelRegistryResponseBody,
-    openRegistryHttpResponse,
-    readRegistryResponseBody,
+    putToSignedUrl,
     requestRegistryJsonWire,
     retryRegistryTransport,
     type RegistryHttpRuntime,
     type RegistryJsonWireResponse,
 } from './http.js';
-import { RegistryClientError, authenticateRegistryJsonHeaders, decodeCanonicalJson, exactRecord } from './wire.js';
+import { RegistryClientError, authenticateRegistryJsonHeaders, exactRecord } from './wire.js';
 
-const SHA256 = /^[0-9a-f]{64}$/u;
-const IDEMPOTENCY_KEY = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/u;
-const textEncoder = new TextEncoder();
+const SIGNED_PUT_IDLE_MILLISECONDS = 120_000;
 
 export interface PublicationUploadInput {
     readonly registryOrigin: string;
@@ -34,6 +35,9 @@ export interface PublicationUploadInput {
     readonly idempotencyKey: string;
     readonly archiveSha256: string;
     readonly byteSize: number;
+    readonly canonicalIri: string;
+    readonly preferredAlias: string;
+    readonly version: string;
     readonly open: () => AsyncIterable<Uint8Array> | Promise<AsyncIterable<Uint8Array>>;
     readonly signal?: AbortSignal;
 }
@@ -222,29 +226,121 @@ async function uploadBody(
     });
 }
 
-async function decodeUploadResponse(response: Response, signal: AbortSignal): Promise<PublicationAttemptView> {
-    if (response.headers.get('content-type') !== 'application/json; charset=utf-8') {
-        await cancelRegistryResponseBody(response);
+/** The registry signs for what this client declared, and only an origin as protected as its own may receive the bytes. */
+function checkSignedPut(put: PublicationSignedPut, registryOrigin: string, request: PublicationUploadRequest): void {
+    if (
+        (registryOrigin.startsWith('https:') && !put.url.startsWith('https:')) ||
+        put.headers['content-length'] !== String(request.byteSize) ||
+        put.headers['x-amz-checksum-sha256'] !== Buffer.from(request.archiveSha256, 'hex').toString('base64')
+    ) {
         throw new RegistryClientError('CLIENT_RESPONSE_INVALID');
     }
-    const bytes = await readRegistryResponseBody(response, PUBLICATION_QUERY_LIMITS.maxStatusBytes, signal);
-    const wire: RegistryJsonWireResponse = Object.freeze({
-        status: response.status,
-        body: decodeCanonicalJson(bytes),
-        bytes,
-        headers: response.headers,
-    });
-    if (response.status !== 202) {
-        return publicationError(wire);
+}
+
+async function startUpload(
+    input: PublicationUploadInput,
+    registryOrigin: string,
+    bearer: string,
+    create: string,
+    request: PublicationUploadRequest,
+    runtime?: RegistryHttpRuntime,
+): Promise<PublicationUploadGrant> {
+    const response = await requestRegistryJsonWire(
+        {
+            registryOrigin,
+            path: `/api/v1/publications/uploads?create=${create}`,
+            method: 'POST',
+            body: request,
+            bearer,
+            ...(input.signal === undefined ? {} : { signal: input.signal }),
+        },
+        runtime,
+    );
+    if (response.status !== 201) {
+        return publicationError(response);
     }
-    authenticateRegistryJsonHeaders(response.headers, bytes, 'no-store');
+    authenticateRegistryJsonHeaders(response.headers, response.bytes, 'no-store');
+    let grant: PublicationUploadGrant;
     try {
-        return decodePublicationAttemptView(wire.body);
+        grant = decodePublicationUploadGrant(response.body);
+    } catch {
+        throw new RegistryClientError('CLIENT_RESPONSE_INVALID');
+    }
+    if (grant.put !== null) {
+        checkSignedPut(grant.put, registryOrigin, request);
+    }
+    return grant;
+}
+
+async function sendArchive(input: PublicationUploadInput, put: PublicationSignedPut, runtime?: RegistryHttpRuntime) {
+    const body = await uploadBody(input.open, input.byteSize, input.archiveSha256);
+    try {
+        const outcome = await putToSignedUrl(
+            {
+                url: put.url,
+                headers: put.headers,
+                body: body.stream,
+                idleTimeoutMilliseconds: SIGNED_PUT_IDLE_MILLISECONDS,
+                ...(input.signal === undefined ? {} : { signal: input.signal }),
+            },
+            runtime,
+        );
+        if (outcome === 'stored') {
+            await body.settled();
+            if (!body.completed() || body.failure() !== undefined) {
+                throw body.failure() ?? new RegistryClientError('CLIENT_INPUT_INVALID');
+            }
+        }
+    } catch (error) {
+        const failure = body.failure();
+        if (failure !== undefined) {
+            throw failure;
+        }
+        throw error;
+    } finally {
+        await body.close();
+    }
+}
+
+async function finalizeUpload(
+    input: PublicationUploadInput,
+    registryOrigin: string,
+    bearer: string,
+    uploadId: string,
+    runtime?: RegistryHttpRuntime,
+): Promise<PublicationAttemptView> {
+    const response = await requestRegistryJsonWire(
+        {
+            registryOrigin,
+            path: `/api/v1/publications/uploads/${encodeURIComponent(uploadId)}/finalize`,
+            method: 'POST',
+            bearer,
+            ...(input.signal === undefined ? {} : { signal: input.signal }),
+            maximumResponseBytes: PUBLICATION_QUERY_LIMITS.maxStatusBytes,
+        },
+        runtime,
+    );
+    if (response.status !== 202) {
+        return publicationError(response);
+    }
+    authenticateRegistryJsonHeaders(response.headers, response.bytes, 'no-store');
+    try {
+        const attempt = decodePublicationAttemptView(response.body);
+        if (attempt.attemptId !== uploadId) {
+            throw new Error();
+        }
+        return attempt;
     } catch {
         throw new RegistryClientError('CLIENT_RESPONSE_INVALID');
     }
 }
 
+/**
+ * Publishes an archive in three steps: ask the registry to start an upload, send the bytes directly to the storage URL
+ * it signs, then finalize. Starting and finalizing both repeat safely under the same idempotency key, so a retry after
+ * an expired URL or a lost connection starts over from a fresh URL. The registry verifies everything after finalize;
+ * what it finds arrives through the attempt this returns and later polls of it.
+ */
 export async function uploadPublication(
     input: PublicationUploadInput,
     runtime?: RegistryHttpRuntime,
@@ -252,67 +348,41 @@ export async function uploadPublication(
     const registryOrigin = canonicalOrigin(input.registryOrigin);
     const bearer = canonicalBearer(input.bearer, true);
     const rawCreate: unknown = input.create;
+    let request: PublicationUploadRequest;
+    try {
+        request = decodePublicationUploadRequest({
+            archiveSha256: input.archiveSha256,
+            byteSize: input.byteSize,
+            canonicalIri: input.canonicalIri,
+            idempotencyKey: input.idempotencyKey,
+            preferredAlias: input.preferredAlias,
+            version: input.version,
+        });
+    } catch {
+        throw new RegistryClientError('CLIENT_INPUT_INVALID');
+    }
     if (
         (rawCreate !== false && rawCreate !== 'private' && rawCreate !== 'public') ||
-        typeof input.idempotencyKey !== 'string' ||
-        !input.idempotencyKey.isWellFormed() ||
-        !IDEMPOTENCY_KEY.test(input.idempotencyKey) ||
-        textEncoder.encode(input.idempotencyKey).byteLength > PUBLICATION_LIMITS.maxIdempotencyKeyBytes ||
-        typeof input.archiveSha256 !== 'string' ||
-        !SHA256.test(input.archiveSha256) ||
-        !Number.isSafeInteger(input.byteSize) ||
-        input.byteSize < 1 ||
-        input.byteSize > PUBLICATION_LIMITS.maxCandidateBytes ||
-        typeof input.open !== 'function'
+        request.byteSize > PUBLICATION_LIMITS.maxCandidateBytes ||
+        typeof input.open !== 'function' ||
+        bearer === undefined
     ) {
         throw new RegistryClientError('CLIENT_INPUT_INVALID');
     }
-    if (bearer === undefined) {
-        throw new RegistryClientError('CLIENT_INPUT_INVALID');
-    }
     const create = input.create === false ? 'false' : input.create;
-    return await retryRegistryTransport(
+    const uploadId = await retryRegistryTransport(
         async () => {
-            const body = await uploadBody(input.open, input.byteSize, input.archiveSha256);
-            let opened;
-            try {
-                opened = await openRegistryHttpResponse(
-                    {
-                        registryOrigin,
-                        path: `/api/v1/publications?create=${create}`,
-                        method: 'POST',
-                        headers: {
-                            accept: 'application/json',
-                            authorization: `Bearer ${bearer}`,
-                            'content-length': String(input.byteSize),
-                            'content-type': 'application/vnd.erden.package.v1',
-                            'idempotency-key': input.idempotencyKey,
-                            'x-erden-archive-sha256': input.archiveSha256,
-                        },
-                        body: body.stream,
-                        streamingRequest: true,
-                        ...(input.signal === undefined ? {} : { signal: input.signal }),
-                        timeoutMilliseconds: 300000,
-                    },
-                    runtime,
-                );
-                const attempt = await decodeUploadResponse(opened.response, opened.signal);
-                await body.settled();
-                if (!body.completed() || body.failure() !== undefined) {
-                    throw body.failure() ?? new RegistryClientError('CLIENT_INPUT_INVALID');
-                }
-                return attempt;
-            } catch (error) {
-                const failure = body.failure();
-                if (failure !== undefined) {
-                    throw failure;
-                }
-                throw error;
-            } finally {
-                opened?.finish();
-                await body.close();
+            const grant = await startUpload(input, registryOrigin, bearer, create, request, runtime);
+            if (grant.put !== null) {
+                await sendArchive(input, grant.put, runtime);
             }
+            return grant.uploadId;
         },
+        runtime,
+        input.signal,
+    );
+    return await retryRegistryTransport(
+        async () => await finalizeUpload(input, registryOrigin, bearer, uploadId, runtime),
         runtime,
         input.signal,
     );

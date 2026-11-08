@@ -1,7 +1,7 @@
 {
-    "recordedOn": "merge/owl-el-rl-code over main fdd33bf (with erden-shacl), 2026-10-16: reasoner 0.3.0+purrdf.0.12.0.dfb1df7 built from source (calculus fc444990\u2026, partition rules erden.profile-partition/v3; the test hashes each report with a placeholder executable digest, since a source build has no pinned one) and erden-shacl 0.1.0+purrdf.3.0.1 (6ec761d9\u2026). Against the 0.2.0 recording, decided consistent reports add reasoning.completeness, and the reasoner identity changes; report-mode-properties-typed-by-dependent also names the v3 rules digest. Re-recorded on fix/registry-gaps-reasoner, 2026-10-16: inconsistent and inconsistent-across-layers only add reasoning.diagnostics[].locations, the file, line and column of each statement the diagnostic\u2019s axioms were read from; with that key removed they give the bytes recorded before.",
+    "recordedOn": "fix/ci-green-2, on the vocabulary IRIs under erden.sh/o/erden/",
     "reports": {
-        "erden-demo": "2e2ca24b75b07c2d0bb14752237824c30fae64f5d321a9aa617b2f30af981ab9",
+        "erden-demo": "081b7b66c352abd975da5be686d3abaccc2ccad2216c8066b4afc67487d6d386",
         "synthetic-chain": "1c4269f9e8181a6df13a884096b7f822dee77d2ed2220fc94d90072db0c9ad32",
         "local-additions": "97b67002cb07a936c86056234260da7154ddfd96d5dd64ef6aa6684e23116a58",
         "dependency-class-under-new-class": "1f9bae4682dfcf67d434ecd449f45d4b2a4688b08fb634806a46e3613789edf4",
