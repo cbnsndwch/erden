@@ -52,7 +52,9 @@ Build missing engines using the repository workflow:
 
 The SHACL build script installs only a byte-identical pinned result into its platform package. Simply building `shacl/target/release/erden-shacl` does not perform that installation. Do not invent an `ERDEN_SHACL_BIN` override.
 
-After builds, use the selected Node runtime:
+If a native build has the expected size but a different digest, inspect the host SDK and linker as well as Rust. Matching the Rust version does not guarantee identical native linker output. When no release is available, an official artifact from the canonical upstream CI may restore a checkout only if its executable size and SHA-256 exactly match the checkout's committed platform metadata and resolver anchors. Verify before executing or installing it, use the declared platform-package path, then run `build-from-source.mjs --check`, `doctor` and the distribution known-answer check. A workflow success or artifact name alone is insufficient, and CI artifact retention is not a permanent distribution route. Preserve a valid installed engine; if no matching artifact is available, report the remaining reproducibility blocker.
+
+After builds or verified artifact installation, use the selected Node runtime:
 
 ```bash
 node apps/cli/dist/bin.js doctor --json

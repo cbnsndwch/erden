@@ -26,7 +26,7 @@ The user accepted the proposed collection with an additional environment-readine
 
 - [x] Ground model creation in the manifest schema and the demo's evidence, SHACL and competency-question formats.
 - [x] Define bounded edit/check loops, evidence preservation and a clear distinction between validated structure and factual truth.
-- [ ] Exercise a fresh project and the existing demo in an isolated temporary directory; check an intentionally failing constraint as well as a passing model. **Partly verified:** initialization succeeds with the verified reasoner; successful semantic checks remain blocked because the SHACL build was refused for a digest mismatch. See `skills/TESTING.md`.
+- [x] Exercise a fresh project, the existing demo and an isolated fixture with an intentionally failing SHACL constraint. After installing the exact pinned upstream engine, the demo passes and the invalid fixture reports the expected violation. See `skills/TESTING.md`.
 
 ### Task 3: Querying, dependencies and publication
 
@@ -57,4 +57,4 @@ No production publishing, login or remote writes are required to deliver this co
 
 ## Completion record
 
-Six skills were authored and installed in a clean temporary project. Structure, fixture paths, interfaces, formatting and repository boundaries pass. Three tasks were evaluated with and without skills; an output-extension gap was fixed and its targeted follow-up passed. An independent source review found no material instruction/CLI mismatch. Successful semantic validation and registry-backed cases remain unverified for the reasons recorded in `skills/TESTING.md`. No production code, engine pins, global shell configuration or remote registry state was changed.
+Six skills were authored and installed in a clean temporary project. Structure, fixture paths, interfaces, formatting and repository boundaries pass. Three tasks were evaluated with and without skills; an output-extension gap was fixed and its targeted follow-up passed. An independent source review found no material instruction/CLI mismatch. The qualified SHACL engine was subsequently restored from an exact-match upstream artifact; direct CLI semantic validation and an invalid-constraint check now pass their expected outcomes. Full agent evaluations in English and registry-backed cases remain unverified as recorded in `skills/TESTING.md`. No production code, engine pins, global shell configuration or remote registry state was changed.

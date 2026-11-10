@@ -243,5 +243,39 @@
             "failure": "Real doctor KAT: SHACL BINARY_MISSING"
         },
         "scope": "Targeted regression after upstream contract changes; historical comparison above is not a current benchmark."
+    },
+    "runtime_recovery": {
+        "source_revision": "560295c",
+        "platform": "darwin-arm64",
+        "node_version": "24.17.0",
+        "artifact": {
+            "repository": "cbnsndwch/erden",
+            "workflow_run_id": 40711192325,
+            "artifact_id": 12826538833,
+            "name": "shacl-aarch64-apple-darwin",
+            "source_commit": "a65794c4d925c46d5ec31b5916d785b8e307010a",
+            "bytes": 9616368,
+            "sha256": "f96a8ddac5e32c2e9be0c5261626b7439bf5bd4de5a36d4dbfd627b2dfb4ad4f"
+        },
+        "verification": {
+            "matches_committed_pin": true,
+            "installed_pin_check_exit_code": 0,
+            "doctor_exit_code": 0,
+            "engine_self_tests": "passed",
+            "valid_demo_check_exit_code": 0,
+            "valid_demo_stage_statuses": "all six passed",
+            "invalid_shacl_check_exit_code": 1,
+            "invalid_shacl_failure_code": "shacl-conformance",
+            "invalid_shacl_violations": 1,
+            "fresh_init_exit_code": 0,
+            "fresh_project_check_exit_code": 0,
+            "distribution_closure_exit_code": 0
+        },
+        "affected_suites": {
+            "passed": 159,
+            "skipped": 6,
+            "failed": 0
+        },
+        "scope": "Direct runtime and CLI verification after installing the qualified binary; no engine pins or production code changed, no agent skill reruns, no registry operations, and no full workspace gate claim."
     }
 }
