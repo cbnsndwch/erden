@@ -1,10 +1,10 @@
 [
     {
-        "query": "prepara la versión 1.2.0 de Erden sin subirla",
+        "query": "prepare Erden version 1.2.0 without uploading it",
         "should_trigger": true
     },
     {
-        "query": "publica este modelo de Erden como privado",
+        "query": "publish this Erden model privately",
         "should_trigger": true
     },
     {
@@ -12,15 +12,15 @@
         "should_trigger": true
     },
     {
-        "query": "comprueba que Erden esté instalado",
+        "query": "check that Erden is installed",
         "should_trigger": false
     },
     {
-        "query": "consulta una versión publicada de Erden",
+        "query": "query a published Erden version",
         "should_trigger": false
     },
     {
-        "query": "publica un post en Instagram",
+        "query": "publish an Instagram post",
         "should_trigger": false
     }
 ]

@@ -1,6 +1,6 @@
 ---
 name: erden-query
-description: Answer natural-language questions using an exact published Erden knowledge version, translating the question into supported read-only queries and explaining the returned evidence. Use for questions about facts, relationships or counts in an Erden release, including “consulta esta base de conocimiento” and “qué proveedores dependen de este producto”. Do not use for arbitrary SQL, live external data, local model validation, or editing knowledge.
+description: Answer natural-language questions using an exact published Erden knowledge version, translating the question into supported read-only queries and explaining the returned evidence. Use for questions about facts, relationships or counts in an Erden release, including “query this knowledge base” and “which suppliers depend on this product”. Do not use for arbitrary SQL, live external data, local model validation, or editing knowledge.
 license: Apache-2.0
 metadata:
     version: '0.1.0'
@@ -39,4 +39,4 @@ Use the returned bindings or boolean, with the ontology/version and relevant pro
 
 An empty result means no matching answer in the queried dataset under that query. `ASK false` is not proof that the claim is false in the real world. Distinguish declared and inferred data when the question depends on that distinction. Do not claim freshness beyond the chosen release.
 
-Example requests: “En @equipo/compras versión 1.2.0, ¿qué proveedores suministran este producto?” / “Using this published Erden release, count suppliers by category and show the supporting version.”
+Example requests: “In @team/purchasing version 1.2.0, which suppliers supply this product?” / “Using this published Erden release, count suppliers by category and show the supporting version.”

@@ -3,7 +3,7 @@
     "evals": [
         {
             "id": 1,
-            "prompt": "Comprueba si esta máquina puede validar un proyecto Erden localmente. No instales ni cambies nada.",
+            "prompt": "Check whether this machine can validate an Erden project locally. Do not install or change anything.",
             "expected_output": "Run available CLI diagnostics, distinguish Node, reasoner and SHACL state, and report local readiness without mutations.",
             "files": [],
             "expectations": [
@@ -14,7 +14,7 @@
         },
         {
             "id": 2,
-            "prompt": "Quiero configurar Erden desde este checkout usando las versiones que ya tengo instaladas.",
+            "prompt": "Set up Erden from this checkout using the versions I already have installed.",
             "expected_output": "Inspect checkout pins and existing runtimes, use the appropriate source workflow, and verify the actual result without bypassing pins.",
             "files": []
         },

@@ -1,10 +1,10 @@
 [
     {
-        "query": "convierte estas notas en conocimiento reutilizable dentro de Erden",
+        "query": "turn these notes into reusable knowledge in Erden",
         "should_trigger": true
     },
     {
-        "query": "añade esta relación al modelo Erden existente",
+        "query": "add this relationship to the existing Erden model",
         "should_trigger": true
     },
     {
@@ -12,15 +12,15 @@
         "should_trigger": true
     },
     {
-        "query": "resume este documento en tres frases",
+        "query": "summarize this document in three sentences",
         "should_trigger": false
     },
     {
-        "query": "qué significa ontología en filosofía",
+        "query": "what does ontology mean in philosophy",
         "should_trigger": false
     },
     {
-        "query": "consulta esta versión ya publicada de Erden",
+        "query": "query this already published Erden version",
         "should_trigger": false
     }
 ]

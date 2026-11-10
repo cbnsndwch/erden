@@ -1,6 +1,6 @@
 ---
 name: erden-publish
-description: Prepare, package and publish an Erden knowledge release, or inspect its publication status and validation report. Use when someone asks to share/version knowledge in the Erden registry, “publica esta versión”, prepare a release without uploading, or investigate a rejected publication. Do not publish merely because someone asked to model, validate or query knowledge.
+description: Prepare, package and publish an Erden knowledge release, or inspect its publication status and validation report. Use when someone asks to share/version knowledge in the Erden registry, “publish this version”, prepare a release without uploading, or investigate a rejected publication. Do not publish merely because someone asked to model, validate or query knowledge.
 license: Apache-2.0
 metadata:
     version: '0.1.0'
@@ -40,4 +40,4 @@ Read the returned attempt state and identifier. Use `erden publication <attempt-
 
 Distinguish prepared, cancelled, pending, published and rejected/failed states from the returned evidence. Include version, identity, registry, attempt ID when present, and validation findings. A zero exit code or an accepted upload alone does not prove publication. Do not invent a release URL; use a returned URL or a documented report link derived from the actual registry and attempt.
 
-Example requests: “Prepara la versión 1.2.0, pero no la subas.” / “Publish this validated Erden release privately and explain the registry's final verdict.”
+Example requests: “Prepare version 1.2.0, but do not upload it.” / “Publish this validated Erden release privately and explain the registry's final verdict.”

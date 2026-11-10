@@ -3,7 +3,7 @@
     "evals": [
         {
             "id": 1,
-            "prompt": "Consulta @example/suppliers y dime qué proveedores hay. No tengo una versión seleccionada ni un proyecto local.",
+            "prompt": "Query @example/suppliers and tell me which suppliers it contains. I have not selected a version and have no local project.",
             "expected_output": "Ask for the missing exact release version and identify https://registry.erden.sh as the built-in default; clarify a different registry only when the context requires it. Do not invent latest or publish a local model.",
             "files": [],
             "expectations": [
@@ -14,13 +14,13 @@
         },
         {
             "id": 2,
-            "prompt": "En la versión exacta proporcionada por el registro de prueba, lista los proveedores y cita la versión consultada.",
+            "prompt": "List the suppliers in the exact version provided by the test registry and cite the queried version.",
             "expected_output": "Use a supported bounded SELECT with the actual vocabulary and explain the returned bindings and release provenance.",
             "files": []
         },
         {
             "id": 3,
-            "prompt": "El registro devolvió ASK false para esta afirmación. ¿Significa que es falsa en el mundo real?",
+            "prompt": "The registry returned ASK false for this claim. Does that mean it is false in the real world?",
             "expected_output": "Explain absence of a matching fact in that dataset/query without asserting universal real-world falsity.",
             "files": []
         }

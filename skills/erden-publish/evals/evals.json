@@ -3,7 +3,7 @@
     "evals": [
         {
             "id": 1,
-            "prompt": "Prepara la versión 1.2.0 del proyecto de prueba, pero no la subas ni inicies sesión.",
+            "prompt": "Prepare version 1.2.0 of the test project, but do not upload it or log in.",
             "expected_output": "Check then pack only if appropriate; report any runtime blocker without logging in, publishing or claiming a created artifact.",
             "files": [
                 "evals/files/project/README.md",
@@ -21,7 +21,7 @@
         },
         {
             "id": 2,
-            "prompt": "Publica la versión 1.2.0 en el proyecto privado existente del registro de prueba.",
+            "prompt": "Publish version 1.2.0 to the existing private project in the test registry.",
             "expected_output": "Preserve existing identity and visibility, authenticate only if needed, publish to the test registry and distinguish pending from terminal success.",
             "files": [
                 "evals/files/project/README.md",
@@ -34,7 +34,7 @@
         },
         {
             "id": 3,
-            "prompt": "Mi comando publish --no-wait devolvió exit 0 y state queued. ¿Ya está publicada?",
+            "prompt": "My publish --no-wait command returned exit 0 and state queued. Is the version published yet?",
             "expected_output": "Explain that it remains pending; inspect the same attempt when its identity/registry are known, without issuing another upload.",
             "files": []
         }

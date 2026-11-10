@@ -1,6 +1,6 @@
 ---
 name: erden-setup
-description: Check and prepare everything needed to use Erden, including the CLI, runtime, reasoning and SHACL engines, project configuration, and task-specific registry access. Use when someone wants to start using Erden, asks whether their computer is ready, says “prepara Erden” or “no me funciona Erden”, or encounters installation and missing-engine errors. Do not use for generic machine setup unrelated to Erden or for checking the meaning of an ontology.
+description: Check and prepare everything needed to use Erden, including the CLI, runtime, reasoning and SHACL engines, project configuration, and task-specific registry access. Use when someone wants to start using Erden, asks whether their computer is ready, says “set up Erden” or “Erden is not working for me”, or encounters installation and missing-engine errors. Do not use for generic machine setup unrelated to Erden or for checking the meaning of an ontology.
 license: Apache-2.0
 metadata:
     version: '0.1.0'
@@ -39,4 +39,4 @@ Read [runtime.md](references/runtime.md) when installation, source builds, platf
 
 Return a small table of the components checked, their observed status and any action taken. State readiness for the requested task, separating local engine readiness, project validation and registry access. Include the next concrete step only for unresolved items. Do not describe untested components as ready.
 
-Example requests: “Quiero usar Erden por primera vez; prepara lo necesario.” / “Check whether this machine can run Erden locally; don't change anything.”
+Example requests: “I want to use Erden for the first time; set up what I need.” / “Check whether this machine can run Erden locally; don't change anything.”

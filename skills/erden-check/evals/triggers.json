@@ -1,10 +1,10 @@
 [
     {
-        "query": "valida el conocimiento de este proyecto Erden",
+        "query": "validate the knowledge in this Erden project",
         "should_trigger": true
     },
     {
-        "query": "explícame por qué falla mi pregunta de competencia en Erden",
+        "query": "explain why my Erden competency question fails",
         "should_trigger": true
     },
     {
@@ -12,15 +12,15 @@
         "should_trigger": true
     },
     {
-        "query": "revisa si tengo instalado Erden y sus motores",
+        "query": "check whether Erden and its engines are installed",
         "should_trigger": false
     },
     {
-        "query": "ejecuta las pruebas unitarias del CLI",
+        "query": "run the CLI unit tests",
         "should_trigger": false
     },
     {
-        "query": "publica la versión validada de Erden",
+        "query": "publish the validated Erden version",
         "should_trigger": false
     }
 ]

@@ -1,10 +1,10 @@
 [
     {
-        "query": "consulta los proveedores en @equipo/compras versión 1.0.0 de Erden",
+        "query": "query suppliers in Erden @team/purchasing version 1.0.0",
         "should_trigger": true
     },
     {
-        "query": "cuenta productos en esta versión publicada en Erden",
+        "query": "count products in this published Erden version",
         "should_trigger": true
     },
     {
@@ -12,15 +12,15 @@
         "should_trigger": true
     },
     {
-        "query": "haz una consulta SQL en Postgres",
+        "query": "run a SQL query in Postgres",
         "should_trigger": false
     },
     {
-        "query": "valida una ontología local de Erden sin publicar",
+        "query": "validate a local Erden ontology without publishing",
         "should_trigger": false
     },
     {
-        "query": "edita los proveedores del modelo Erden",
+        "query": "edit the suppliers in the Erden model",
         "should_trigger": false
     }
 ]

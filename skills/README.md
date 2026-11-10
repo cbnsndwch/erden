@@ -2,14 +2,14 @@
 
 Use Erden through natural-language requests in an agent that can read files and run commands. The agent selects the relevant skill, operates the Erden CLI, and explains the actual result in your language.
 
-| Skill                                             | What you can ask                                                                                             |
-| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| [erden-setup](erden-setup/SKILL.md)               | “Check whether my machine is ready for Erden.” / “Prepara todo lo necesario para usar Erden.”                |
-| [erden-model](erden-model/SKILL.md)               | “Turn these supplier rules into Erden knowledge.” / “Convierte estas notas en conocimiento reutilizable.”    |
-| [erden-check](erden-check/SKILL.md)               | “Validate this project and explain its errors.” / “Valida estas reglas sin cambiar archivos.”                |
-| [erden-query](erden-query/SKILL.md)               | “Ask this published release which products use this supplier.” / “Consulta los proveedores de esta versión.” |
-| [erden-dependencies](erden-dependencies/SKILL.md) | “Restore the exact locked dependencies offline.” / “Actualiza este vocabulario compartido.”                  |
-| [erden-publish](erden-publish/SKILL.md)           | “Prepare version 1.2.0 without uploading.” / “Publica esta versión en el registro indicado.”                 |
+| Skill                                             | What you can ask                                                                                        |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| [erden-setup](erden-setup/SKILL.md)               | “Check whether my machine is ready for Erden.” / “Set up everything needed to use Erden.”               |
+| [erden-model](erden-model/SKILL.md)               | “Turn these supplier rules into Erden knowledge.” / “Turn these notes into reusable knowledge.”         |
+| [erden-check](erden-check/SKILL.md)               | “Validate this project and explain its errors.” / “Validate these rules without changing files.”        |
+| [erden-query](erden-query/SKILL.md)               | “Ask this published release which products use this supplier.” / “Query the suppliers in this version.” |
+| [erden-dependencies](erden-dependencies/SKILL.md) | “Restore the exact locked dependencies offline.” / “Update this shared vocabulary.”                     |
+| [erden-publish](erden-publish/SKILL.md)           | “Prepare version 1.2.0 without uploading.” / “Publish this version to the specified registry.”          |
 
 ## Install from this checkout
 
@@ -56,7 +56,7 @@ After public integration, test listing and installation from a clean project, ve
 
 See [TESTING.md](TESTING.md) for validation commands, the initial evaluation set, observed results and remaining gaps. Update the relevant skill whenever a CLI flag, JSON contract, runtime prerequisite or semantic policy changes. Run formatting, structural validation, installation checks and the affected behavioral cases before release.
 
-The collection includes 18 initial behavioral cases and 36 trigger/non-trigger examples across Spanish and English. Their presence is not a claim that every case has run. Trigger selection also depends on the agent/model, so validate the clients you intend to advertise.
+The collection includes 18 initial behavioral cases and 36 trigger/non-trigger examples in English. Their presence is not a claim that every case has run. Trigger selection also depends on the agent/model, so validate the clients you intend to advertise.
 
 Authoring follows the [Agent Skills specification](https://agentskills.io/specification), its [creation guidance](https://agentskills.io/skill-creation/best-practices), and the [skill-creator evaluation workflow](https://github.com/anthropics/skills/tree/main/skills/skill-creator). The project-specific research and tradeoffs are recorded in [skills-research.md](../docs/skills-research.md).
 

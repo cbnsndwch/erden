@@ -209,7 +209,8 @@
         "Three cases, one independent agent per case/configuration. Narrow smoke checks, not a statistically reliable comparison.",
         "Execution token counts and durations were not exposed by agent completion notifications; no timing/cost metrics are reported.",
         "Both publication agents recovered from an invalid output extension; this finding informed a targeted documentation fix.",
-        "Local SHACL verification blocked successful semantic checks. No live registry operations were attempted."
+        "Local SHACL verification blocked successful semantic checks. No live registry operations were attempted.",
+        "Checked-in evaluation prompts were subsequently translated into English. These historical runs predate that wording change; the translated prompts have not been rerun."
     ],
     "targeted_followup": {
         "case": "publish-prepare-only",

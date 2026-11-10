@@ -3,19 +3,19 @@
     "evals": [
         {
             "id": 1,
-            "prompt": "Restaura las dependencias exactas de este proyecto sin usar la red.",
+            "prompt": "Restore the exact dependencies of this project without using the network.",
             "expected_output": "Use offline frozen installation, preserving constraints and explaining any absent cached artifact.",
             "files": []
         },
         {
             "id": 2,
-            "prompt": "Actualiza solo @example/suppliers dentro del rango que ya permite mi manifiesto.",
+            "prompt": "Update only @example/suppliers within the range already allowed by my manifest.",
             "expected_output": "Update only the selected dependency, preserve the declared range and inspect the actual lockfile/report.",
             "files": []
         },
         {
             "id": 3,
-            "prompt": "Muéstrame qué haría quitar @example/suppliers, pero no cambies nada.",
+            "prompt": "Show me what removing @example/suppliers would do, but do not change anything.",
             "expected_output": "Inspect and explain the intended removal without inventing a remove dry-run flag or pruning the shared store.",
             "files": []
         }

@@ -3,7 +3,7 @@
     "evals": [
         {
             "id": 1,
-            "prompt": "Crea un proyecto local de Erden con estas notas: Acme es un proveedor preferido, y todo proveedor preferido es proveedor. Conserva la fuente y comprueba el resultado.",
+            "prompt": "Create a local Erden project from these notes: Acme is a preferred supplier, and every preferred supplier is a supplier. Preserve the source and check the result.",
             "expected_output": "Create a small attributed model, relevant shape and justified competency question; report the actual check result or environment blocker.",
             "files": [
                 "evals/files/project/README.md",
@@ -16,7 +16,7 @@
         },
         {
             "id": 2,
-            "prompt": "Añade el proveedor Beta al proyecto de prueba y conserva la regla de proveedores preferidos.",
+            "prompt": "Add supplier Beta to the test project and preserve the preferred-supplier rule.",
             "expected_output": "Preserve existing identity and evidence, add only sourced knowledge and adjust question expectations from the changed facts before checking.",
             "files": [
                 "evals/files/project/README.md",
@@ -29,7 +29,7 @@
         },
         {
             "id": 3,
-            "prompt": "Explícame qué es una ontología sin crear archivos.",
+            "prompt": "Explain what an ontology is without creating any files.",
             "expected_output": "Explain the term without scaffolding a project or invoking unrelated mutation workflows.",
             "files": []
         }

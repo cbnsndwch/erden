@@ -1,10 +1,10 @@
 [
     {
-        "query": "instala las dependencias bloqueadas de mi proyecto Erden sin red",
+        "query": "install the locked dependencies of my Erden project offline",
         "should_trigger": true
     },
     {
-        "query": "añade este vocabulario de Erden al proyecto",
+        "query": "add this Erden vocabulary to the project",
         "should_trigger": true
     },
     {
@@ -12,15 +12,15 @@
         "should_trigger": true
     },
     {
-        "query": "actualiza las dependencias npm del CLI de Erden",
+        "query": "update the Erden CLI npm dependencies",
         "should_trigger": false
     },
     {
-        "query": "instala el ejecutable erden",
+        "query": "install the erden executable",
         "should_trigger": false
     },
     {
-        "query": "publica mi vocabulario en Erden",
+        "query": "publish my vocabulary in Erden",
         "should_trigger": false
     }
 ]

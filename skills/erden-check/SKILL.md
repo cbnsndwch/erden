@@ -1,6 +1,6 @@
 ---
 name: erden-check
-description: Validate an Erden knowledge project, explain contradictions, failed rules, competency questions and citation problems, and repair model errors when requested. Use when someone asks “valida mi conocimiento”, “revisa estas reglas en Erden”, or wants to understand an Erden check report. Use erden-setup instead for installation readiness alone; this skill checks the project's knowledge and evidence.
+description: Validate an Erden knowledge project, explain contradictions, failed rules, competency questions and citation problems, and repair model errors when requested. Use when someone asks “validate my knowledge”, “check these rules in Erden”, or wants to understand an Erden check report. Use erden-setup instead for installation readiness alone; this skill checks the project's knowledge and evidence.
 license: Apache-2.0
 metadata:
     version: '0.1.0'
@@ -31,4 +31,4 @@ Do not remove constraints, lower expectations, delete evidence, change dependenc
 
 State passed, failed or unable to run; summarize the stages that actually executed and their relevant warnings. If there were changes, list them and the final rerun result. Distinguish consistency and rule conformance from the factual truth or completeness of the knowledge. Include evidence for any remaining limitation.
 
-Example requests: “Valida este proyecto de Erden y explícame los errores sin cambiar archivos.” / “Fix the failed competency question while preserving the intended supplier rule.”
+Example requests: “Validate this Erden project and explain the errors without changing files.” / “Fix the failed competency question while preserving the intended supplier rule.”

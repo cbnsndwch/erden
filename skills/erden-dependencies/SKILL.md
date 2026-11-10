@@ -1,6 +1,6 @@
 ---
 name: erden-dependencies
-description: Add, install, update or remove shared ontology dependencies in an Erden project while preserving its manifest, version constraints and lockfile. Use when someone wants to reuse a known Erden vocabulary, restore dependencies, “actualiza las dependencias de Erden”, or reproduce a project offline. Do not use for npm or Python dependencies, searching an unspecified global catalog, or publishing a release.
+description: Add, install, update or remove shared ontology dependencies in an Erden project while preserving its manifest, version constraints and lockfile. Use when someone wants to reuse a known Erden vocabulary, restore dependencies, “update the Erden dependencies”, or reproduce a project offline. Do not use for npm or Python dependencies, searching an unspecified global catalog, or publishing a release.
 license: Apache-2.0
 metadata:
     version: '0.1.0'
@@ -41,4 +41,4 @@ After a dependency change, run `erden check --json` when the local runtime is re
 
 Report identifiers and resolved versions, changed constraints if any, lockfile status and verification results. Use `store status` or `store path` only when they help diagnose cache problems; actual store pruning requires a cleanup request.
 
-Example requests: “Añade @equipo/proveedores en la serie 1.x a mi proyecto Erden.” / “Restore this Erden project's exact locked dependencies without using the network.”
+Example requests: “Add @team/suppliers in the 1.x series to my Erden project.” / “Restore this Erden project's exact locked dependencies without using the network.”

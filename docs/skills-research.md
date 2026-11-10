@@ -1,111 +1,111 @@
-# Skills públicos para Erden: investigación y propuesta
+# Public Erden skills: research and proposal
 
-Fecha de consulta: 10 de noviembre de 2026. Investigación inicial: commit `e937a6f`. Instrucciones actualizadas para upstream `1dc6fd0`, con destino confirmado `cbnsndwch/erden`.
-Estado: alcance acordado con el usuario, incorporando `erden-setup`; seis skills iniciales implementados. Instalación local y comprobaciones iniciales realizadas; publicación pública pendiente. Véase [el estado de validación](../skills/TESTING.md).
+Research date: November 10, 2026. Initial source revision: `e937a6f`. Instructions were updated for upstream `1dc6fd0`, with `cbnsndwch/erden` confirmed as the destination.
+Status: the agreed scope includes `erden-setup`; six initial skills are implemented. Local installation and initial checks are complete; public distribution is pending. See the [validation status](../skills/TESTING.md).
 
-## Recomendación
+## Recommendation
 
-Crear seis Agent Skills orientados a resultados, en `skills/` dentro de este repositorio. Usar el CLI de Erden como interfaz de ejecución y el formato abierto `SKILL.md` como interfaz para agentes. Mantener juntos código y skills permite revisar su compatibilidad cuando cambian los comandos.
+Create six outcome-focused Agent Skills under `skills/` in this repository. Use the Erden CLI as the execution interface and the open `SKILL.md` format as the agent interface. Keeping code and skills together makes it easier to review compatibility when commands change.
 
-La experiencia buscada es: una persona describe lo que necesita; el agente identifica el proyecto, prepara los archivos o la consulta, ejecuta Erden, verifica el resultado y lo explica en su idioma. No debería necesitar escribir Turtle, SHACL, SPARQL ni comandos.
+The intended experience is that a person describes what they need; the agent identifies the project, prepares the files or query, runs Erden, verifies the result and explains it in the user's language. Users should not need to write Turtle, SHACL, SPARQL or commands.
 
-Los skills requieren un agente compatible con acceso a archivos y terminal, además de Erden instalado. Instalarlos no instala automáticamente Erden ni concede acceso al registro. Para una experiencia en clientes sin terminal, habría que diseñar adicionalmente una integración remota, por ejemplo MCP. Esa integración queda fuera de esta primera versión.
+The skills require a compatible agent with filesystem and terminal access, plus an Erden installation. Installing them does not automatically install Erden or grant registry access. Supporting clients without a terminal would require an additional remote integration, such as MCP. That integration is outside this initial scope.
 
-## Qué recomiendan las fuentes
+## Source recommendations
 
-| Fuente o herramienta                                                                              | Uso propuesto                                                             | Alcance real                                                               |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| [Agent Skills](https://agentskills.io/specification)                                              | Formato portable y validación estructural con `skills-ref validate`       | Comprueba formato; no demuestra calidad de comportamiento                  |
-| [Buenas prácticas de Agent Skills](https://agentskills.io/skill-creation/best-practices)          | Instrucciones breves, tareas coherentes y referencias a demanda           | Orientación para redactar y refinar con ejecuciones reales                 |
-| [skill-creator de Anthropic](https://github.com/anthropics/skills/tree/main/skills/skill-creator) | Redactar, comparar con/sin skill, revisar resultados y mejorar activación | Algunas automatizaciones de optimización dependen de Claude Code           |
-| `skill-creator` incluido en este entorno Codex                                                    | Inicializar, escribir y validar skills desde esta sesión                  | Disponible localmente; su validación tampoco sustituye pruebas funcionales |
-| [CLI de Vercel](https://github.com/vercel-labs/skills)                                            | Crear una plantilla, descubrir, instalar y distribuir skills              | `npx skills init` no certifica que un skill funcione correctamente         |
+| Source or tool                                                                                 | Proposed use                                                                        | Scope and limitations                                                 |
+| ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| [Agent Skills](https://agentskills.io/specification)                                           | Portable format and structural validation with `skills-ref validate`                | Checks structure; does not establish behavioral quality               |
+| [Agent Skills best practices](https://agentskills.io/skill-creation/best-practices)            | Concise instructions, cohesive tasks and references loaded as needed                | Guidance for authoring and refining skills through actual runs        |
+| [Anthropic skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) | Draft, compare runs with and without a skill, review results and improve activation | Some optimization automation depends on Claude Code                   |
+| The `skill-creator` bundled with this Codex environment                                        | Initialize, write and validate skills in this session                               | Available locally; its validation does not replace functional testing |
+| [Vercel CLI](https://github.com/vercel-labs/skills)                                            | Create a template, discover, install and distribute skills                          | `npx skills init` does not certify that a skill works correctly       |
 
-La recomendación mejor respaldada para autoría es el `skill-creator` oficial de Anthropic combinado con la especificación abierta. Su [ficha en skills.sh](https://skills.sh/anthropics/skills/skill-creator) mostraba aproximadamente 428.6 mil instalaciones al consultar. Es una señal de adopción, no una prueba de consenso universal ni de calidad de cada resultado.
+The best-supported authoring recommendation is Anthropic's official `skill-creator` combined with the open specification. Its [skills.sh listing](https://skills.sh/anthropics/skills/skill-creator) showed approximately 428.6 thousand installations when consulted. This indicates adoption, not universal consensus or the quality of every result.
 
-Comando documentado para instalar ese creador cuando haga falta:
+Documented installation command for that creator when needed:
 
 ```bash
 npx skills add anthropics/skills --skill skill-creator
 ```
 
-No se instaló otra copia durante esta investigación: el entorno ya ofrece herramientas de creación de skills.
+No additional copy was installed during this research because the environment already provides skill-authoring tools.
 
-## Diseño propuesto para Erden
+## Proposed Erden design
 
-| Skill                | Ejemplo de petición                                                     | Trabajo del agente y respaldo actual                                                                                                                 |
-| -------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `erden-setup`        | «Comprueba si tengo todo para usar Erden»                               | Diagnosticar CLI, runtime y motores; distinguir instalación distribuida de código fuente, y verificar requisitos de proyecto/registro según la tarea |
-| `erden-model`        | «Convierte estas notas en una base de conocimiento de Erden»            | Acordar conceptos necesarios, usar `init` si hace falta, editar las fuentes del proyecto, conservar procedencia y ejecutar `check`                   |
-| `erden-check`        | «Revisa estas reglas y explícame qué contradicciones hay»               | Ejecutar `check --json`, distinguir problemas del modelo de fallos de instalación, explicar evidencia y corregir cuando se haya solicitado           |
-| `erden-query`        | «En esta versión publicada, ¿qué productos dependen de este proveedor?» | Identificar vocabulario y versión, redactar una consulta admitida, usar `query --file ... --json` y explicar resultados con identidad de la versión  |
-| `erden-dependencies` | «Añade este vocabulario compartido y actualiza sus dependencias»        | Usar `add`, `install`, `update` o `remove` según el objetivo; respetar restricciones y lockfile, y verificar el estado resultante                    |
-| `erden-publish`      | «Publica la versión 1.2.0 de este conocimiento»                         | Verificar proyecto y destino, validar, empaquetar, autenticarse si hace falta, publicar y consultar el intento hasta conocer su estado               |
+| Skill                | Example request                                                      | Agent workflow and current support                                                                                                                     |
+| -------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `erden-setup`        | “Check whether I have everything needed to use Erden”                | Diagnose the CLI, runtime and engines; distinguish a release installation from a source checkout; check project and registry requirements for the task |
+| `erden-model`        | “Turn these notes into an Erden knowledge base”                      | Establish the required concepts, use `init` if needed, edit project sources, preserve provenance and run `check`                                       |
+| `erden-check`        | “Review these rules and explain any contradictions”                  | Run `check --json`, distinguish model issues from installation failures, explain the evidence and repair errors when requested                         |
+| `erden-query`        | “In this published version, which products depend on this supplier?” | Identify vocabulary and version, write a supported query, use `query --file ... --json` and explain results with their version identity                |
+| `erden-dependencies` | “Add this shared vocabulary and update its dependencies”             | Choose `add`, `install`, `update` or `remove` for the goal; preserve constraints and the lockfile; verify the resulting state                          |
+| `erden-publish`      | “Publish version 1.2.0 of this knowledge”                            | Verify the project and destination, validate, package, authenticate if needed, publish and inspect the attempt's status                                |
 
-El usuario añadió `erden-setup` como entrada explícita para comprobar y preparar requisitos. Los otros cinco skills mantienen comprobaciones mínimas y pueden usarlo si está instalado, sin depender de él. Las descripciones permiten seleccionar el flujo adecuado y cada skill se puede instalar por separado.
+The collection includes `erden-setup` as an explicit entrypoint for checking and preparing prerequisites. The other five skills retain minimal readiness checks and can use it if installed, without depending on it. Their descriptions identify the appropriate workflow, and each skill can be installed independently.
 
-Las instrucciones se redactarían en inglés para distribución internacional, con ejemplos y pruebas en español e inglés. Las respuestas deben seguir el idioma del usuario. Esta elección es una propuesta de producto, no un requisito del estándar.
+All repository content, including instructions, documentation, examples and evaluation prompts, is written in English. Agent responses should still follow the user's language. English repository content is a project requirement, not a requirement of the Agent Skills standard.
 
-### Opciones comparadas
+### Options compared
 
-| Opción                     | Ventaja                                                            | Coste o límite                                                                     | Decisión propuesta                                                  |
-| -------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Un único skill `erden`     | Entrada única y menos archivos                                     | Mezcla modelado, consulta y publicación; cuesta seleccionar instrucciones precisas | Alternativa válida para un piloto muy pequeño                       |
-| Seis skills por objetivo   | Alcances claros, instalación selectiva y evaluaciones concretas    | Hay que vigilar solapamientos y compatibilidad común                               | Recomendada para esta primera colección                             |
-| Skills más un servidor MCP | Permite herramientas remotas en clientes compatibles sin CLI local | Añade servicio, autenticación, mantenimiento y otro alcance de desarrollo          | Evaluar posteriormente si el público necesita clientes sin terminal |
+| Option                       | Benefit                                                        | Cost or limitation                                                                       | Proposed decision                                                    |
+| ---------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| One `erden` skill            | One entrypoint and fewer files                                 | Combines modeling, querying and publication, making precise instruction selection harder | Valid alternative for a very small pilot                             |
+| Six skills organized by goal | Clear scopes, selective installation and focused evaluations   | Requires attention to overlap and shared compatibility                                   | Recommended for this initial collection                              |
+| Skills plus an MCP server    | Enables remote tools in compatible clients without a local CLI | Adds a service, authentication, maintenance and development scope                        | Consider later if the audience needs clients without terminal access |
 
-## Lo que confirma el repositorio
+## Repository evidence
 
-La referencia de comandos procede de [main.ts](../apps/cli/src/main.ts), no solo del resumen del README.
+The command reference comes from [main.ts](../apps/cli/src/main.ts), not only the README summary.
 
-- `init` admite formatos de manifiesto JSON, JSONC, YAML y TOML; las fuentes incluyen ontología, formas y preguntas de competencia.
-- `check` dispone de salida JSON y modo offline. Los códigos generales son 0 para éxito, 1 para fallo semántico, 2 para uso incorrecto y 3 para fallo operativo.
-- `add`, `remove`, `update` e `install` ya existen. `install` admite `--frozen-lockfile` y `--offline`.
-- `query` requiere `<identifier>@<exact-version>` y exactamente una entrada `--file` o `--stdin`. Se ejecuta en el registro, no admite `--offline` y resuelve el registro explícito, el del manifiesto o el predeterminado `https://registry.erden.sh`; un manifiesto inválido no permite usar el predeterminado. Véase [query.ts](../apps/cli/src/query.ts).
-- El lenguaje de consultas publicado admite `SELECT` y `ASK` con límites. El contrato rechaza, entre otras cosas, actualizaciones, `SERVICE`, subconsultas y rutas sin límite. Un skill no debe prometer SPARQL arbitrario. Véase [release-query/model.ts](../packages/contracts/src/release-query/model.ts).
-- `pack` y `publish` son operaciones distintas. Empaquetar no equivale a superar la validación semántica ni a que el registro haya publicado una versión.
-- `publish` crea un intento y ahora espera por defecto hasta dos horas; el flujo de subir y consultar por separado usa `--no-wait`. `publication <attempt-id> --wait --report --json` permite consultar su resolución. La creación no interactiva de un proyecto exige visibilidad y `--yes`. Véase [registry.ts](../apps/cli/src/registry.ts).
-- `login` usa un flujo de dispositivo. El agente puede iniciarlo y explicar el paso al usuario, pero no debe inventar credenciales ni solicitar que se peguen secretos en el chat.
-- El listado actual del CLI no contiene `erden search`, `erden import` ni un comando para consultar proyectos locales arbitrariamente. Modelar documentos supone editar fuentes usando el agente; no llamar a un importador inexistente.
+- `init` supports JSON, JSONC, YAML and TOML manifests; sources include the ontology, shapes and competency questions.
+- `check` provides JSON output and offline mode. General exit codes are 0 for success, 1 for semantic failure, 2 for usage errors and 3 for operational failure.
+- `add`, `remove`, `update` and `install` already exist. `install` supports `--frozen-lockfile` and `--offline`.
+- `query` requires `<identifier>@<exact-version>` and exactly one input through `--file` or `--stdin`. It runs on the registry, does not support `--offline`, and resolves the explicit registry, the manifest registry or the default `https://registry.erden.sh`. An invalid manifest prevents fallback to the default. See [query.ts](../apps/cli/src/query.ts).
+- The published query language supports bounded `SELECT` and `ASK` queries. The contract rejects updates, `SERVICE`, subqueries and unbounded paths, among other constructs. A skill must not promise arbitrary SPARQL support. See [release-query/model.ts](../packages/contracts/src/release-query/model.ts).
+- `pack` and `publish` are separate operations. Packaging does not establish semantic validity or mean that the registry has published a version.
+- `publish` creates an attempt and now waits for up to two hours by default; uploading and checking status separately uses `--no-wait`. `publication <attempt-id> --wait --report --json` retrieves its outcome. Noninteractive project creation requires visibility and `--yes`. See [registry.ts](../apps/cli/src/registry.ts).
+- `login` uses a device flow. The agent can start it and explain the user's next step, but must not invent credentials or ask the user to paste secrets into chat.
+- The current CLI has no `erden search`, `erden import` or command for arbitrary queries against local projects. Modeling documents means editing sources with the agent, not invoking a nonexistent importer.
 
-El [ejemplo local](../examples/erden-demo/README.md) aporta una base real para fixtures: inferencia de tipos, una forma SHACL, una pregunta de competencia y una cita a un archivo local.
+The [local example](../examples/erden-demo/README.md) provides a concrete fixture basis: type inference, a SHACL shape, a competency question and a citation to a local file.
 
-## Reglas de autoría aplicadas a esta propuesta
+## Authoring rules applied to this proposal
 
-1. **Describir la intención.** La descripción debe reconocer «revisa mis reglas» o «pregunta a esta base de conocimiento», además del nombre del producto. Debe evitar activarse en cualquier pregunta genérica sobre datos.
-2. **Mantener un núcleo pequeño.** `SKILL.md` contiene selección del flujo, invariantes y criterios de éxito. Los detalles de manifiestos, consultas y errores van en referencias enlazadas cuando sean pertinentes. La especificación recomienda menos de 500 líneas; no es un tamaño objetivo.
-3. **Conservar independencia.** Ningún skill instalado individualmente puede depender de rutas del checkout del autor, archivos de otro skill no instalado o herramientas privadas.
-4. **Apoyarse en contratos reales.** Preferir `--json` cuando exista, interpretar el código de salida y conservar evidencia. No crear flags como `--dry-run` o `--json` para comandos que no los admiten. El CLI actual sí admite `--version`.
-5. **No confundir validez con verdad.** Un modelo que pasa las comprobaciones no demuestra que sus afirmaciones sobre el mundo sean correctas. Mantener fuentes, distinguir afirmaciones de inferencias y no presentar ausencia de datos como prueba de inexistencia.
-6. **Respetar el objetivo autorizado.** Una petición de consulta no autoriza publicación. Una publicación explícitamente solicitada no exige volver a pedir la misma autorización; solo resolver información faltante, como destino o visibilidad, antes de ejecutarla. No convertir preparación en publicación por defecto.
-7. **Usar scripts solo cuando aporten fiabilidad.** Evitar otra capa de wrappers sobre comandos que ya proporcionan una interfaz estructurada. Añadir automatización cuando las pruebas demuestren trabajo repetido o errores evitables.
+1. **Describe intent.** Descriptions should recognize “check my rules” or “ask this knowledge base” as well as the product name. Avoid activation for every generic data question.
+2. **Keep the core small.** `SKILL.md` contains workflow selection, invariants and success criteria. Manifest, query and error details belong in references linked where relevant. The specification recommends fewer than 500 lines; that is not a target length.
+3. **Preserve independence.** An individually installed skill must not depend on the author's checkout paths, files from another uninstalled skill or private tools.
+4. **Use actual contracts.** Prefer `--json` when supported, interpret exit codes and retain evidence. Do not invent flags such as `--dry-run` or `--json` for commands that do not support them. The current CLI does support `--version`.
+5. **Distinguish validity from truth.** A model passing its checks does not prove that its claims about the world are correct. Preserve sources, distinguish assertions from inferences and do not present missing data as proof of nonexistence.
+6. **Respect the authorized goal.** A query request does not authorize publication. Explicitly requested publication does not require repeated permission; resolve missing information, such as destination or visibility, before acting. Do not turn preparation into publication by default.
+7. **Use scripts when they improve reliability.** Avoid another wrapper layer around commands that already provide structured interfaces. Add automation when tests reveal repeated work or avoidable errors.
 
-Estas decisiones siguen las [buenas prácticas del estándar](https://agentskills.io/skill-creation/best-practices), adaptadas a los contratos de Erden.
+These decisions follow the [standard's best practices](https://agentskills.io/skill-creation/best-practices), adapted to Erden's contracts.
 
-## Evaluación propuesta
+## Proposed evaluation
 
-Separar validación estructural, activación y ejecución. Empezar con dos o tres tareas realistas por skill y ampliar después de observar fallos; comparar con una ejecución sin skill cuando sea posible. Es el procedimiento descrito en [Evaluating skill output quality](https://agentskills.io/skill-creation/evaluating-skills).
+Separate structural validation, activation and execution. Start with two or three realistic tasks per skill and expand after observing failures; compare against a run without the skill when possible. This follows [Evaluating skill output quality](https://agentskills.io/skill-creation/evaluating-skills).
 
-| Caso inicial                                  | Resultado observable esperado                                                              |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Crear conocimiento desde un documento pequeño | Fuentes y manifiesto válidos; hechos rastreables; informe real de `check`                  |
-| Detectar una contradicción en un fixture      | Diagnóstico vinculado a los hechos problemáticos; ninguna declaración falsa de éxito       |
-| Preguntar por una versión publicada           | Consulta sobre la versión solicitada; respuesta apoyada en bindings y metadatos reales     |
-| Pedir una consulta sin versión suficiente     | Recuperar el contexto disponible o pedir el dato imprescindible; no inventar `latest`      |
-| Actualizar una dependencia                    | Cambios coherentes en manifiesto y lockfile y validación posterior adecuada                |
-| «Prepara la publicación, pero no la subas»    | Artefacto preparado; ninguna llamada de publicación                                        |
-| Publicación pendiente o rechazada             | Estado pendiente o rechazo explícito; no confundir aceptación del intento con publicación  |
-| Motor ausente o credencial caducada           | Diagnóstico operativo correcto; no interpretar el fallo como contradicción de la ontología |
+| Initial case                                | Expected observable result                                                                      |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Create knowledge from a short document      | Valid sources and manifest, traceable facts and an actual `check` report                        |
+| Detect a contradiction in a fixture         | A diagnosis linked to the problematic facts, with no false success claim                        |
+| Ask about a published version               | A query against the requested version, with an answer supported by actual bindings and metadata |
+| Request a query without an exact version    | Retrieve available context or ask for the required detail; do not invent `latest`               |
+| Update a dependency                         | Consistent manifest and lockfile changes, followed by appropriate validation                    |
+| “Prepare the release, but do not upload it” | A prepared artifact with no publication call                                                    |
+| Pending or rejected publication             | Explicit pending or rejected status; do not confuse an accepted attempt with publication        |
+| Missing engine or expired credential        | Correct operational diagnosis; do not interpret the failure as an ontology contradiction        |
 
-La activación se prueba por separado con peticiones positivas y negativas próximas al dominio, en ambos idiomas. Por ejemplo, «explica qué es una ontología» no debería iniciar un proyecto automáticamente. La [guía de descripciones](https://agentskills.io/skill-creation/optimizing-descriptions) recomienda probar también casos ambiguos y repetir ejecuciones porque la selección varía entre modelos.
+Test activation separately with positive and near-miss negative requests. For example, “explain what an ontology is” should not automatically initialize a project. The [description guidance](https://agentskills.io/skill-creation/optimizing-descriptions) also recommends ambiguous cases and repeated runs because selection varies between models. All checked-in evaluation prompts are in English.
 
-Los benchmarks deberán indicar agente, modelo, fecha, versión del CLI, fixtures y límites encontrados. Una validación de YAML o una lectura manual no se publicará como prueba de funcionamiento completo.
+Benchmarks should identify the agent, model, date, CLI version, fixtures and observed limitations. YAML validation or manual review must not be presented as proof that every workflow succeeds.
 
-## Distribución y aparición en skills.sh
+## Distribution and discovery on skills.sh
 
-El sitio relevante es **skills.sh**. Según su [FAQ](https://skills.sh/docs/faq), los skills se alojan en GitHub y aparecen mediante la telemetría de instalaciones con `npx skills add <owner/repo>`; no describe un formulario obligatorio de envío. Las instalaciones influyen en el ranking, sin garantizar una posición ni un plazo concreto de aparición.
+The relevant site is **skills.sh**. According to its [FAQ](https://skills.sh/docs/faq), skills are hosted on GitHub and appear through installation telemetry from `npx skills add <owner/repo>`; it does not describe a mandatory submission form. Installations influence ranking without guaranteeing a position or indexing deadline.
 
-Estructura propuesta:
+Proposed structure:
 
 ```text
 skills/
@@ -128,9 +128,9 @@ skills/
     SKILL.md
 ```
 
-Cada carpeta incorporará solo las referencias y fixtures que necesite. El README de la colección explicará instalación, requisitos, ejemplos, compatibilidad y cómo ejecutar las evaluaciones. No es necesario añadir un README repetido a cada skill. `agents/openai.yaml` puede aportar metadatos de Codex, sin sustituir el formato portable.
+Each directory should include only the references and fixtures it needs. The collection README explains installation, prerequisites, examples, compatibility and evaluation. There is no need to repeat a README in every skill. `agents/openai.yaml` can provide Codex metadata without replacing the portable format.
 
-El [CLI de Vercel reconoce `skills/<name>/SKILL.md`](https://github.com/vercel-labs/skills/blob/main/docs/creating-skills.md). El destino público confirmado es `cbnsndwch/erden`. Tras integrar los archivos en su rama principal, el recorrido sería:
+The [Vercel CLI recognizes `skills/<name>/SKILL.md`](https://github.com/vercel-labs/skills/blob/main/docs/creating-skills.md). The confirmed public destination is `cbnsndwch/erden`. After these files are merged into its default branch, use:
 
 ```bash
 npx skills add cbnsndwch/erden --list
@@ -138,19 +138,19 @@ npx skills add cbnsndwch/erden --skill erden-model
 npx skills add cbnsndwch/erden --skill '*'
 ```
 
-Los parámetros `--list` y `--skill` están documentados en la [referencia del CLI](https://github.com/vercel-labs/skills/blob/main/docs/commands.md). Las pruebas locales pueden desactivar telemetría; la visibilidad pública se comprobará tras instalaciones reales, sin generar instalaciones artificiales.
+The `--list` and `--skill` options are documented in the [CLI reference](https://github.com/vercel-labs/skills/blob/main/docs/commands.md). Local tests can disable telemetry. Public visibility should be checked after real installations, without generating artificial installations.
 
-El usuario confirmó que `el-frontend/erden` es su fork y que el PR debe dirigirse a `cbnsndwch/erden`. El fork sirve como origen de la contribución; la documentación de instalación apunta al repositorio principal. El comando de instalación desde upstream solo corresponde después de que los archivos estén integrados en su rama principal.
+Pull requests target `cbnsndwch/erden`; `el-frontend/erden` is the contributor's fork. The fork is the contribution source, while installation documentation points to the upstream repository. The upstream installation command applies only after the files have been merged into its default branch.
 
-## Comprobación local y límites de esta investigación
+## Local checks and research limitations
 
-Se inspeccionaron código, contratos, ejemplo, README y ayuda declarada. Se ejecutaron inicialmente dos comprobaciones sobre el CLI **ya compilado** de `e937a6f`; son resultados históricos, anteriores a la actualización del upstream:
+The source code, contracts, example, README and declared help were inspected. Two initial checks used the **already built** CLI at `e937a6f`; these are historical results from before the upstream update:
 
 ```text
 node apps/cli/dist/bin.js doctor --json
   exit 1
-  Node requerido: 24.17.0; runtime encontrado: 24.11.1
-  Reasoner: disponible; self-test passed
+  Required Node: 24.17.0; detected runtime: 24.11.1
+  Reasoner: available; self-test passed
   SHACL: unavailable / BINARY_MISSING
 
 node apps/cli/dist/bin.js check examples/erden-demo --offline --json
@@ -158,8 +158,8 @@ node apps/cli/dist/bin.js check examples/erden-demo --offline --json
   CHECK_SHACL_ENGINE_UNAVAILABLE / BINARY_MISSING
 ```
 
-Aunque hay un binario SHACL en el árbol local, el runtime compilado no lo resuelve como motor disponible. No se ha determinado aquí si se debe a una compilación desactualizada o a la preparación del paquete. Estos resultados describen este entorno y no prueban un defecto de una distribución pública.
+Although a SHACL binary exists in the local tree, the built runtime does not resolve it as an available engine. The initial investigation did not determine whether this was caused by an outdated build or package preparation. These results describe this environment and do not establish a defect in a public distribution.
 
-El README inicial indicaba que la primera distribución pública se estaba preparando. Upstream retiró esa frase. La consulta posterior a sus releases no devolvió publicaciones; se debe comprobar la disponibilidad de assets antes de instalar. La consulta web a `erden.sh` tampoco devolvió contenido accesible con la herramienta usada; eso no demuestra una caída del servicio.
+The initial README stated that the first public distribution was being prepared. Upstream removed that sentence. A subsequent release query returned no published releases, so asset availability should be checked before installation. A web request to `erden.sh` also returned no accessible content through the tool used; that does not demonstrate a service outage.
 
-La implementación posterior a esta investigación incorporó los seis skills y sus casos de evaluación. Se comprobó su estructura e instalación local y se ejecutaron tres casos con y sin skill. La preparación de SHACL quedó bloqueada por una diferencia entre el binario compilado y su hash fijado. El detalle actualizado y las verificaciones aún pendientes están en [TESTING.md](../skills/TESTING.md). No se hicieron publicaciones ni inicios de sesión en el registro.
+Implementation after this research added all six skills and their evaluation cases. Structure and local installation were checked, and three cases ran with and without skills. SHACL preparation was blocked by a mismatch between the compiled binary and its pinned hash. Updated details and pending checks are in [TESTING.md](../skills/TESTING.md). No registry publications or logins were performed. Checked-in evaluation prompts were later translated into English; historical run results do not validate that revised wording.

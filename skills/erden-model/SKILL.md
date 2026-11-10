@@ -1,6 +1,6 @@
 ---
 name: erden-model
-description: Create or update an Erden knowledge model from documents, notes or business rules, including ontology sources, validation rules, evidence and competency questions. Use when someone asks to turn information into reusable company knowledge in Erden, add concepts or relationships, or “convierte estas notas en conocimiento de Erden”. Do not activate just to explain ontology terminology, summarize a document, or query an already published version.
+description: Create or update an Erden knowledge model from documents, notes or business rules, including ontology sources, validation rules, evidence and competency questions. Use when someone asks to turn information into reusable company knowledge in Erden, add concepts or relationships, or “turn these notes into Erden knowledge”. Do not activate just to explain ontology terminology, summarize a document, or query an already published version.
 license: Apache-2.0
 metadata:
     version: '0.1.0'
@@ -34,4 +34,4 @@ If a concrete model error is within the requested work, correct it and rerun. Af
 
 Return the files created or changed, the concepts/rules modeled, the actual validation outcome and any remaining assumptions. Passing validation means the implemented checks passed; it does not establish that all claims are true or that all real-world knowledge is complete. Keep publication as a separate action unless the user requested it.
 
-Example requests: “Añade las reglas de aprobación de compras de este documento a nuestro proyecto Erden.” / “Model these supplier relationships in our existing Erden project and check them.”
+Example requests: “Add the purchasing approval rules from this document to our Erden project.” / “Model these supplier relationships in our existing Erden project and check them.”

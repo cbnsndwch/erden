@@ -1,6 +1,6 @@
 # Skill validation and evaluation
 
-Initial checks on 2026-11-10 used Erden source `e937a6f`, CLI package `0.1.0`, on macOS arm64. The collection was subsequently updated to upstream `1dc6fd0`; results below distinguish those revisions. Skills are initial versions. Local installation and selected diagnostic/preparation behavior have been exercised; live registry workflows and a successful semantic check are not yet verified in this environment.
+Initial checks on 2026-11-10 used Erden source `e937a6f`, CLI package `0.1.0`, on macOS arm64. The collection was subsequently updated to upstream `1dc6fd0`; results below distinguish those revisions. All checked-in instructions, examples and evaluation prompts are in English. Historical behavioral results predate the translation of evaluation prompts and do not validate the revised wording. Skills are initial versions. Local installation and selected diagnostic/preparation behavior have been exercised; live registry workflows and a successful semantic check are not yet verified in this environment.
 
 ## Structural and installation checks
 
@@ -92,7 +92,7 @@ The packaged demo fixtures now use `https://erden.sh/o/erden/evidence#`, matchin
 
 ## Evaluation cases included for continued work
 
-Each skill has `evals/evals.json` with three behavioral cases, and `evals/triggers.json` with three positive and three near-miss negative activation prompts. Together these are 18 behavioral cases and 36 trigger queries across English and Spanish. The case files describe scenarios; they are not an executable runner and not all have been run.
+Each skill has `evals/evals.json` with three behavioral cases, and `evals/triggers.json` with three positive and three near-miss negative activation prompts. Together these are 18 behavioral cases and 36 trigger queries in English. The case files describe scenarios; they are not an executable runner and not all have been run.
 
 Model, check and publish skills include a copy of the dependency-free demo under `evals/files/project/`. Copy that fixture into a fresh temporary directory for each run. For modeling tests, the user-supplied notes in the prompt are additional evidence to preserve. For a deliberately failing SHACL scenario, the evaluator must construct the stated failing condition in its temporary copy and record that change; the bundled fixture itself is the original valid demo.
 
