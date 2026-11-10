@@ -1,0 +1,5 @@
+@prefix ex: <https://example.invalid/suppliers#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:PreferredSupplierShape a sh:NodeShape ; sh:targetClass ex:PreferredSupplier ;
+  sh:property [ sh:path rdf:type ; sh:hasValue ex:Supplier ] .

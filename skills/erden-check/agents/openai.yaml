@@ -1,0 +1,4 @@
+interface:
+    display_name: 'Erden Validation'
+    short_description: 'Validate knowledge, rules and evidence in Erden'
+    default_prompt: 'Use $erden-check to validate this Erden project and explain the findings.'

@@ -22,6 +22,13 @@ The local tools in this repository are Apache-2.0 (see [LICENSE](/LICENSE)). The
 The engine binaries are never committed. A release ships them inside the CLI archive; a checkout builds them from
 source.
 
+## Agent skills
+
+The [Erden skills collection](skills/README.md) lets compatible agents prepare the runtime, model and validate knowledge,
+query published versions, manage dependencies, and prepare or publish releases from natural-language requests.
+Each skill is independently installable. Start with `erden-setup` to check the environment; installing a skill does not
+install the Erden runtime. See the collection's [validation status](skills/TESTING.md) before relying on a workflow.
+
 ## Installing
 
 Each release has one archive per platform: Linux x64 and arm64 (glibc), macOS arm64 and Windows x64. An archive

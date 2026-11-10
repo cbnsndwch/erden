@@ -1,0 +1,4 @@
+interface:
+    display_name: 'Erden Dependencies'
+    short_description: 'Reuse and maintain Erden ontology dependencies'
+    default_prompt: 'Use $erden-dependencies to restore this Erden project from its lockfile.'

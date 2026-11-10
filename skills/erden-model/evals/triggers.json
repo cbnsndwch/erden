@@ -1,0 +1,26 @@
+[
+    {
+        "query": "turn these notes into reusable knowledge in Erden",
+        "should_trigger": true
+    },
+    {
+        "query": "add this relationship to the existing Erden model",
+        "should_trigger": true
+    },
+    {
+        "query": "create Erden business rules from this document",
+        "should_trigger": true
+    },
+    {
+        "query": "summarize this document in three sentences",
+        "should_trigger": false
+    },
+    {
+        "query": "what does ontology mean in philosophy",
+        "should_trigger": false
+    },
+    {
+        "query": "query this already published Erden version",
+        "should_trigger": false
+    }
+]

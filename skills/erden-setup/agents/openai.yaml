@@ -1,0 +1,4 @@
+interface:
+    display_name: 'Erden Setup'
+    short_description: 'Check and prepare the Erden runtime'
+    default_prompt: 'Use $erden-setup to check whether my machine is ready to use Erden.'

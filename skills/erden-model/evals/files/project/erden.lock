@@ -1,0 +1,21 @@
+lockfileVersion: 1
+registryOrigin: null
+manifestDependencySha256: "58317dc2088c176a06744f59331debb7c3df1a03387b03ea59323ebc0a0da3b7"
+root:
+  canonicalIri: "https://example.invalid/suppliers"
+  alias: "@example/suppliers"
+directDependencies: []
+aliasMappings: []
+packages: []
+toolchain:
+  validator:
+    version: "1.0.0"
+    sha256: "6b7bf9de052e8bef68025cc0c6102bb5b4bc04dad929d4278aa1d96ee2584519"
+  reasoner:
+    version: "0.3.0+purrdf.0.12.0.dfb1df7"
+    sha256: "fc444990f8c8c180df359a6beca8811fa3f4f2382f590fcb2f2a56957c19529c"
+counts:
+  directDependencies: 0
+  aliasMappings: 0
+  packages: 0
+  edges: 0

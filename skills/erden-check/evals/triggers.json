@@ -1,0 +1,26 @@
+[
+    {
+        "query": "validate the knowledge in this Erden project",
+        "should_trigger": true
+    },
+    {
+        "query": "explain why my Erden competency question fails",
+        "should_trigger": true
+    },
+    {
+        "query": "check these Erden constraints without editing them",
+        "should_trigger": true
+    },
+    {
+        "query": "check whether Erden and its engines are installed",
+        "should_trigger": false
+    },
+    {
+        "query": "run the CLI unit tests",
+        "should_trigger": false
+    },
+    {
+        "query": "publish the validated Erden version",
+        "should_trigger": false
+    }
+]

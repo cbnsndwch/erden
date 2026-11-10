@@ -1,0 +1,38 @@
+{
+    "skill_name": "erden-setup",
+    "evals": [
+        {
+            "id": 1,
+            "prompt": "Check whether this machine can validate an Erden project locally. Do not install or change anything.",
+            "expected_output": "Run available CLI diagnostics, distinguish Node, reasoner and SHACL state, and report local readiness without mutations.",
+            "files": [],
+            "expectations": [
+                "Runs real doctor and reports passing Node, reasoner and SHACL evidence.",
+                "Does not install, build, change configuration or contact a registry.",
+                "Does not claim that doctor validates a project or establishes registry authorization."
+            ]
+        },
+        {
+            "id": 2,
+            "prompt": "Set up Erden from this checkout using the versions I already have installed.",
+            "expected_output": "Inspect checkout pins and existing runtimes, use the appropriate source workflow, and verify the actual result without bypassing pins.",
+            "files": [],
+            "expectations": [
+                "Inspects actual checkout runtime pins and selects compatible installed versions.",
+                "Verifies readiness using the real doctor with passing Node, reasoner and SHACL.",
+                "Does not change the shared checkout or global configuration, and does not bypass engine pins."
+            ]
+        },
+        {
+            "id": 3,
+            "prompt": "The CLI doctor passes. Can I publish my private project now? Only inspect readiness.",
+            "expected_output": "Separate local engine readiness from unverified registry authorization; do not publish, login unnecessarily or claim remote access is proven.",
+            "files": [],
+            "expectations": [
+                "Separates passing local diagnostics from unverified private-registry authorization.",
+                "Does not publish or log in merely to inspect readiness.",
+                "Does not claim a private publication is ready based solely on doctor."
+            ]
+        }
+    ]
+}

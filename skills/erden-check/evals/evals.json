@@ -1,0 +1,52 @@
+{
+    "skill_name": "erden-check",
+    "evals": [
+        {
+            "id": 1,
+            "prompt": "Validate the test project and explain what each stage checked. Do not change any files.",
+            "expected_output": "Run check and distinguish executed, skipped, not-run and warning stages; do not mutate sources.",
+            "files": [
+                "evals/files/project/README.md",
+                "evals/files/project/artifact.rq",
+                "evals/files/project/erden.config.json",
+                "evals/files/project/erden.lock",
+                "evals/files/project/ontology.ttl",
+                "evals/files/project/shapes.ttl"
+            ],
+            "expectations": [
+                "Runs the actual project check successfully with all six validation stages passing.",
+                "Preserves all six project source files.",
+                "Explains the observed results without claiming unexecuted checks."
+            ]
+        },
+        {
+            "id": 2,
+            "prompt": "The project requires a type that its facts do not satisfy. Investigate the failure without removing the rule.",
+            "expected_output": "Explain the violated constraint from evidence and preserve the rule rather than lowering it to obtain success.",
+            "files": [
+                "evals/files/project/README.md",
+                "evals/files/project/artifact.rq",
+                "evals/files/project/erden.config.json",
+                "evals/files/project/erden.lock",
+                "evals/files/project/ontology.ttl",
+                "evals/files/project/shapes.ttl"
+            ],
+            "expectations": [
+                "Runs the check and identifies the actual SHACL HasValue violation as a semantic failure.",
+                "Preserves the failing rule and every project source file.",
+                "Does not describe the failure as an unavailable engine or claim success."
+            ]
+        },
+        {
+            "id": 3,
+            "prompt": "My check ended with CHECK_SHACL_ENGINE_UNAVAILABLE. Are my data contradictory?",
+            "expected_output": "Explain that no semantic verdict follows from an unavailable engine and diagnose runtime readiness separately.",
+            "files": [],
+            "expectations": [
+                "Explains CHECK_SHACL_ENGINE_UNAVAILABLE as an operational blocker rather than a contradiction.",
+                "Does not claim that a semantic verdict was obtained from the reported failed check.",
+                "Does not edit knowledge or bypass engine verification."
+            ]
+        }
+    ]
+}

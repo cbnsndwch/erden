@@ -1,0 +1,4 @@
+interface:
+    display_name: 'Erden Queries'
+    short_description: 'Answer questions using a published Erden release'
+    default_prompt: 'Use $erden-query to answer a question from this published Erden version.'

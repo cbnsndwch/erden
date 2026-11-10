@@ -1,0 +1,26 @@
+[
+    {
+        "query": "install the locked dependencies of my Erden project offline",
+        "should_trigger": true
+    },
+    {
+        "query": "add this Erden vocabulary to the project",
+        "should_trigger": true
+    },
+    {
+        "query": "update only this Erden ontology dependency",
+        "should_trigger": true
+    },
+    {
+        "query": "update the Erden CLI npm dependencies",
+        "should_trigger": false
+    },
+    {
+        "query": "install the erden executable",
+        "should_trigger": false
+    },
+    {
+        "query": "publish my vocabulary in Erden",
+        "should_trigger": false
+    }
+]

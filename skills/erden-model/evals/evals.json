@@ -1,0 +1,46 @@
+{
+    "skill_name": "erden-model",
+    "evals": [
+        {
+            "id": 1,
+            "prompt": "Create a local Erden project from these notes: Acme is a preferred supplier, and every preferred supplier is a supplier. Preserve the source and check the result.",
+            "expected_output": "Create a small attributed model, relevant shape and justified competency question; report the actual check result or environment blocker.",
+            "files": ["evals/files/notes.md"],
+            "expectations": [
+                "Creates a real Erden project expressing Acme as PreferredSupplier and PreferredSupplier as a subclass of Supplier.",
+                "Preserves the provided notes and connects model facts to existing evidence.",
+                "Adds a meaningful SHACL rule and competency question derived from the supplied facts, and obtains a successful real check.",
+                "Does not publish, access a registry or weaken semantic policies."
+            ]
+        },
+        {
+            "id": 2,
+            "prompt": "Add supplier Beta to the test project and preserve the preferred-supplier rule.",
+            "expected_output": "Preserve existing identity and evidence, add only sourced knowledge and adjust question expectations from the changed facts before checking.",
+            "files": [
+                "evals/files/project/erden.config.json",
+                "evals/files/project/erden.lock",
+                "evals/files/project/notes.md",
+                "evals/files/project/ontology.ttl",
+                "evals/files/project/shapes.ttl",
+                "evals/files/project/suppliers.rq"
+            ],
+            "expectations": [
+                "Adds Beta as a supplier while retaining Acme, the PreferredSupplier subclass rule and the existing identity.",
+                "Preserves existing notes and records the new statement as evidence.",
+                "Updates the supplier question to the justified two-supplier outcome without weakening the preferred-supplier SHACL rule.",
+                "Obtains a passing real check without registry or publication operations."
+            ]
+        },
+        {
+            "id": 3,
+            "prompt": "Explain what an ontology is without creating any files.",
+            "expected_output": "Explain the term without scaffolding a project or invoking unrelated mutation workflows.",
+            "files": [],
+            "expectations": [
+                "Provides an accurate plain-language ontology explanation.",
+                "Creates no project or knowledge files and performs no mutation."
+            ]
+        }
+    ]
+}

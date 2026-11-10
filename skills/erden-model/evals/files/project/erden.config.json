@@ -1,0 +1,18 @@
+{
+    "$schema": "https://erden.dev/schemas/manifest/v1.json",
+    "schemaVersion": 1,
+    "canonicalIri": "https://example.invalid/suppliers",
+    "alias": "@example/suppliers",
+    "ownedIriPrefixes": ["https://example.invalid/suppliers#"],
+    "title": "Erden project",
+    "description": "Replace the example.invalid identity before publishing.",
+    "registry": "https://registry.erden.sh",
+    "sources": {
+        "ontology": ["ontology.ttl"],
+        "shapes": ["shapes.ttl"],
+        "competencyQuestions": ["suppliers.rq"]
+    },
+    "citationRoots": {
+        "default": "."
+    }
+}

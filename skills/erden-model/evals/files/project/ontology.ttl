@@ -1,0 +1,13 @@
+@prefix ex: <https://example.invalid/suppliers#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix ev: <https://erden.sh/o/erden/evidence#> .
+<https://example.invalid/suppliers> a owl:Ontology .
+ex:Supplier a owl:Class ; rdfs:label "Supplier" .
+ex:PreferredSupplier a owl:Class ; rdfs:subClassOf ex:Supplier ; rdfs:label "Preferred supplier" .
+ev:sourcePath a owl:AnnotationProperty .
+ev:sourceRoot a owl:AnnotationProperty .
+prov:wasGeneratedBy a owl:ObjectProperty .
+ex:acme a ex:PreferredSupplier ; rdfs:label "Acme" ; prov:wasGeneratedBy ex:notesObservation .
+ex:notesObservation ev:sourcePath "notes.md" ; ev:sourceRoot "default" .
