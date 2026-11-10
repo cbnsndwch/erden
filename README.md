@@ -71,6 +71,12 @@ reasoner in `reasoner/target/release/` without an environment override.
 `pnpm test` runs the workspace gate: the repository guards, formatting, lint, typecheck, the package packs, a packed
 CLI install, and every test.
 
+## GitHub Action
+
+Use [Erden Check](actions/check/README.md) to validate ontology changes in pull requests. It runs the CLI diagnostics,
+restores frozen dependencies, and reports validation results in the workflow with downloadable JSON evidence.
+See its availability notes for published releases and prepared runtimes.
+
 ## Contributing and security
 
 Outside contributions are not accepted at this time; issues are welcome (see [CONTRIBUTING.md](/CONTRIBUTING.md)).
