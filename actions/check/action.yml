@@ -1,0 +1,29 @@
+name: Erden Check
+description: Validate an Erden project with a pinned CLI and preserve its diagnostic reports.
+inputs:
+    version:
+        description: Exact Erden CLI version, such as 0.1.0. Ranges and latest are not accepted.
+        required: true
+    project:
+        description: Project directory inside the checked-out workspace.
+        default: '.'
+    offline:
+        description: Restore and validate using cached dependency artifacts only. Runtime downloads are separate.
+        default: 'false'
+    erden-root:
+        description: Optional prepared release directory containing node/node[.exe] and lib/dist/bin.js; skips downloading.
+outputs:
+    outcome:
+        description: passed, failed (invalid knowledge), or error (the operation could not complete).
+    exit-code:
+        description: Exit code from the failing CLI phase, or 1 for an action or report error.
+    report-path:
+        description: Absolute path to check.json when a valid check report is available, otherwise empty.
+    reports-path:
+        description: Absolute directory containing phase logs, JSON reports, and result.json; upload it with always().
+runs:
+    using: node24
+    main: index.mjs
+branding:
+    icon: check-circle
+    color: blue

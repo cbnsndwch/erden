@@ -1,0 +1,101 @@
+name: check-action
+
+on:
+    push:
+        paths:
+            - 'actions/check/**'
+            - 'scripts/test/check-action.test.mjs'
+            - 'scripts/test/fixtures/check-action-cli.mjs'
+            - 'release/lib/archive.mjs'
+            - '.github/workflows/check-action.yml'
+    pull_request:
+        paths:
+            - 'actions/check/**'
+            - 'scripts/test/check-action.test.mjs'
+            - 'scripts/test/fixtures/check-action-cli.mjs'
+            - 'release/lib/archive.mjs'
+            - '.github/workflows/check-action.yml'
+
+permissions:
+    contents: read
+
+jobs:
+    action:
+        name: action (${{ matrix.runner }})
+        strategy:
+            fail-fast: false
+            matrix:
+                runner: [ubuntu-24.04, ubuntu-24.04-arm, macos-15, windows-2025]
+        runs-on: ${{ matrix.runner }}
+        timeout-minutes: 10
+        steps:
+            - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+              with:
+                  persist-credentials: false
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version-file: .node-version
+            - name: Test action behavior and verified archive extraction
+              run: node --test scripts/test/check-action.test.mjs
+            - name: Prepare the protocol fixture (not the Erden engines)
+              id: fixture
+              shell: bash
+              run: |
+                  node --input-type=module <<'JS'
+                  import { appendFileSync, copyFileSync, mkdirSync, mkdtempSync, realpathSync, writeFileSync } from 'node:fs';
+                  import { join } from 'node:path';
+                  const root = mkdtempSync(join(realpathSync(process.env.RUNNER_TEMP), 'erden-action-fixture-'));
+                  mkdirSync(join(root, 'node'));
+                  mkdirSync(join(root, 'lib/dist'), { recursive: true });
+                  copyFileSync(process.execPath, join(root, 'node', process.platform === 'win32' ? 'node.exe' : 'node'));
+                  copyFileSync('scripts/test/fixtures/check-action-cli.mjs', join(root, 'lib/dist/bin.js'));
+                  writeFileSync(join(root, 'lib/package.json'), '{"type":"module"}\n');
+                  appendFileSync(process.env.GITHUB_OUTPUT, `root=${root}\n`);
+                  JS
+            - name: Run the local action with the passing protocol fixture
+              id: valid
+              uses: ./actions/check
+              with:
+                  version: '0.1.0'
+                  project: examples/erden-demo
+                  offline: 'true'
+                  erden-root: ${{ steps.fixture.outputs.root }}
+            - name: Run the invalid-knowledge fixture (expected failure)
+              id: invalid
+              continue-on-error: true
+              uses: ./actions/check
+              env:
+                  ERDEN_ACTION_FIXTURE_SCENARIO: failed
+              with:
+                  version: '0.1.0'
+                  project: examples/erden-demo
+                  offline: 'true'
+                  erden-root: ${{ steps.fixture.outputs.root }}
+            - name: Verify GitHub receives both outcomes and their reports
+              shell: bash
+              env:
+                  VALID_OUTCOME: ${{ steps.valid.outputs.outcome }}
+                  INVALID_OUTCOME: ${{ steps.invalid.outputs.outcome }}
+                  INVALID_STEP: ${{ steps.invalid.outcome }}
+                  INVALID_EXIT: ${{ steps.invalid.outputs.exit-code }}
+                  VALID_REPORT: ${{ steps.valid.outputs.report-path }}
+                  INVALID_REPORT: ${{ steps.invalid.outputs.report-path }}
+              run: |
+                  node --input-type=module <<'JS'
+                  import assert from 'node:assert/strict';
+                  import { readFileSync } from 'node:fs';
+                  assert.equal(process.env.VALID_OUTCOME, 'passed');
+                  assert.equal(process.env.INVALID_OUTCOME, 'failed');
+                  assert.equal(process.env.INVALID_STEP, 'failure');
+                  assert.equal(process.env.INVALID_EXIT, '1');
+                  assert.equal(JSON.parse(readFileSync(process.env.VALID_REPORT, 'utf8')).outcome, 'passed');
+                  assert.equal(JSON.parse(readFileSync(process.env.INVALID_REPORT, 'utf8')).outcome, 'failed');
+                  JS
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+              if: ${{ always() && steps.valid.outputs.reports-path != '' }}
+              with:
+                  name: action-fixture-reports-${{ matrix.runner }}
+                  path: |
+                      ${{ steps.valid.outputs.reports-path }}
+                      ${{ steps.invalid.outputs.reports-path }}
+                  if-no-files-found: error
