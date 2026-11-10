@@ -1,0 +1,4 @@
+interface:
+    display_name: 'Erden Publication'
+    short_description: 'Prepare and publish verified Erden knowledge releases'
+    default_prompt: 'Use $erden-publish to prepare a release and show its validation results.'

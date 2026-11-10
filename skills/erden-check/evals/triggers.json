@@ -1,0 +1,26 @@
+[
+    {
+        "query": "valida el conocimiento de este proyecto Erden",
+        "should_trigger": true
+    },
+    {
+        "query": "explícame por qué falla mi pregunta de competencia en Erden",
+        "should_trigger": true
+    },
+    {
+        "query": "check these Erden constraints without editing them",
+        "should_trigger": true
+    },
+    {
+        "query": "revisa si tengo instalado Erden y sus motores",
+        "should_trigger": false
+    },
+    {
+        "query": "ejecuta las pruebas unitarias del CLI",
+        "should_trigger": false
+    },
+    {
+        "query": "publica la versión validada de Erden",
+        "should_trigger": false
+    }
+]

@@ -1,0 +1,4 @@
+interface:
+    display_name: 'Erden Modeling'
+    short_description: 'Turn source material into checked Erden knowledge'
+    default_prompt: 'Use $erden-model to turn these notes into a checked Erden knowledge project.'

@@ -1,0 +1,16 @@
+{
+    "schemaVersion": 1,
+    "canonicalIri": "https://example.invalid/erden/demo",
+    "alias": "@example/erden-demo",
+    "ownedIriPrefixes": ["https://example.invalid/erden/demo#"],
+    "title": "Erden inference and validation demo",
+    "description": "A dependency-free local project checked by the shared Erden application operation.",
+    "sources": {
+        "ontology": ["ontology.ttl"],
+        "shapes": ["shapes.ttl"],
+        "competencyQuestions": ["artifact.rq"]
+    },
+    "citationRoots": {
+        "default": "."
+    }
+}

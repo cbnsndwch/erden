@@ -1,0 +1,26 @@
+[
+    {
+        "query": "prepara mi equipo para usar Erden por primera vez",
+        "should_trigger": true
+    },
+    {
+        "query": "Erden dice BINARY_MISSING al revisar motores",
+        "should_trigger": true
+    },
+    {
+        "query": "check Erden prerequisites without installing anything",
+        "should_trigger": true
+    },
+    {
+        "query": "valida las reglas de proveedores de mi proyecto Erden",
+        "should_trigger": false
+    },
+    {
+        "query": "instala Python para mi notebook",
+        "should_trigger": false
+    },
+    {
+        "query": "consulta los productos de una versión publicada de Erden",
+        "should_trigger": false
+    }
+]

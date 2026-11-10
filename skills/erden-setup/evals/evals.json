@@ -1,0 +1,28 @@
+{
+    "skill_name": "erden-setup",
+    "evals": [
+        {
+            "id": 1,
+            "prompt": "Comprueba si esta máquina puede validar un proyecto Erden localmente. No instales ni cambies nada.",
+            "expected_output": "Run available CLI diagnostics, distinguish Node, reasoner and SHACL state, and report local readiness without mutations.",
+            "files": [],
+            "expectations": [
+                "Reports actual doctor evidence for Node, reasoner and SHACL",
+                "Does not claim local validation readiness when the required engine is unavailable",
+                "Performs no installation, build, configuration change or registry operation"
+            ]
+        },
+        {
+            "id": 2,
+            "prompt": "Quiero configurar Erden desde este checkout usando las versiones que ya tengo instaladas.",
+            "expected_output": "Inspect checkout pins and existing runtimes, use the appropriate source workflow, and verify the actual result without bypassing pins.",
+            "files": []
+        },
+        {
+            "id": 3,
+            "prompt": "The CLI doctor passes. Can I publish my private project now? Only inspect readiness.",
+            "expected_output": "Separate local engine readiness from unverified registry authorization; do not publish, login unnecessarily or claim remote access is proven.",
+            "files": []
+        }
+    ]
+}

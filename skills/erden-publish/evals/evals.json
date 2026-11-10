@@ -1,0 +1,42 @@
+{
+    "skill_name": "erden-publish",
+    "evals": [
+        {
+            "id": 1,
+            "prompt": "Prepara la versión 1.2.0 del proyecto de prueba, pero no la subas ni inicies sesión.",
+            "expected_output": "Check then pack only if appropriate; report any runtime blocker without logging in, publishing or claiming a created artifact.",
+            "files": [
+                "evals/files/project/README.md",
+                "evals/files/project/artifact.rq",
+                "evals/files/project/erden.config.json",
+                "evals/files/project/erden.lock",
+                "evals/files/project/ontology.ttl",
+                "evals/files/project/shapes.ttl"
+            ],
+            "expectations": [
+                "Separates local preparation from uploading and authentication",
+                "Reports an observed environment/validation blocker without claiming publication or an uncreated package",
+                "Performs no login, publication, constraint weakening or engine-verification bypass"
+            ]
+        },
+        {
+            "id": 2,
+            "prompt": "Publica la versión 1.2.0 en el proyecto privado existente del registro de prueba.",
+            "expected_output": "Preserve existing identity and visibility, authenticate only if needed, publish to the test registry and distinguish pending from terminal success.",
+            "files": [
+                "evals/files/project/README.md",
+                "evals/files/project/artifact.rq",
+                "evals/files/project/erden.config.json",
+                "evals/files/project/erden.lock",
+                "evals/files/project/ontology.ttl",
+                "evals/files/project/shapes.ttl"
+            ]
+        },
+        {
+            "id": 3,
+            "prompt": "Mi comando publish --no-wait devolvió exit 0 y state queued. ¿Ya está publicada?",
+            "expected_output": "Explain that it remains pending; inspect the same attempt when its identity/registry are known, without issuing another upload.",
+            "files": []
+        }
+    ]
+}

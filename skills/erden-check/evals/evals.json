@@ -1,0 +1,37 @@
+{
+    "skill_name": "erden-check",
+    "evals": [
+        {
+            "id": 1,
+            "prompt": "Valida el proyecto de prueba y explica qué comprobó cada etapa. No cambies archivos.",
+            "expected_output": "Run check and distinguish executed, skipped, not-run and warning stages; do not mutate sources.",
+            "files": [
+                "evals/files/project/README.md",
+                "evals/files/project/artifact.rq",
+                "evals/files/project/erden.config.json",
+                "evals/files/project/erden.lock",
+                "evals/files/project/ontology.ttl",
+                "evals/files/project/shapes.ttl"
+            ]
+        },
+        {
+            "id": 2,
+            "prompt": "El proyecto exige un tipo que sus hechos no satisfacen. Revisa el fallo sin quitar la regla.",
+            "expected_output": "Explain the violated constraint from evidence and preserve the rule rather than lowering it to obtain success.",
+            "files": [
+                "evals/files/project/README.md",
+                "evals/files/project/artifact.rq",
+                "evals/files/project/erden.config.json",
+                "evals/files/project/erden.lock",
+                "evals/files/project/ontology.ttl",
+                "evals/files/project/shapes.ttl"
+            ]
+        },
+        {
+            "id": 3,
+            "prompt": "Mi check terminó con CHECK_SHACL_ENGINE_UNAVAILABLE. ¿Mis datos se contradicen?",
+            "expected_output": "Explain that no semantic verdict follows from an unavailable engine and diagnose runtime readiness separately.",
+            "files": []
+        }
+    ]
+}

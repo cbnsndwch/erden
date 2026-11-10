@@ -1,0 +1,23 @@
+{
+    "skill_name": "erden-dependencies",
+    "evals": [
+        {
+            "id": 1,
+            "prompt": "Restaura las dependencias exactas de este proyecto sin usar la red.",
+            "expected_output": "Use offline frozen installation, preserving constraints and explaining any absent cached artifact.",
+            "files": []
+        },
+        {
+            "id": 2,
+            "prompt": "Actualiza solo @example/suppliers dentro del rango que ya permite mi manifiesto.",
+            "expected_output": "Update only the selected dependency, preserve the declared range and inspect the actual lockfile/report.",
+            "files": []
+        },
+        {
+            "id": 3,
+            "prompt": "Muéstrame qué haría quitar @example/suppliers, pero no cambies nada.",
+            "expected_output": "Inspect and explain the intended removal without inventing a remove dry-run flag or pruning the shared store.",
+            "files": []
+        }
+    ]
+}

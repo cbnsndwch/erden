@@ -1,0 +1,37 @@
+{
+    "skill_name": "erden-model",
+    "evals": [
+        {
+            "id": 1,
+            "prompt": "Crea un proyecto local de Erden con estas notas: Acme es un proveedor preferido, y todo proveedor preferido es proveedor. Conserva la fuente y comprueba el resultado.",
+            "expected_output": "Create a small attributed model, relevant shape and justified competency question; report the actual check result or environment blocker.",
+            "files": [
+                "evals/files/project/README.md",
+                "evals/files/project/artifact.rq",
+                "evals/files/project/erden.config.json",
+                "evals/files/project/erden.lock",
+                "evals/files/project/ontology.ttl",
+                "evals/files/project/shapes.ttl"
+            ]
+        },
+        {
+            "id": 2,
+            "prompt": "Añade el proveedor Beta al proyecto de prueba y conserva la regla de proveedores preferidos.",
+            "expected_output": "Preserve existing identity and evidence, add only sourced knowledge and adjust question expectations from the changed facts before checking.",
+            "files": [
+                "evals/files/project/README.md",
+                "evals/files/project/artifact.rq",
+                "evals/files/project/erden.config.json",
+                "evals/files/project/erden.lock",
+                "evals/files/project/ontology.ttl",
+                "evals/files/project/shapes.ttl"
+            ]
+        },
+        {
+            "id": 3,
+            "prompt": "Explícame qué es una ontología sin crear archivos.",
+            "expected_output": "Explain the term without scaffolding a project or invoking unrelated mutation workflows.",
+            "files": []
+        }
+    ]
+}

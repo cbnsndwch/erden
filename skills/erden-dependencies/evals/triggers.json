@@ -1,0 +1,26 @@
+[
+    {
+        "query": "instala las dependencias bloqueadas de mi proyecto Erden sin red",
+        "should_trigger": true
+    },
+    {
+        "query": "añade este vocabulario de Erden al proyecto",
+        "should_trigger": true
+    },
+    {
+        "query": "update only this Erden ontology dependency",
+        "should_trigger": true
+    },
+    {
+        "query": "actualiza las dependencias npm del CLI de Erden",
+        "should_trigger": false
+    },
+    {
+        "query": "instala el ejecutable erden",
+        "should_trigger": false
+    },
+    {
+        "query": "publica mi vocabulario en Erden",
+        "should_trigger": false
+    }
+]
