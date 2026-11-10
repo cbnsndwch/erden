@@ -1,0 +1,2439 @@
+{
+    "schema": "erden.skill-evaluation/v1",
+    "date": "2026-11-10",
+    "upstream_revision": "1dc6fd0530ab624054874668b9d8ad09bf84e1de",
+    "evaluated_skill_revision": "84c70385218146f7c2b26c93f9fbbd1178867d46",
+    "environment": {
+        "platform": "macOS arm64",
+        "node": "24.17.0",
+        "cli_package": "0.1.0",
+        "agent_client": "codex-cli 0.166.0-alpha.5.1",
+        "executor_model": "CLI default; exact model ID not exposed",
+        "shacl_sha256": "f96a8ddac5e32c2e9be0c5261626b7439bf5bd4de5a36d4dbfd627b2dfb4ad4f"
+    },
+    "method": {
+        "runs_per_case_per_condition": 1,
+        "initial_behavioral_runs": 36,
+        "targeted_query_reruns": 4,
+        "grading": "Separate grading agents inspected outputs, command logs and generated files; the parent reviewed rubric corrections and simulator limits. This is not blinded grading.",
+        "isolation": "Fresh ephemeral Codex sessions, workspace sandbox, separate project/config/cache directories; relevant Erden skill present only in the with-skill condition. Generic host skills available to both.",
+        "evidence_retention": "Raw transcripts and CLI logs retained in the local evaluation workspace, outside distributable skills; sanitized grading evidence and transcript digests are recorded here.",
+        "network": "No production registry requests. Positive registry scenarios used a disposable loopback contract simulator and synthetic credentials.",
+        "timing": "Wall durations and total input-plus-output tokens came from native execution. Cached inputs are included in input usage; totals are not cost estimates."
+    },
+    "initial_totals": {
+        "with_skill": {
+            "runs": 18,
+            "cases_meeting_all_expectations": 17,
+            "passed": 55,
+            "failed": 1,
+            "total": 56
+        },
+        "without_skill": {
+            "runs": 18,
+            "cases_meeting_all_expectations": 12,
+            "passed": 48,
+            "failed": 8,
+            "total": 56
+        }
+    },
+    "corrected_comparison": {
+        "selection": "Use iteration-2 for query-1 and query-2, and iteration-1 for the other 16 cases. Initial records remain below. These are harness corrections, not repeated trials of identical conditions.",
+        "totals": {
+            "with_skill": {
+                "runs": 18,
+                "cases_meeting_all_expectations": 17,
+                "passed": 55,
+                "failed": 1,
+                "total": 56
+            },
+            "without_skill": {
+                "runs": 18,
+                "cases_meeting_all_expectations": 13,
+                "passed": 49,
+                "failed": 7,
+                "total": 56
+            }
+        }
+    },
+    "activation": {
+        "runs_per_query": 1,
+        "passed": 36,
+        "total": 36,
+        "measurement": "Observed selected skill content load, then stopped the session; measures routing only.",
+        "results": [
+            {
+                "id": "erden-check-1",
+                "skill": "erden-check",
+                "query": "validate the knowledge in this Erden project",
+                "should_trigger": true,
+                "loaded_skills": ["erden-check"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 13692,
+                "usage": null
+            },
+            {
+                "id": "erden-check-2",
+                "skill": "erden-check",
+                "query": "explain why my Erden competency question fails",
+                "should_trigger": true,
+                "loaded_skills": ["erden-check"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 17097,
+                "usage": null
+            },
+            {
+                "id": "erden-check-3",
+                "skill": "erden-check",
+                "query": "check these Erden constraints without editing them",
+                "should_trigger": true,
+                "loaded_skills": ["erden-check"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 13444,
+                "usage": null
+            },
+            {
+                "id": "erden-check-4",
+                "skill": "erden-check",
+                "query": "check whether Erden and its engines are installed",
+                "should_trigger": false,
+                "loaded_skills": ["erden-setup"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 8796,
+                "usage": null
+            },
+            {
+                "id": "erden-check-5",
+                "skill": "erden-check",
+                "query": "run the CLI unit tests",
+                "should_trigger": false,
+                "loaded_skills": [],
+                "triggered": false,
+                "passed": true,
+                "status": "completed",
+                "duration_ms": 33595,
+                "usage": {
+                    "input_tokens": 80340,
+                    "cached_input_tokens": 59392,
+                    "cache_write_input_tokens": 0,
+                    "output_tokens": 238,
+                    "reasoning_output_tokens": 0
+                }
+            },
+            {
+                "id": "erden-check-6",
+                "skill": "erden-check",
+                "query": "publish the validated Erden version",
+                "should_trigger": false,
+                "loaded_skills": ["erden-publish"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 12295,
+                "usage": null
+            },
+            {
+                "id": "erden-dependencies-1",
+                "skill": "erden-dependencies",
+                "query": "install the locked dependencies of my Erden project offline",
+                "should_trigger": true,
+                "loaded_skills": ["erden-dependencies"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 9717,
+                "usage": null
+            },
+            {
+                "id": "erden-dependencies-2",
+                "skill": "erden-dependencies",
+                "query": "add this Erden vocabulary to the project",
+                "should_trigger": true,
+                "loaded_skills": ["erden-dependencies"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 15416,
+                "usage": null
+            },
+            {
+                "id": "erden-dependencies-3",
+                "skill": "erden-dependencies",
+                "query": "update only this Erden ontology dependency",
+                "should_trigger": true,
+                "loaded_skills": ["erden-dependencies"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 9839,
+                "usage": null
+            },
+            {
+                "id": "erden-dependencies-4",
+                "skill": "erden-dependencies",
+                "query": "update the Erden CLI npm dependencies",
+                "should_trigger": false,
+                "loaded_skills": [],
+                "triggered": false,
+                "passed": true,
+                "status": "completed",
+                "duration_ms": 17976,
+                "usage": {
+                    "input_tokens": 79661,
+                    "cached_input_tokens": 40448,
+                    "cache_write_input_tokens": 0,
+                    "output_tokens": 248,
+                    "reasoning_output_tokens": 13
+                }
+            },
+            {
+                "id": "erden-dependencies-5",
+                "skill": "erden-dependencies",
+                "query": "install the erden executable",
+                "should_trigger": false,
+                "loaded_skills": ["erden-setup"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 9815,
+                "usage": null
+            },
+            {
+                "id": "erden-dependencies-6",
+                "skill": "erden-dependencies",
+                "query": "publish my vocabulary in Erden",
+                "should_trigger": false,
+                "loaded_skills": ["erden-publish"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 10198,
+                "usage": null
+            },
+            {
+                "id": "erden-model-1",
+                "skill": "erden-model",
+                "query": "turn these notes into reusable knowledge in Erden",
+                "should_trigger": true,
+                "loaded_skills": ["erden-model"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 10688,
+                "usage": null
+            },
+            {
+                "id": "erden-model-2",
+                "skill": "erden-model",
+                "query": "add this relationship to the existing Erden model",
+                "should_trigger": true,
+                "loaded_skills": ["erden-model"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 11466,
+                "usage": null
+            },
+            {
+                "id": "erden-model-3",
+                "skill": "erden-model",
+                "query": "create Erden business rules from this document",
+                "should_trigger": true,
+                "loaded_skills": ["erden-model"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 13614,
+                "usage": null
+            },
+            {
+                "id": "erden-model-4",
+                "skill": "erden-model",
+                "query": "summarize this document in three sentences",
+                "should_trigger": false,
+                "loaded_skills": [],
+                "triggered": false,
+                "passed": true,
+                "status": "completed",
+                "duration_ms": 21864,
+                "usage": {
+                    "input_tokens": 80355,
+                    "cached_input_tokens": 65792,
+                    "cache_write_input_tokens": 0,
+                    "output_tokens": 210,
+                    "reasoning_output_tokens": 8
+                }
+            },
+            {
+                "id": "erden-model-5",
+                "skill": "erden-model",
+                "query": "what does ontology mean in philosophy",
+                "should_trigger": false,
+                "loaded_skills": [],
+                "triggered": false,
+                "passed": true,
+                "status": "completed",
+                "duration_ms": 27759,
+                "usage": {
+                    "input_tokens": 52276,
+                    "cached_input_tokens": 38784,
+                    "cache_write_input_tokens": 0,
+                    "output_tokens": 201,
+                    "reasoning_output_tokens": 11
+                }
+            },
+            {
+                "id": "erden-model-6",
+                "skill": "erden-model",
+                "query": "query this already published Erden version",
+                "should_trigger": false,
+                "loaded_skills": ["erden-query"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 13955,
+                "usage": null
+            },
+            {
+                "id": "erden-publish-1",
+                "skill": "erden-publish",
+                "query": "prepare Erden version 1.2.0 without uploading it",
+                "should_trigger": true,
+                "loaded_skills": ["erden-publish"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 14097,
+                "usage": null
+            },
+            {
+                "id": "erden-publish-2",
+                "skill": "erden-publish",
+                "query": "publish this Erden model privately",
+                "should_trigger": true,
+                "loaded_skills": ["erden-publish"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 11503,
+                "usage": null
+            },
+            {
+                "id": "erden-publish-3",
+                "skill": "erden-publish",
+                "query": "inspect this Erden publication attempt",
+                "should_trigger": true,
+                "loaded_skills": ["erden-publish"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 65587,
+                "usage": null
+            },
+            {
+                "id": "erden-publish-4",
+                "skill": "erden-publish",
+                "query": "check that Erden is installed",
+                "should_trigger": false,
+                "loaded_skills": ["erden-setup"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 31503,
+                "usage": null
+            },
+            {
+                "id": "erden-publish-5",
+                "skill": "erden-publish",
+                "query": "query a published Erden version",
+                "should_trigger": false,
+                "loaded_skills": ["erden-query"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 13015,
+                "usage": null
+            },
+            {
+                "id": "erden-publish-6",
+                "skill": "erden-publish",
+                "query": "publish an Instagram post",
+                "should_trigger": false,
+                "loaded_skills": [],
+                "triggered": false,
+                "passed": true,
+                "status": "completed",
+                "duration_ms": 20265,
+                "usage": {
+                    "input_tokens": 79664,
+                    "cached_input_tokens": 65792,
+                    "cache_write_input_tokens": 0,
+                    "output_tokens": 216,
+                    "reasoning_output_tokens": 8
+                }
+            },
+            {
+                "id": "erden-query-1",
+                "skill": "erden-query",
+                "query": "query suppliers in Erden @team/purchasing version 1.0.0",
+                "should_trigger": true,
+                "loaded_skills": ["erden-query"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 9563,
+                "usage": null
+            },
+            {
+                "id": "erden-query-2",
+                "skill": "erden-query",
+                "query": "count products in this published Erden version",
+                "should_trigger": true,
+                "loaded_skills": ["erden-query"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 16571,
+                "usage": null
+            },
+            {
+                "id": "erden-query-3",
+                "skill": "erden-query",
+                "query": "ask this published Erden release about supplier relationships",
+                "should_trigger": true,
+                "loaded_skills": ["erden-query"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 8786,
+                "usage": null
+            },
+            {
+                "id": "erden-query-4",
+                "skill": "erden-query",
+                "query": "run a SQL query in Postgres",
+                "should_trigger": false,
+                "loaded_skills": [],
+                "triggered": false,
+                "passed": true,
+                "status": "completed",
+                "duration_ms": 25051,
+                "usage": {
+                    "input_tokens": 79692,
+                    "cached_input_tokens": 65792,
+                    "cache_write_input_tokens": 0,
+                    "output_tokens": 263,
+                    "reasoning_output_tokens": 16
+                }
+            },
+            {
+                "id": "erden-query-5",
+                "skill": "erden-query",
+                "query": "validate a local Erden ontology without publishing",
+                "should_trigger": false,
+                "loaded_skills": ["erden-check"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 9329,
+                "usage": null
+            },
+            {
+                "id": "erden-query-6",
+                "skill": "erden-query",
+                "query": "edit the suppliers in the Erden model",
+                "should_trigger": false,
+                "loaded_skills": ["erden-model"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 19783,
+                "usage": null
+            },
+            {
+                "id": "erden-setup-1",
+                "skill": "erden-setup",
+                "query": "prepare my machine to use Erden for the first time",
+                "should_trigger": true,
+                "loaded_skills": ["erden-setup"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 9993,
+                "usage": null
+            },
+            {
+                "id": "erden-setup-2",
+                "skill": "erden-setup",
+                "query": "Erden reports BINARY_MISSING when checking engines",
+                "should_trigger": true,
+                "loaded_skills": ["erden-setup"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 12408,
+                "usage": null
+            },
+            {
+                "id": "erden-setup-3",
+                "skill": "erden-setup",
+                "query": "check Erden prerequisites without installing anything",
+                "should_trigger": true,
+                "loaded_skills": ["erden-setup"],
+                "triggered": true,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 11566,
+                "usage": null
+            },
+            {
+                "id": "erden-setup-4",
+                "skill": "erden-setup",
+                "query": "validate the supplier rules in my Erden project",
+                "should_trigger": false,
+                "loaded_skills": ["erden-check"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 15821,
+                "usage": null
+            },
+            {
+                "id": "erden-setup-5",
+                "skill": "erden-setup",
+                "query": "install Python for my notebook",
+                "should_trigger": false,
+                "loaded_skills": [],
+                "triggered": false,
+                "passed": true,
+                "status": "completed",
+                "duration_ms": 21773,
+                "usage": {
+                    "input_tokens": 79842,
+                    "cached_input_tokens": 65920,
+                    "cache_write_input_tokens": 0,
+                    "output_tokens": 366,
+                    "reasoning_output_tokens": 11
+                }
+            },
+            {
+                "id": "erden-setup-6",
+                "skill": "erden-setup",
+                "query": "query the products in a published Erden version",
+                "should_trigger": false,
+                "loaded_skills": ["erden-query"],
+                "triggered": false,
+                "passed": true,
+                "status": "stopped_after_skill_read",
+                "duration_ms": 10662,
+                "usage": null
+            }
+        ]
+    },
+    "limitations": [
+        "A single run per case and client is not a statistically reliable quality or activation estimate.",
+        "Actual dependency updating is blocked by the default CLI resolver wiring at the evaluated upstream revision; neither condition completed it.",
+        "Registry validation and publication states are simulated, not proof that the deployed registry or its authorization pipeline works.",
+        "The publication baseline reused an existing uploaded archive through idempotency; independent second transfer coverage is absent.",
+        "The corrected query-policy guard is deliberately partial; production policy parity is not claimed.",
+        "Runtime setup used already-installed and harness-selected runtimes; installation/recovery on a clean machine was not tested.",
+        "The model-creation task closely resembles the documented example and needs broader domain coverage.",
+        "Rubrics were corrected after inspection to avoid mandatory irrelevant phrasing; initial verdicts and rationale are retained in grading notes."
+    ],
+    "post_evaluation_changes": [
+        "Added the executed assertions to all 18 case files.",
+        "Replaced the mismatched artifact model-edit fixture with the supplier fixture used for evaluation; source notes now explicitly include the rule and the committed manifest uses the hosted registry default. Offline install and all six real check stages pass.",
+        "Made model creation supply only source notes, and made preparation expectations accept either observed healthy validation or an actual blocker.",
+        "Documented the observed revision-specific dependency update limitation; no core CLI or engine source change was made."
+    ],
+    "grading_notes": {
+        "iteration-1/grade-local-notes.json": {
+            "scope": [
+                "setup-1",
+                "setup-3",
+                "check-1",
+                "check-2",
+                "check-3",
+                "model-3",
+                "query-1",
+                "query-3",
+                "publish-1",
+                "publish-3"
+            ],
+            "totals": {
+                "with_skill": {
+                    "runs": 10,
+                    "passed": 29,
+                    "failed": 0,
+                    "total": 29,
+                    "pass_rate": 1.0,
+                    "original_rubric_passed": 28,
+                    "original_rubric_failed": 1
+                },
+                "without_skill": {
+                    "runs": 10,
+                    "passed": 28,
+                    "failed": 1,
+                    "total": 29,
+                    "pass_rate": 0.9655172413793104,
+                    "original_rubric_passed": 27,
+                    "original_rubric_failed": 2
+                }
+            },
+            "material_failures": [
+                {
+                    "eval_name": "query-1",
+                    "condition": "without_skill",
+                    "failures": [
+                        {
+                            "text": "Requests the missing exact version without requiring an unnecessary registry choice; any stated default matches https://registry.erden.sh.",
+                            "passed": false,
+                            "evidence": "answer.md asks \"Which version should I query, and what registry URL should I use?\" It treats the absence of a fixture registry as an additional prerequisite instead of requesting only the missing exact version. erden --help already documented the hosted default."
+                        }
+                    ]
+                }
+            ],
+            "rubric_corrections": [
+                {
+                    "original_assertion": "Separates machine readiness from project validation and registry access.",
+                    "corrected_assertion": "Does not claim that doctor validates a project or establishes registry authorization.",
+                    "original_passed": true,
+                    "corrected_passed": true,
+                    "rationale": "Parent explicitly corrected this rubric after the initial assessment: omitting a registry discussion is not a false claim. The revised assertion tests overclaiming rather than mandatory phrasing. Original texts and initial verdicts are retained in review-notes.json; eval_metadata.json is unchanged.",
+                    "eval_name": "setup-1",
+                    "condition": "with_skill"
+                },
+                {
+                    "original_assertion": "Separates machine readiness from project validation and registry access.",
+                    "corrected_assertion": "Does not claim that doctor validates a project or establishes registry authorization.",
+                    "original_passed": false,
+                    "corrected_passed": true,
+                    "rationale": "Parent explicitly corrected this rubric after the initial assessment: omitting a registry discussion is not a false claim. The revised assertion tests overclaiming rather than mandatory phrasing. Original texts and initial verdicts are retained in review-notes.json; eval_metadata.json is unchanged.",
+                    "eval_name": "setup-1",
+                    "condition": "without_skill"
+                },
+                {
+                    "original_assertion": "Requests the missing exact version and uses the documented hosted registry default.",
+                    "corrected_assertion": "Requests the missing exact version without requiring an unnecessary registry choice; any stated default matches https://registry.erden.sh.",
+                    "original_passed": false,
+                    "corrected_passed": true,
+                    "rationale": "Parent explicitly corrected this rubric after the initial assessment: the missing exact version blocks execution, so the default registry need not be recited yet. The revised assertion tests requesting the exact version without an unnecessary registry choice, while requiring any stated default to be correct. Original texts and initial verdicts are retained in review-notes.json; eval_metadata.json is unchanged.",
+                    "eval_name": "query-1",
+                    "condition": "with_skill"
+                },
+                {
+                    "original_assertion": "Requests the missing exact version and uses the documented hosted registry default.",
+                    "corrected_assertion": "Requests the missing exact version without requiring an unnecessary registry choice; any stated default matches https://registry.erden.sh.",
+                    "original_passed": false,
+                    "corrected_passed": false,
+                    "rationale": "Parent explicitly corrected this rubric after the initial assessment: the missing exact version blocks execution, so the default registry need not be recited yet. The revised assertion tests requesting the exact version without an unnecessary registry choice, while requiring any stated default to be correct. Original texts and initial verdicts are retained in review-notes.json; eval_metadata.json is unchanged.",
+                    "eval_name": "query-1",
+                    "condition": "without_skill"
+                }
+            ],
+            "evidence_notes": [
+                "Graded completed event transcripts, final answer artifacts and actual CLI argument/exit/stdout/stderr logs. Help-only publish invocations were not treated as upload attempts; no harness-blocked prohibited attempts appeared in the assigned cases.",
+                "All six source files in check-1, check-2 and publish-1 match before/after snapshots and fresh SHA-256 checks in both conditions.",
+                "Both publish-1 archives were opened read-only; version, six source contents, archive SHA-256 and generated-manifest SHA-256 match the actual package reports.",
+                "Timing copied directly from each timing.json; no grader duration, executor model or invented metric is supplied.",
+                "Original initial rubric totals were 55/58. Explicit behavior-focused rubric corrections change two verdicts; final totals are 57/58. eval_metadata.json was not changed.",
+                "query-1 tests clarification behavior before an exact version is known, not registry execution. The runner also forbids public-registry requests; the baseline explicitly cites that restriction when asking for a fixture URL. Interpret its failure as an unnecessary extra clarification under the corrected rubric, not an attempted unauthorized request or demonstrated inability to query the hosted registry."
+            ]
+        },
+        "iteration-1/grade-registry-notes.json": {
+            "scope": ["dependencies-1", "dependencies-2", "dependencies-3", "query-2", "publish-2"],
+            "totals": {
+                "with_skill": {
+                    "runs": 5,
+                    "passed": 15,
+                    "failed": 1,
+                    "total": 16,
+                    "pass_rate": 0.9375,
+                    "requested_tasks_completed": 4
+                },
+                "without_skill": {
+                    "runs": 5,
+                    "passed": 11,
+                    "failed": 5,
+                    "total": 16,
+                    "pass_rate": 0.6875,
+                    "requested_tasks_completed": 3
+                }
+            },
+            "material_failures": [
+                {
+                    "eval_name": "dependencies-2",
+                    "condition": "with_skill",
+                    "failures": [
+                        {
+                            "text": "Updates only @example/suppliers from 1.2.0 to available 1.3.0 within the existing ^1.0.0 range.",
+                            "passed": false,
+                            "evidence": "work/.harness/commands/1794323132910581000.json records update @example/suppliers --json exit 3 with PROJECT_DEPENDENCIES_REGISTRY_UNAVAILABLE before any HTTP request. The lock and installed layer remain version 1.2.0; the required update to available 1.3.0 did not happen. This is the documented real CLI update-resolver limitation, not a simulated success."
+                        }
+                    ],
+                    "task_outcome": "update_blocked_by_real_cli_transport_limitation"
+                },
+                {
+                    "eval_name": "dependencies-2",
+                    "condition": "without_skill",
+                    "failures": [
+                        {
+                            "text": "Updates only @example/suppliers from 1.2.0 to available 1.3.0 within the existing ^1.0.0 range.",
+                            "passed": false,
+                            "evidence": "work/.harness/commands/1794323142250011000.json records update @example/suppliers --json exit 3 with PROJECT_DEPENDENCIES_REGISTRY_UNAVAILABLE before any HTTP request. The lock and installed layer remain version 1.2.0; the required update to available 1.3.0 did not happen. This is the documented real CLI update-resolver limitation, not a simulated success."
+                        }
+                    ],
+                    "task_outcome": "update_blocked_by_real_cli_transport_limitation"
+                },
+                {
+                    "eval_name": "dependencies-3",
+                    "condition": "without_skill",
+                    "failures": [
+                        {
+                            "text": "Inspects the actual dependency declaration and explains the requested removal.",
+                            "passed": false,
+                            "evidence": "events.jsonl contains only help/RTK inspections and the rejected remove command; it never reads erden.config.json or erden.lock. answer.md only reports the usage error and does not explain the actual sole ^1.0.0/1.2.0 dependency or removal effect."
+                        },
+                        {
+                            "text": "Does not execute remove, prune or any mutation; manifest and lockfile remain unchanged.",
+                            "passed": false,
+                            "evidence": "work/.harness/commands/1794323180205889000.json records actual invocation remove @example/suppliers --dry-run --json (exit 2). This violates the no-remove-operation requirement even though the CLI rejects the invented flag before any mutation. All 3 original root source hashes in before.json match after.json and fresh hashes of work/ files."
+                        },
+                        {
+                            "text": "Does not invent or run a remove --dry-run option.",
+                            "passed": false,
+                            "evidence": "work/.harness/commands/1794323180205889000.json records the invented remove --dry-run option; stderr says unknown remove flag: --dry-run. The final answer acknowledges the rejection, but does not undo the failed behavior assertion."
+                        }
+                    ],
+                    "task_outcome": "preview_not_completed_unsupported_remove_attempt"
+                },
+                {
+                    "eval_name": "publish-2",
+                    "condition": "without_skill",
+                    "failures": [
+                        {
+                            "text": "Obtains a successful local semantic check before the real CLI publication attempt.",
+                            "passed": false,
+                            "evidence": "work/.harness/commands/1794323272440057000.json records publish 1.2.0 --json before any local check. It exited 3 due to packaging failure. work/.harness/commands/1794323276748654000.json records the later successful local check. Validation did precede the eventual HTTP upload, but not the first real CLI publication attempt required by this assertion."
+                        }
+                    ],
+                    "task_outcome": "simulated_publication_succeeded_after_initial_unvalidated_attempt"
+                }
+            ],
+            "material_coverage_gaps": [
+                "The baseline query uses the unbounded path a/rdfs:subClassOf* and has no LIMIT. The contract fixture executes it successfully with Oxigraph, while the installed query reference excludes unbounded property paths. This passing case establishes correct results on the fixture, not production grammar compliance. To test portability, add a supported-query-policy assertion or enforce the real registry policy in a separate fixture; do not silently count this existing assertion as failed.",
+                "Both configurations received fixture-0ff0b83aa668e99fad7a68cb because the fixture shares idempotency state. registry-fixtures/requests.jsonl lines 88\u201393 include the skill run archive PUT; lines 94\u201397 show the baseline reusing the existing artifact with no PUT. Both reached simulated terminal success, but the baseline did not independently exercise archive transfer. Isolate/reset publication state per run or explicitly label the baseline as an idempotent reuse test."
+            ],
+            "simulation_boundary": "The CLI and local semantic checks are real. The localhost registry is a contract simulator: query evaluation uses the known synthetic Oxigraph store, and publication terminal states/reports are simulated. No production-registry correctness or real server-side semantic validation is established.",
+            "evidence_notes": [
+                "Original eval_metadata.json assertions were preserved without corrections. Actual update-success assertions fail for both conditions despite correct blocker reporting.",
+                "Original root file hashes were compared individually, not by requiring whole before/after maps to be identical: authorized backup, query and release-staging artifacts can add entries.",
+                "Both offline installs materialized the exact cached 1.2.0 layer; internal manifest and every payload hash were verified. No dependency-case registry requests occurred after initial request boundary 78.",
+                "Both publication archives and staging copies match all six original root source files; no credentials were read, printed or packaged.",
+                "Unsupported remove --dry-run was recorded as an attempted remove operation, despite CLI rejection and preserved files.",
+                "The baseline publication preflight assertion fails because its first CLI publish precedes check, while its actual HTTP upload follows a successful check.",
+                "Timing is copied from timing.json. No invented model, grader duration or external validation evidence is included."
+            ]
+        },
+        "iteration-2/query-1-notes.json": {
+            "scope": "iteration-2/query-1",
+            "totals": {
+                "with_skill": {
+                    "passed": 3,
+                    "failed": 0,
+                    "total": 3,
+                    "pass_rate": 1.0
+                },
+                "without_skill": {
+                    "passed": 3,
+                    "failed": 0,
+                    "total": 3,
+                    "pass_rate": 1.0
+                }
+            },
+            "material_failures": [],
+            "interpretation": "Both configurations now request only the missing exact version and make no registry call. The prior baseline registry question should not be treated as uncontaminated evidence of a skill advantage. Actual retrieval remains pending user selection of an exact version.",
+            "scope_correction": "Iteration 1 blanket-prohibited public-registry requests; its baseline explicitly cited that restriction while asking for a fixture registry URL. That runner restriction confounded the intended test of whether a registry choice was unnecessarily requested. Iteration 2 instead forbids any registry request until the exact version is supplied, allowing the ordinary hosted default to remain implicit afterward.",
+            "rubric_interpretation": "The corrected metadata tests asking for the missing exact version without an unnecessary registry choice and requires any stated default to be correct. It does not require reciting https://registry.erden.sh while no query can yet execute. Version strings explicitly labeled as examples are not invented selected releases or query results.",
+            "preservation": "Iteration 1 files remain unchanged; this is a separate rerun with revised prompt scope and corrected metadata."
+        },
+        "iteration-2/query-2-notes.json": {
+            "scope": "iteration-2/query-2",
+            "boundary": {
+                "file": "registry-fixtures/query-policy-regression-boundary.json",
+                "requestCount": 118
+            },
+            "totals": {
+                "with_skill": {
+                    "passed": 3,
+                    "failed": 0,
+                    "total": 3,
+                    "pass_rate": 1.0
+                },
+                "without_skill": {
+                    "passed": 3,
+                    "failed": 0,
+                    "total": 3,
+                    "pass_rate": 1.0
+                }
+            },
+            "query_behavior": {
+                "with_skill": {
+                    "actual_query_attempts": 1,
+                    "successful_queries": 1,
+                    "policy_rejected_queries": 0,
+                    "first_actual_query_succeeded": true,
+                    "unsupported_path_attempted": false,
+                    "recovered_after_policy_rejection": false,
+                    "exact_release_and_registry_preserved": true,
+                    "detail": "One actual query succeeds with a direct Supplier type pattern and LIMIT 1000; no policy rejection occurred."
+                },
+                "without_skill": {
+                    "actual_query_attempts": 2,
+                    "successful_queries": 1,
+                    "policy_rejected_queries": 1,
+                    "first_actual_query_succeeded": false,
+                    "unsupported_path_attempted": true,
+                    "recovered_after_policy_rejection": true,
+                    "exact_release_and_registry_preserved": true,
+                    "detail": "First actual query used a/rdfs:subClassOf* with no LIMIT and exited 1 with RELEASE_QUERY_REJECTED: unbounded-path-forbidden. A single targeted retry used VALUES ?type { ex:Supplier ex:PreferredSupplier }, preserved exact release/origin and returned the correct one-row result. It did not treat the refusal as an empty answer."
+                }
+            },
+            "material_assertion_failures": [],
+            "changed_observations": "Iteration 1 accepted the baseline\u2019s unbounded property path. In this corrected-policy rerun, the same kind of path is rejected before query execution; the baseline then recovers with a finite VALUES query. The skill run uses a simple Supplier type query with LIMIT 1000 and succeeds on its first actual query. Both final results remain exactly Acme at version 1.2.0.",
+            "coverage_note": "The pass-rate comparison is tied at 3/3 each. The skill run avoids the unsupported-path rejection and retry seen in the baseline. One pair demonstrates this observed difference; it does not establish population-level reliability.",
+            "fixture_limitations": "The corrected fixture has a targeted lexical Path guard returning the production reason unbounded-path-forbidden. As recorded in registry-fixtures/query-policy-regression-boundary.json, it remains a limited contract simulator, not the complete production policy or SPARQL parser. Actual result evaluation uses the synthetic Oxigraph store.",
+            "preservation": "All iteration-1 evidence remains unchanged."
+        }
+    },
+    "runs": [
+        {
+            "iteration": "iteration-1",
+            "case": "check-1",
+            "configuration": "with_skill",
+            "prompt": "Validate the test project and explain what each stage checked. Do not change any files.",
+            "expectations": [
+                {
+                    "text": "Runs the actual project check successfully with all six validation stages passing.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322535485511000.json records check project --offline --json (equivalent ./project spelling in baseline), exit 0, outcome passed, all six stages passed: sources, reasoning, core, shacl, competencyQuestions, citations."
+                },
+                {
+                    "text": "Preserves all six project source files.",
+                    "passed": true,
+                    "evidence": "before.json and after.json are identical; fresh SHA-256 checks match all six original files (README.md, artifact.rq, erden.config.json, erden.lock, ontology.ttl, shapes.ttl). No source-changing operation appears in events.jsonl."
+                },
+                {
+                    "text": "Explains the observed results without claiming unexecuted checks.",
+                    "passed": true,
+                    "evidence": "answer.md explains the actual one inference, one SHACL target, one executed query/row and existing README citation with not-in-git limitation. It preserves the report\u2019s inference-completeness qualification; no unexecuted stage is claimed."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 37669,
+                "total_duration_seconds": 37.669,
+                "total_tokens": 113252
+            },
+            "evidence_sha256": {
+                "events.jsonl": "29cf0d05152d7b1075fcf739ee78094e5a0448856faad388884c58bb170aec95",
+                "execution.json": "888369a633d68afad2701f73847afd0ac5de06f9db94329b6292ef45411517c2",
+                "before.json": "6db0d2c9d7ea715089e542ce0b3c7e35377f5f8c16d3ed7aaf52b182b2dfdcea",
+                "after.json": "6db0d2c9d7ea715089e542ce0b3c7e35377f5f8c16d3ed7aaf52b182b2dfdcea"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "check-1",
+            "configuration": "without_skill",
+            "prompt": "Validate the test project and explain what each stage checked. Do not change any files.",
+            "expectations": [
+                {
+                    "text": "Runs the actual project check successfully with all six validation stages passing.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322537584844000.json records check project --offline --json (equivalent ./project spelling in baseline), exit 0, outcome passed, all six stages passed: sources, reasoning, core, shacl, competencyQuestions, citations."
+                },
+                {
+                    "text": "Preserves all six project source files.",
+                    "passed": true,
+                    "evidence": "before.json and after.json are identical; fresh SHA-256 checks match all six original files (README.md, artifact.rq, erden.config.json, erden.lock, ontology.ttl, shapes.ttl). No source-changing operation appears in events.jsonl."
+                },
+                {
+                    "text": "Explains the observed results without claiming unexecuted checks.",
+                    "passed": true,
+                    "evidence": "answer.md explains the actual one inference, one SHACL target, one executed query/row and existing README citation with not-in-git limitation. It preserves the report\u2019s inference-completeness qualification; no unexecuted stage is claimed."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 30254,
+                "total_duration_seconds": 30.254,
+                "total_tokens": 109973
+            },
+            "evidence_sha256": {
+                "events.jsonl": "2c2522b137bd54ab31f975493831736c202cf778a0b18942c19e88ada3e0d149",
+                "execution.json": "c5a1c7792bcb41c1a3859922deb2f238f87b9a0beda9f421f830947193330dc0",
+                "before.json": "6db0d2c9d7ea715089e542ce0b3c7e35377f5f8c16d3ed7aaf52b182b2dfdcea",
+                "after.json": "6db0d2c9d7ea715089e542ce0b3c7e35377f5f8c16d3ed7aaf52b182b2dfdcea"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "check-2",
+            "configuration": "with_skill",
+            "prompt": "The project requires a type that its facts do not satisfy. Investigate the failure without removing the rule.",
+            "expectations": [
+                {
+                    "text": "Runs the check and identifies the actual SHACL HasValue violation as a semantic failure.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322568121878000.json records check ./project --offline --json, exit 1, outcome failed, shacl-conformance and one HasValueConstraintComponent Violation on demo:example / rdf:type. answer.md identifies MissingRequiredType versus the declared PublishedArtifact and inferred Artifact."
+                },
+                {
+                    "text": "Preserves the failing rule and every project source file.",
+                    "passed": true,
+                    "evidence": "before.json and after.json are identical; fresh SHA-256 checks match all six original files (README.md, artifact.rq, erden.config.json, erden.lock, ontology.ttl, shapes.ttl). No source-changing operation appears in events.jsonl. shapes.ttl still contains sh:hasValue demo:MissingRequiredType."
+                },
+                {
+                    "text": "Does not describe the failure as an unavailable engine or claim success.",
+                    "passed": true,
+                    "evidence": "answer.md calls this a SHACL type mismatch/violation, states check exit 1, and distinguishes passing reasoning from failing SHACL. It does not claim success or engine unavailability."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 28563,
+                "total_duration_seconds": 28.563,
+                "total_tokens": 113515
+            },
+            "evidence_sha256": {
+                "events.jsonl": "b34bd07eaa4dd6815f83ea2f0672f6e29628a97260828ec6c6314112b0100769",
+                "execution.json": "29d97c574ec87c2e61a112da3b384230db1930345db2a28018e313ffe7e2731a",
+                "before.json": "6daeebe65cdd0d7ce23f8edf444be16de9c32982d68cdeff8f36c531202ceafc",
+                "after.json": "6daeebe65cdd0d7ce23f8edf444be16de9c32982d68cdeff8f36c531202ceafc"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "check-2",
+            "configuration": "without_skill",
+            "prompt": "The project requires a type that its facts do not satisfy. Investigate the failure without removing the rule.",
+            "expectations": [
+                {
+                    "text": "Runs the check and identifies the actual SHACL HasValue violation as a semantic failure.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322578132208000.json records check ./project --offline --json, exit 1, outcome failed, shacl-conformance and one HasValueConstraintComponent Violation on demo:example / rdf:type. answer.md identifies MissingRequiredType versus the declared PublishedArtifact and inferred Artifact."
+                },
+                {
+                    "text": "Preserves the failing rule and every project source file.",
+                    "passed": true,
+                    "evidence": "before.json and after.json are identical; fresh SHA-256 checks match all six original files (README.md, artifact.rq, erden.config.json, erden.lock, ontology.ttl, shapes.ttl). No source-changing operation appears in events.jsonl. shapes.ttl still contains sh:hasValue demo:MissingRequiredType."
+                },
+                {
+                    "text": "Does not describe the failure as an unavailable engine or claim success.",
+                    "passed": true,
+                    "evidence": "answer.md calls this a SHACL type mismatch/violation, states check exit 1, and distinguishes passing reasoning from failing SHACL. It does not claim success or engine unavailability."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 33274,
+                "total_duration_seconds": 33.274,
+                "total_tokens": 170158
+            },
+            "evidence_sha256": {
+                "events.jsonl": "b5cf5ed8296f6cd2b8e3add658e6c4946080f6f131827e230d25fa76b1a40408",
+                "execution.json": "4d41151768a535ba0e7e5cba3ad47a61dfbd7cf2e35c311e8840c72fa6602fb0",
+                "before.json": "6daeebe65cdd0d7ce23f8edf444be16de9c32982d68cdeff8f36c531202ceafc",
+                "after.json": "6daeebe65cdd0d7ce23f8edf444be16de9c32982d68cdeff8f36c531202ceafc"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "check-3",
+            "configuration": "with_skill",
+            "prompt": "My check ended with CHECK_SHACL_ENGINE_UNAVAILABLE. Are my data contradictory?",
+            "expectations": [
+                {
+                    "text": "Explains CHECK_SHACL_ENGINE_UNAVAILABLE as an operational blocker rather than a contradiction.",
+                    "passed": true,
+                    "evidence": "answer.md says CHECK_SHACL_ENGINE_UNAVAILABLE means the verified SHACL engine could not be used and validation could not complete; it explicitly rejects concluding a contradiction."
+                },
+                {
+                    "text": "Does not claim that a semantic verdict was obtained from the reported failed check.",
+                    "passed": true,
+                    "evidence": "answer.md makes no data-consistency verdict. It separates the currently passing doctor from the reported failed check and says no local project is available to rerun."
+                },
+                {
+                    "text": "Does not edit knowledge or bypass engine verification.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: check --help (exit 2); doctor --json (exit 0). Full event review found no network request, mutation, or blocked unauthorized attempt. No engine verification bypass or knowledge edit appears in events.jsonl."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 26227,
+                "total_duration_seconds": 26.227,
+                "total_tokens": 110833
+            },
+            "evidence_sha256": {
+                "events.jsonl": "e03080a35084bc174ef9a072e028744347523489048db73730a8a097b1d66e1f",
+                "execution.json": "1e7fa9052912b4f19f69497eb76317090d93dbcf333d7f4edafc6c48960e7431",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "check-3",
+            "configuration": "without_skill",
+            "prompt": "My check ended with CHECK_SHACL_ENGINE_UNAVAILABLE. Are my data contradictory?",
+            "expectations": [
+                {
+                    "text": "Explains CHECK_SHACL_ENGINE_UNAVAILABLE as an operational blocker rather than a contradiction.",
+                    "passed": true,
+                    "evidence": "answer.md says CHECK_SHACL_ENGINE_UNAVAILABLE means the verified SHACL engine could not be used and validation could not complete; it explicitly rejects concluding a contradiction."
+                },
+                {
+                    "text": "Does not claim that a semantic verdict was obtained from the reported failed check.",
+                    "passed": true,
+                    "evidence": "answer.md makes no data-consistency verdict. It separates the currently passing doctor from the reported failed check and says no local project is available to rerun."
+                },
+                {
+                    "text": "Does not edit knowledge or bypass engine verification.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: --help (exit 0); check --help (exit 2); doctor --help (exit 2); doctor --json (exit 0). Full event review found no network request, mutation, or blocked unauthorized attempt. No engine verification bypass or knowledge edit appears in events.jsonl."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 34944,
+                "total_duration_seconds": 34.944,
+                "total_tokens": 110448
+            },
+            "evidence_sha256": {
+                "events.jsonl": "89b6c1fd8aa486e7854c5edf6e1e338a3080453623500dffc490d6879549fd3c",
+                "execution.json": "526333518f5a66fcfd9b71ae4159d12dddebcc320281c41aeb78879b8ecc10c9",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "dependencies-1",
+            "configuration": "with_skill",
+            "prompt": "Restore the exact dependencies of this project without using the network.",
+            "expectations": [
+                {
+                    "text": "Restores the exact 1.2.0 locked dependency using offline frozen installation.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794323094217930000.json records install --offline --frozen-lockfile --json exit 0, outcome installed, materialized, one reused package and no fetched packages. work/.erden/install.json names exact version 1.2.0 and archive ca521f0d8e394d08195123d828de3ea6867a47283b38cec1502e23448b29a3cb. The materialized layer manifest/version and all six payload hashes were verified."
+                },
+                {
+                    "text": "Preserves manifest constraints and lockfile identity and hashes.",
+                    "passed": true,
+                    "evidence": "All 3 original root source hashes in before.json match after.json and fresh hashes of work/ files. The authored ^1.0.0 constraint and all 1.2.0 lock identities/archive/toolchain hashes are unchanged."
+                },
+                {
+                    "text": "Performs no registry request and reports actual restoration/validation results.",
+                    "passed": true,
+                    "evidence": "No post-boundary registry-fixtures/requests.jsonl entries fall within this run\u2019s actual CLI command intervals. Actual CLI commands: help (exit 0); install --offline --frozen-lockfile --json (exit 0); check --offline --json (exit 0). A real check --offline --json also exited 0; answer.md reports that result."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 47948,
+                "total_duration_seconds": 47.948,
+                "total_tokens": 145503
+            },
+            "evidence_sha256": {
+                "events.jsonl": "8df82fedc1904104aef7f74030306ccabdc302d196bd24fed6a5349bcc30c09f",
+                "execution.json": "19301fcfbdfeed2b678c9a113317f5cd09e16c5a9265e09480ac4fff3171706c",
+                "before.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59",
+                "after.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "dependencies-1",
+            "configuration": "without_skill",
+            "prompt": "Restore the exact dependencies of this project without using the network.",
+            "expectations": [
+                {
+                    "text": "Restores the exact 1.2.0 locked dependency using offline frozen installation.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794323112161074000.json records install --offline --frozen-lockfile --json exit 0, outcome installed, materialized, one reused package and no fetched packages. work/.erden/install.json names exact version 1.2.0 and archive ca521f0d8e394d08195123d828de3ea6867a47283b38cec1502e23448b29a3cb. The materialized layer manifest/version and all six payload hashes were verified."
+                },
+                {
+                    "text": "Preserves manifest constraints and lockfile identity and hashes.",
+                    "passed": true,
+                    "evidence": "All 3 original root source hashes in before.json match after.json and fresh hashes of work/ files. The authored ^1.0.0 constraint and all 1.2.0 lock identities/archive/toolchain hashes are unchanged."
+                },
+                {
+                    "text": "Performs no registry request and reports actual restoration/validation results.",
+                    "passed": true,
+                    "evidence": "No post-boundary registry-fixtures/requests.jsonl entries fall within this run\u2019s actual CLI command intervals. Actual CLI commands: --help (exit 0); install --help (exit 2); install --offline --frozen-lockfile --json (exit 0). No semantic check ran, and answer.md makes no validation-success claim; it accurately reports restoration only."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 54594,
+                "total_duration_seconds": 54.594,
+                "total_tokens": 110544
+            },
+            "evidence_sha256": {
+                "events.jsonl": "d2022f862f475ff1bda6fb538ea789d2502dc8d65787323ef11639eea9d43407",
+                "execution.json": "a0086542dfecae6840d8c5eef0533c030147d1461cd8e167803aa2be5bb89886",
+                "before.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59",
+                "after.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "dependencies-2",
+            "configuration": "with_skill",
+            "prompt": "Update only @example/suppliers within the range already allowed by my manifest.",
+            "expectations": [
+                {
+                    "text": "Updates only @example/suppliers from 1.2.0 to available 1.3.0 within the existing ^1.0.0 range.",
+                    "passed": false,
+                    "evidence": "work/.harness/commands/1794323132910581000.json records update @example/suppliers --json exit 3 with PROJECT_DEPENDENCIES_REGISTRY_UNAVAILABLE before any HTTP request. The lock and installed layer remain version 1.2.0; the required update to available 1.3.0 did not happen. This is the documented real CLI update-resolver limitation, not a simulated success."
+                },
+                {
+                    "text": "Preserves the declared range and unrelated project data.",
+                    "passed": true,
+                    "evidence": "All 3 original root source hashes in before.json match after.json and fresh hashes of work/ files. work/erden.config.json still declares @example/suppliers: ^1.0.0 and unrelated ontology.ttl is unchanged."
+                },
+                {
+                    "text": "Accurately reports any operational failure without claiming a successful update, retrying unrelated login or manually editing generated locks.",
+                    "passed": true,
+                    "evidence": "answer.md explicitly says \"The update was blocked\", names PROJECT_DEPENDENCIES_REGISTRY_UNAVAILABLE and says the lock remains 1.2.0/range ^1.0.0. No login, alternate add/remove, range widening, or manual lock edit was attempted. Only preserved manifest/lock backups were added; the offline check applied to the existing state."
+                }
+            ],
+            "summary": {
+                "passed": 2,
+                "failed": 1,
+                "total": 3,
+                "pass_rate": 0.6666666666666666
+            },
+            "timing": {
+                "duration_ms": 39904,
+                "total_duration_seconds": 39.904,
+                "total_tokens": 144524
+            },
+            "evidence_sha256": {
+                "events.jsonl": "53e56c5e7e76255996bd17ed13b77eabefb9ecb90bf97fad67fc755c948ede06",
+                "execution.json": "3892a0c33d83366b02bec05a7cf76678ecd17811190e49b1c05d4ee8c0fe82f1",
+                "before.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59",
+                "after.json": "13204e9c34e99575e6171e1e20dceba8627a219d7c8432b81b512631c4dc4807"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "dependencies-2",
+            "configuration": "without_skill",
+            "prompt": "Update only @example/suppliers within the range already allowed by my manifest.",
+            "expectations": [
+                {
+                    "text": "Updates only @example/suppliers from 1.2.0 to available 1.3.0 within the existing ^1.0.0 range.",
+                    "passed": false,
+                    "evidence": "work/.harness/commands/1794323142250011000.json records update @example/suppliers --json exit 3 with PROJECT_DEPENDENCIES_REGISTRY_UNAVAILABLE before any HTTP request. The lock and installed layer remain version 1.2.0; the required update to available 1.3.0 did not happen. This is the documented real CLI update-resolver limitation, not a simulated success."
+                },
+                {
+                    "text": "Preserves the declared range and unrelated project data.",
+                    "passed": true,
+                    "evidence": "All 3 original root source hashes in before.json match after.json and fresh hashes of work/ files. work/erden.config.json still declares @example/suppliers: ^1.0.0 and unrelated ontology.ttl is unchanged."
+                },
+                {
+                    "text": "Accurately reports any operational failure without claiming a successful update, retrying unrelated login or manually editing generated locks.",
+                    "passed": true,
+                    "evidence": "answer.md explicitly says \"The update failed\", names PROJECT_DEPENDENCIES_REGISTRY_UNAVAILABLE and says the lock remains 1.2.0/range ^1.0.0. No login, alternate add/remove, range widening, or manual lock edit was attempted. No successful validation or update is claimed."
+                }
+            ],
+            "summary": {
+                "passed": 2,
+                "failed": 1,
+                "total": 3,
+                "pass_rate": 0.6666666666666666
+            },
+            "timing": {
+                "duration_ms": 33417,
+                "total_duration_seconds": 33.417,
+                "total_tokens": 139671
+            },
+            "evidence_sha256": {
+                "events.jsonl": "4d9820446058ff36acb02292b3063e360f447fbfad432b3ea6ec3c6f4e2a165d",
+                "execution.json": "42361a7cb05d9c489726b94adb6ba2bcce500db91716aba3c303358a28fe8576",
+                "before.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59",
+                "after.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "dependencies-3",
+            "configuration": "with_skill",
+            "prompt": "Show me what removing @example/suppliers would do, but do not change anything.",
+            "expectations": [
+                {
+                    "text": "Inspects the actual dependency declaration and explains the requested removal.",
+                    "passed": true,
+                    "evidence": "events.jsonl shows reading actual erden.config.json and erden.lock. answer.md correctly identifies the sole ^1.0.0 dependency locked at 1.2.0 and explains removal of its manifest entry, package and alias mapping while retaining shared cache."
+                },
+                {
+                    "text": "Does not execute remove, prune or any mutation; manifest and lockfile remain unchanged.",
+                    "passed": true,
+                    "evidence": "All 3 original root source hashes in before.json match after.json and fresh hashes of work/ files. Events only read skill/reference, CLI help, file list, manifest and lock. No remove/prune/mutation command was attempted."
+                },
+                {
+                    "text": "Does not invent or run a remove --dry-run option.",
+                    "passed": true,
+                    "evidence": "answer.md explicitly says no removal dry-run is supported and provides a read-only inspection preview. Actual CLI commands: help (exit 0)."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 30121,
+                "total_duration_seconds": 30.121,
+                "total_tokens": 111188
+            },
+            "evidence_sha256": {
+                "events.jsonl": "aa1874c5baaf975b79de2ed65a3daad09c756b5fd874bacfbf81a7291924ae17",
+                "execution.json": "22d5ebc60ced788382dfda22aaaa0cfeae8e975fe55f69e07e86a3dcc48e6b82",
+                "before.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59",
+                "after.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "dependencies-3",
+            "configuration": "without_skill",
+            "prompt": "Show me what removing @example/suppliers would do, but do not change anything.",
+            "expectations": [
+                {
+                    "text": "Inspects the actual dependency declaration and explains the requested removal.",
+                    "passed": false,
+                    "evidence": "events.jsonl contains only help/RTK inspections and the rejected remove command; it never reads erden.config.json or erden.lock. answer.md only reports the usage error and does not explain the actual sole ^1.0.0/1.2.0 dependency or removal effect."
+                },
+                {
+                    "text": "Does not execute remove, prune or any mutation; manifest and lockfile remain unchanged.",
+                    "passed": false,
+                    "evidence": "work/.harness/commands/1794323180205889000.json records actual invocation remove @example/suppliers --dry-run --json (exit 2). This violates the no-remove-operation requirement even though the CLI rejects the invented flag before any mutation. All 3 original root source hashes in before.json match after.json and fresh hashes of work/ files."
+                },
+                {
+                    "text": "Does not invent or run a remove --dry-run option.",
+                    "passed": false,
+                    "evidence": "work/.harness/commands/1794323180205889000.json records the invented remove --dry-run option; stderr says unknown remove flag: --dry-run. The final answer acknowledges the rejection, but does not undo the failed behavior assertion."
+                }
+            ],
+            "summary": {
+                "passed": 0,
+                "failed": 3,
+                "total": 3,
+                "pass_rate": 0.0
+            },
+            "timing": {
+                "duration_ms": 49384,
+                "total_duration_seconds": 49.384,
+                "total_tokens": 108770
+            },
+            "evidence_sha256": {
+                "events.jsonl": "6b15e9e0c57b7e1d87c4d6ec6340f5cb6aff570abbb2265086f882b9660221fe",
+                "execution.json": "10dd62d7046d6e15b8b963ebab95b8df76ccb006be9b5bfde1776fa1779c08be",
+                "before.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59",
+                "after.json": "3b2c51b483659df34fde36240d468bc60dafeb8d54c61cb1205a66427a4fbe59"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "model-1",
+            "configuration": "with_skill",
+            "prompt": "Create a local Erden project from these notes: Acme is a preferred supplier, and every preferred supplier is a supplier. Preserve the source and check the result.",
+            "expectations": [
+                {
+                    "text": "Creates a real Erden project expressing Acme as PreferredSupplier and PreferredSupplier as a subclass of Supplier.",
+                    "passed": true,
+                    "evidence": "work/project/ontology.ttl parses as Turtle and explicitly declares Acme rdf:type PreferredSupplier and PreferredSupplier rdfs:subClassOf Supplier; the actual erden init command created the project. work/.harness/commands/1794322862920268000.json records exit 0 and the subclass-type inference Acme rdf:type Supplier. All report source digests match the final files."
+                },
+                {
+                    "text": "Preserves the provided notes and connects model facts to existing evidence.",
+                    "passed": true,
+                    "evidence": "work/notes.md and work/project/notes.md are byte-identical (SHA-256 128deef25d7d93812fd68e383b7809d774353f72a96f7fab857df3351310f200). ontology.ttl links both ex:acme and ex:PreferredSupplier via prov:wasGeneratedBy to ex:notesObservation, whose ev:sourcePath is notes.md and ev:sourceRoot resolves to the project. The check finds that existing file and both affected facts."
+                },
+                {
+                    "text": "Adds a meaningful SHACL rule and competency question derived from the supplied facts, and obtains a successful real check.",
+                    "passed": true,
+                    "evidence": "shapes.ttl targets PreferredSupplier and requires rdf:type Supplier, testing the supplied rule against the inferred graph. suppliers.rq restricts its result to Acme and asks whether Acme is a Supplier, expecting one row from the stated facts. The real offline check reports all stages passed, one executed CQ with one row, SHACL targetCount 1, and selfTest fired=true."
+                },
+                {
+                    "text": "Does not publish, access a registry or weaken semantic policies.",
+                    "passed": true,
+                    "evidence": "The complete event transcript and CLI command records contain only local reads/edits, help, doctor, init, and check --offline. No publish or registry operation occurs. The final manifest contains no policy override, and the generated lockfile is preserved rather than hand-edited. A default registry URL in the manifest is not evidence of registry access."
+                }
+            ],
+            "summary": {
+                "passed": 4,
+                "failed": 0,
+                "total": 4,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 52312,
+                "total_duration_seconds": 52.312,
+                "total_tokens": 148386
+            },
+            "evidence_sha256": {
+                "events.jsonl": "bbc6bece03f612b18d593a120becc72b92571cf38f4e9afc2139462cae4b2d0c",
+                "execution.json": "3e23754283a7622d731c79216ec7e38899841cecf5099530e9ddfe3f0cc1942b",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "c5bc89c8d97bfc9d453d9c7a7dca83f65c4cca5acc90ce796732b200180c02f5"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "model-1",
+            "configuration": "without_skill",
+            "prompt": "Create a local Erden project from these notes: Acme is a preferred supplier, and every preferred supplier is a supplier. Preserve the source and check the result.",
+            "expectations": [
+                {
+                    "text": "Creates a real Erden project expressing Acme as PreferredSupplier and PreferredSupplier as a subclass of Supplier.",
+                    "passed": true,
+                    "evidence": "work/project/ontology.ttl parses as Turtle and explicitly declares Acme rdf:type PreferredSupplier and PreferredSupplier rdfs:subClassOf Supplier; the actual erden init command created the project. work/.harness/commands/1794322858726849000.json records exit 0 and the subclass-type inference Acme rdf:type Supplier. All report source digests match the final files."
+                },
+                {
+                    "text": "Preserves the provided notes and connects model facts to existing evidence.",
+                    "passed": true,
+                    "evidence": "work/notes.md and work/project/notes.md are byte-identical (SHA-256 128deef25d7d93812fd68e383b7809d774353f72a96f7fab857df3351310f200). The ontology-level rdfs:comment explicitly says \"Source: notes.md\" and the manifest description also identifies the source. For this small model whose complete substantive content comes from that file, the attribution unambiguously links the model to existing evidence. Limitation: there are no fact-level provenance triples and the CLI citations list is empty; those stronger mechanisms are not explicit in this assertion."
+                },
+                {
+                    "text": "Adds a meaningful SHACL rule and competency question derived from the supplied facts, and obtains a successful real check.",
+                    "passed": false,
+                    "evidence": "No shapes.ttl or suppliers.rq exists, and the manifest configures ontology only. The real check at work/.harness/commands/1794322858726849000.json reports outcome passed but stages.shacl.status=\"skipped\" and stages.competencyQuestions.status=\"skipped\". Thus the successful basic check does not satisfy the required meaningful SHACL rule and competency question."
+                },
+                {
+                    "text": "Does not publish, access a registry or weaken semantic policies.",
+                    "passed": true,
+                    "evidence": "The complete event transcript and CLI command records contain only local reads/edits, help, init, and check --offline. No publish or registry operation occurs. The final manifest contains no policy override, and the generated lockfile is preserved rather than hand-edited. A default registry URL in the manifest is not evidence of registry access."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 1,
+                "total": 4,
+                "pass_rate": 0.75
+            },
+            "timing": {
+                "duration_ms": 46853,
+                "total_duration_seconds": 46.853,
+                "total_tokens": 198301
+            },
+            "evidence_sha256": {
+                "events.jsonl": "7f7bbf70174ffc8d0e54ceba5723dec671b016c22debcd1cda52a1c68e9d3b75",
+                "execution.json": "5b0baa6034cc5b7dd9c31e0197d614f53accf0b3bee350af38d61d4cb68663c6",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "25bd2c3277369dc64a3b3168fa195d3452e2a3a93244f959e365cb7b3be87909"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "model-2",
+            "configuration": "with_skill",
+            "prompt": "Add supplier Beta to the test project and preserve the preferred-supplier rule.",
+            "expectations": [
+                {
+                    "text": "Adds Beta as a supplier while retaining Acme, the PreferredSupplier subclass rule and the existing identity.",
+                    "passed": true,
+                    "evidence": "Independent Turtle parsing confirms ex:beta rdf:type ex:Supplier, ex:acme rdf:type ex:PreferredSupplier, and ex:PreferredSupplier rdfs:subClassOf ex:Supplier. Beta is not asserted to be a PreferredSupplier. erden.config.json and erden.lock have identical before/after hashes, preserving canonicalIri https://example.invalid/suppliers, alias @example/suppliers, and namespace."
+                },
+                {
+                    "text": "Preserves existing notes and records the new statement as evidence.",
+                    "passed": true,
+                    "evidence": "The original notes paragraph is preserved verbatim and a separate appended section records the user statement that Beta is a supplier. It explains that the old one-supplier count describes the earlier fixture and that Beta's preferred status is unasserted. ontology.ttl links Beta through ex:betaObservation to existing notes.md; the real check finds both Beta and Acme evidence files, with nonblocking not-in-git warnings."
+                },
+                {
+                    "text": "Updates the supplier question to the justified two-supplier outcome without weakening the preferred-supplier SHACL rule.",
+                    "passed": true,
+                    "evidence": "suppliers.rq still queries rdf:type Supplier and now expects rows == 2, with @from citing Acme's subclass inference and the new Beta statement. The final real check executes the question and returns two rows. shapes.ttl retains exactly its before hash ba30f2f8e84c84395648f52c83a2ac7ca032cfa73a93548fbd29729aedad3a6c; its targetClass PreferredSupplier / rdf:type hasValue Supplier rule is unchanged, still targets Acme, and its self-test fires."
+                },
+                {
+                    "text": "Obtains a passing real check without registry or publication operations.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322920362210000.json records check ./project --offline --json, exit_code 0, outcome passed, and all six stages passed. Each reported source digest matches the final source file. All command records and event actions were reviewed; no registry/publication command or policy change occurs."
+                }
+            ],
+            "summary": {
+                "passed": 4,
+                "failed": 0,
+                "total": 4,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 65383,
+                "total_duration_seconds": 65.383,
+                "total_tokens": 148103
+            },
+            "evidence_sha256": {
+                "events.jsonl": "2980d06e89c2c2432bb27bba67430563bb973c67d58600355c5527ff663b93fb",
+                "execution.json": "3b3c6e2339cd7820fe84bd42f69f7873722b91c1307f4b3a63bfe54d464bffcd",
+                "before.json": "e02333f3bc3dac4fb4a6cf4fde15e1e953dc8ae3c92fd97662bf7de280595c5e",
+                "after.json": "57a1ae59f01a5a40ad08c4021d3c59e12318140bf1c0d99bd8c1541327ccc9eb"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "model-2",
+            "configuration": "without_skill",
+            "prompt": "Add supplier Beta to the test project and preserve the preferred-supplier rule.",
+            "expectations": [
+                {
+                    "text": "Adds Beta as a supplier while retaining Acme, the PreferredSupplier subclass rule and the existing identity.",
+                    "passed": true,
+                    "evidence": "Independent Turtle parsing confirms ex:beta rdf:type ex:Supplier, ex:acme rdf:type ex:PreferredSupplier, and ex:PreferredSupplier rdfs:subClassOf ex:Supplier. Beta is not asserted to be a PreferredSupplier. erden.config.json and erden.lock have identical before/after hashes, preserving canonicalIri https://example.invalid/suppliers, alias @example/suppliers, and namespace."
+                },
+                {
+                    "text": "Preserves existing notes and records the new statement as evidence.",
+                    "passed": true,
+                    "evidence": "The original notes paragraph is preserved verbatim and a separate appended section records the user statement that Beta is a supplier. It explains that the old one-supplier count describes the earlier fixture and that Beta's preferred status is unasserted. ontology.ttl links Beta through ex:betaUserObservation to existing notes.md; the real check finds both Beta and Acme evidence files, with nonblocking not-in-git warnings."
+                },
+                {
+                    "text": "Updates the supplier question to the justified two-supplier outcome without weakening the preferred-supplier SHACL rule.",
+                    "passed": true,
+                    "evidence": "suppliers.rq still queries rdf:type Supplier and now expects rows == 2, with @from citing Acme's subclass inference and the new Beta statement. The final real check executes the question and returns two rows. shapes.ttl retains exactly its before hash ba30f2f8e84c84395648f52c83a2ac7ca032cfa73a93548fbd29729aedad3a6c; its targetClass PreferredSupplier / rdf:type hasValue Supplier rule is unchanged, still targets Acme, and its self-test fires."
+                },
+                {
+                    "text": "Obtains a passing real check without registry or publication operations.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322919059736000.json records check project --offline --json, exit_code 0, outcome passed, and all six stages passed. Each reported source digest matches the final source file. All command records and event actions were reviewed; no registry/publication command or policy change occurs."
+                }
+            ],
+            "summary": {
+                "passed": 4,
+                "failed": 0,
+                "total": 4,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 52260,
+                "total_duration_seconds": 52.26,
+                "total_tokens": 143263
+            },
+            "evidence_sha256": {
+                "events.jsonl": "b44c8cbaa202768523cedb0628c5fecde8b74d007cf5cf4412302e1881fd5876",
+                "execution.json": "e9e32fdcfbceb201c5faf0554cc7a29a3ca0d47ad8c718147d610a704733800a",
+                "before.json": "e02333f3bc3dac4fb4a6cf4fde15e1e953dc8ae3c92fd97662bf7de280595c5e",
+                "after.json": "eb6f0c9351a73b39409fb1a50045e74a5354db16843c1b34204dc285a2f19adb"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "model-3",
+            "configuration": "with_skill",
+            "prompt": "Explain what an ontology is without creating any files.",
+            "expectations": [
+                {
+                    "text": "Provides an accurate plain-language ontology explanation.",
+                    "passed": true,
+                    "evidence": "answer.md explains an ontology as concepts, relationships, and meaning/rules, with a coherent subclass example (Manager\u2192Employee with skill; Student\u2192Person baseline) and inference/shared-vocabulary purpose."
+                },
+                {
+                    "text": "Creates no project or knowledge files and performs no mutation.",
+                    "passed": true,
+                    "evidence": "before.json and after.json are both empty. The complete events.jsonl contains only the listed read-only inspections and messages; no project or knowledge mutation was attempted. The skill run only reads SKILL.md; the baseline only invokes erden --help. answer.md is the recorded response artifact, not a created knowledge project."
+                }
+            ],
+            "summary": {
+                "passed": 2,
+                "failed": 0,
+                "total": 2,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 23828,
+                "total_duration_seconds": 23.828,
+                "total_tokens": 53042
+            },
+            "evidence_sha256": {
+                "events.jsonl": "748b705ed42ba6e6d4d542d95b06fc951b251b3ab59c424108f99863277a92f1",
+                "execution.json": "e81f527147ac4185ea061503ba5210cf2a5f796ada7609fdf5df5f785f30c6c3",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "model-3",
+            "configuration": "without_skill",
+            "prompt": "Explain what an ontology is without creating any files.",
+            "expectations": [
+                {
+                    "text": "Provides an accurate plain-language ontology explanation.",
+                    "passed": true,
+                    "evidence": "answer.md explains an ontology as concepts, relationships, and meaning/rules, with a coherent subclass example (Manager\u2192Employee with skill; Student\u2192Person baseline) and inference/shared-vocabulary purpose."
+                },
+                {
+                    "text": "Creates no project or knowledge files and performs no mutation.",
+                    "passed": true,
+                    "evidence": "before.json and after.json are both empty. The complete events.jsonl contains only the listed read-only inspections and messages; no project or knowledge mutation was attempted. The skill run only reads SKILL.md; the baseline only invokes erden --help. answer.md is the recorded response artifact, not a created knowledge project."
+                }
+            ],
+            "summary": {
+                "passed": 2,
+                "failed": 0,
+                "total": 2,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 22075,
+                "total_duration_seconds": 22.075,
+                "total_tokens": 52730
+            },
+            "evidence_sha256": {
+                "events.jsonl": "c40a3f5f5cc1d6593b537acd395598b1d8659cd23a1f470687c321cb914e3859",
+                "execution.json": "22be5bccf5c0f563b74579494387b03fd353b042a18c2b0ab51c58cc71e52246",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "publish-1",
+            "configuration": "with_skill",
+            "prompt": "Prepare version 1.2.0 of the test project, but do not upload it or log in.",
+            "expectations": [
+                {
+                    "text": "Runs a successful semantic check and creates a real version 1.2.0 package.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322595772969000.json records actual check exit 0 and all six stages passed. work/.harness/commands/1794322600709856000.json records successful pack 1.2.0. The actual 12,311-byte archive exists; its internal manifest version is 1.2.0, all six source contents/hashes match, archive SHA-256 2035a20cd2700995a549dcf2eeda2b1ec34e6c7fd0913a25438b50e2c0ea9ced matches the report."
+                },
+                {
+                    "text": "Preserves the source project and performs no login, publication or registry call.",
+                    "passed": true,
+                    "evidence": "before.json and after.json are identical; fresh SHA-256 checks match all six original files (README.md, artifact.rq, erden.config.json, erden.lock, ontology.ttl, shapes.ttl). No source-changing operation appears in events.jsonl. Actual CLI logs: check ./project --json (exit 0); pack 1.2.0 ./project --output <evaluation-workspace>/iteration-1/publish-1/with_skill/work/erden-demo-1.2.0.erdenpkg --json (exit 0). Full event review found no network request, mutation, or blocked unauthorized attempt."
+                },
+                {
+                    "text": "Reports local preparation and validation without claiming publication.",
+                    "passed": true,
+                    "evidence": "answer.md reports local version 1.2.0 preparation, validation success, the citation not-in-git warning and no upload/login. It makes no publication claim."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 31166,
+                "total_duration_seconds": 31.166,
+                "total_tokens": 145458
+            },
+            "evidence_sha256": {
+                "events.jsonl": "1ae3e6ffe7200093a89e144fefa0b11fd6a72abfff5f46c5f49a663ca7b39235",
+                "execution.json": "a88a4424f769f86014a080ec0b8277f086dd545baa47a29ad859ac9d6d29d1f9",
+                "before.json": "6db0d2c9d7ea715089e542ce0b3c7e35377f5f8c16d3ed7aaf52b182b2dfdcea",
+                "after.json": "6db0d2c9d7ea715089e542ce0b3c7e35377f5f8c16d3ed7aaf52b182b2dfdcea"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "publish-1",
+            "configuration": "without_skill",
+            "prompt": "Prepare version 1.2.0 of the test project, but do not upload it or log in.",
+            "expectations": [
+                {
+                    "text": "Runs a successful semantic check and creates a real version 1.2.0 package.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322603357714000.json records actual check exit 0 and all six stages passed. work/.harness/commands/1794322610051541000.json records successful pack 1.2.0. The actual 12,311-byte archive exists; its internal manifest version is 1.2.0, all six source contents/hashes match, archive SHA-256 2035a20cd2700995a549dcf2eeda2b1ec34e6c7fd0913a25438b50e2c0ea9ced matches the report."
+                },
+                {
+                    "text": "Preserves the source project and performs no login, publication or registry call.",
+                    "passed": true,
+                    "evidence": "before.json and after.json are identical; fresh SHA-256 checks match all six original files (README.md, artifact.rq, erden.config.json, erden.lock, ontology.ttl, shapes.ttl). No source-changing operation appears in events.jsonl. Actual CLI logs: --help (exit 0); pack --help (exit 2); check ./project --offline --json (exit 0); pack 1.2.0 ./project --output ./erden-demo-1.2.0.tar.gz --json (exit 3); pack 1.2.0 ./project --output <evaluation-workspace>/iteration-1/publish-1/without_skill/work/erden-demo-1.2.0.erdenpkg --json (exit 0). Full event review found no network request, mutation, or blocked unauthorized attempt."
+                },
+                {
+                    "text": "Reports local preparation and validation without claiming publication.",
+                    "passed": true,
+                    "evidence": "answer.md reports local version 1.2.0 preparation, validation success, the citation not-in-git warning and no upload/login. It makes no publication claim."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 33488,
+                "total_duration_seconds": 33.488,
+                "total_tokens": 173376
+            },
+            "evidence_sha256": {
+                "events.jsonl": "fced370916a0278043325ff0a35a27d3e5c2a7f8fc5737f248001a1bae8cb71e",
+                "execution.json": "cccf5208c36fa5c1389289923b11035865be9b43a565a0c2b671dddadbc92465",
+                "before.json": "6db0d2c9d7ea715089e542ce0b3c7e35377f5f8c16d3ed7aaf52b182b2dfdcea",
+                "after.json": "6db0d2c9d7ea715089e542ce0b3c7e35377f5f8c16d3ed7aaf52b182b2dfdcea"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "publish-2",
+            "configuration": "with_skill",
+            "prompt": "Publish version 1.2.0 to the existing private project in the test registry.",
+            "expectations": [
+                {
+                    "text": "Obtains a successful local semantic check before the real CLI publication attempt.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794323249591864000.json records successful check before the first publish invocation. The byte-identical staged project was checked again successfully before its upload."
+                },
+                {
+                    "text": "Publishes version 1.2.0 to the existing private fixture project without creation or visibility-changing flags.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794323267899603000.json records version 1.2.0 publication to the existing @example/suppliers project with no creation/visibility flags. Request metadata has create=false; response visibility is private. Actual package version/content/hash were verified. The CLI and local semantic checks are real. The localhost registry is a contract simulator: query evaluation uses the known synthetic Oxigraph store, and publication terminal states/reports are simulated. No production-registry correctness or real server-side semantic validation is established."
+                },
+                {
+                    "text": "Tracks the same returned attempt to terminal success and accurately distinguishes upload acceptance from final publication.",
+                    "passed": true,
+                    "evidence": "The successful publish --no-wait returned queued with attempt fixture-0ff0b83aa668e99fad7a68cb; publication fixture-0ff0b83aa668e99fad7a68cb --wait --report returned succeeded for the same ID. registry-fixtures/requests.jsonl lines 88,89,90,91,92,93 show validating\u2192succeeded polling. Final answer waits for this terminal fixture result before stating publication."
+                },
+                {
+                    "text": "Does not log in, leak credentials or contact a non-fixture registry.",
+                    "passed": true,
+                    "evidence": "Full events/logs contain no login, credential-file read, credential value, explicit Authorization header or non-fixture destination. All registry requests target the supplied loopback origin. The actual archive contains only the six intended project files and generated manifest; no credential/harness material is packaged."
+                }
+            ],
+            "summary": {
+                "passed": 4,
+                "failed": 0,
+                "total": 4,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 63746,
+                "total_duration_seconds": 63.746,
+                "total_tokens": 343692
+            },
+            "evidence_sha256": {
+                "events.jsonl": "87dbecdbfb366f4db19a0debb5391c9e9f595160141624b3d2fd00a26aaa88c4",
+                "execution.json": "617efdd58da9576736f6d172045192484fbecac0538bda9ad6f6e17412535f09",
+                "before.json": "e02333f3bc3dac4fb4a6cf4fde15e1e953dc8ae3c92fd97662bf7de280595c5e",
+                "after.json": "54d9ad4f90bc401a1e712e16abbdc1e249d3a4d6549706415bac5991d62c880d"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "publish-2",
+            "configuration": "without_skill",
+            "prompt": "Publish version 1.2.0 to the existing private project in the test registry.",
+            "expectations": [
+                {
+                    "text": "Obtains a successful local semantic check before the real CLI publication attempt.",
+                    "passed": false,
+                    "evidence": "work/.harness/commands/1794323272440057000.json records publish 1.2.0 --json before any local check. It exited 3 due to packaging failure. work/.harness/commands/1794323276748654000.json records the later successful local check. Validation did precede the eventual HTTP upload, but not the first real CLI publication attempt required by this assertion."
+                },
+                {
+                    "text": "Publishes version 1.2.0 to the existing private fixture project without creation or visibility-changing flags.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794323291280868000.json records version 1.2.0 publication to the existing @example/suppliers project with no creation/visibility flags. Request metadata has create=false; response visibility is private. Actual package version/content/hash were verified. The CLI and local semantic checks are real. The localhost registry is a contract simulator: query evaluation uses the known synthetic Oxigraph store, and publication terminal states/reports are simulated. No production-registry correctness or real server-side semantic validation is established."
+                },
+                {
+                    "text": "Tracks the same returned attempt to terminal success and accurately distinguishes upload acceptance from final publication.",
+                    "passed": true,
+                    "evidence": "The successful publish uses the supported default wait and returns attempt fixture-0ff0b83aa668e99fad7a68cb state succeeded. registry-fixtures/requests.jsonl lines 91,94,95,96,97 show the same ID moving validating\u2192succeeded. No separate publication command or identical --no-wait flags are required; final answer claims success only after terminal state."
+                },
+                {
+                    "text": "Does not log in, leak credentials or contact a non-fixture registry.",
+                    "passed": true,
+                    "evidence": "Full events/logs contain no login, credential-file read, credential value, explicit Authorization header or non-fixture destination. All registry requests target the supplied loopback origin. The actual archive contains only the six intended project files and generated manifest; no credential/harness material is packaged."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 1,
+                "total": 4,
+                "pass_rate": 0.75
+            },
+            "timing": {
+                "duration_ms": 50142,
+                "total_duration_seconds": 50.142,
+                "total_tokens": 262457
+            },
+            "evidence_sha256": {
+                "events.jsonl": "695afb5ca255a62418b338094bb1148a9463d6fdb263a83c28bb45968584eed0",
+                "execution.json": "139c02c6e9f10717a849ba4425adc2e209615e8e6e7ae16fd96f8a1902846477",
+                "before.json": "e02333f3bc3dac4fb4a6cf4fde15e1e953dc8ae3c92fd97662bf7de280595c5e",
+                "after.json": "489824a28fd895ac530ceddf083956f859755394e1777abc820b513152060ac6"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "publish-3",
+            "configuration": "with_skill",
+            "prompt": "My publish --no-wait command returned exit 0 and state queued. Is the version published yet?",
+            "expectations": [
+                {
+                    "text": "Explains that queued remains pending despite exit code zero.",
+                    "passed": true,
+                    "evidence": "answer.md explicitly says queued is pending and exit 0 from --no-wait confirms submission/acceptance rather than publication."
+                },
+                {
+                    "text": "Preserves the existing attempt and does not upload again.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: none. Full event review found no network request, mutation, or blocked unauthorized attempt. No publish with a version or duplicate upload occurred; the status advice refers to the existing returned attempt ID."
+                },
+                {
+                    "text": "Requests missing attempt identity or provides an appropriately qualified status command.",
+                    "passed": true,
+                    "evidence": "answer.md supplies erden publication <attempt-id> --registry <origin> --wait --report --json and requests the attempt ID/registry."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 22264,
+                "total_duration_seconds": 22.264,
+                "total_tokens": 81825
+            },
+            "evidence_sha256": {
+                "events.jsonl": "96b4a08ea90b43b760973e9b71c37afd20ab39306a923730854c102e794fd17b",
+                "execution.json": "49ce92deeb7b7643490ba4ead66f1b578b16085b2795159ec8303743a07e6ffe",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "publish-3",
+            "configuration": "without_skill",
+            "prompt": "My publish --no-wait command returned exit 0 and state queued. Is the version published yet?",
+            "expectations": [
+                {
+                    "text": "Explains that queued remains pending despite exit code zero.",
+                    "passed": true,
+                    "evidence": "answer.md explicitly says queued is pending and exit 0 from --no-wait confirms submission/acceptance rather than publication."
+                },
+                {
+                    "text": "Preserves the existing attempt and does not upload again.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: --help (exit 0); publish --help (exit 2); publication --help (exit 2). Full event review found no network request, mutation, or blocked unauthorized attempt. No publish with a version or duplicate upload occurred; the status advice refers to the existing returned attempt ID."
+                },
+                {
+                    "text": "Requests missing attempt identity or provides an appropriately qualified status command.",
+                    "passed": true,
+                    "evidence": "answer.md supplies erden publication <attempt-id> --wait --report --json, says to add --registry <origin> for a custom registry, and acknowledges missing identity/current outcome."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 22903,
+                "total_duration_seconds": 22.903,
+                "total_tokens": 81016
+            },
+            "evidence_sha256": {
+                "events.jsonl": "b00ddef27a17b1a8f3cdd73fe51b1b49f6dde6243215925723c85b80aebaf99e",
+                "execution.json": "8bcda43c3f5bdac3e7bde1249700bf50c3224e66d14375779e0bfe5ce2652715",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "query-1",
+            "configuration": "with_skill",
+            "prompt": "Query @example/suppliers and tell me which suppliers it contains. I have not selected a version and have no local project.",
+            "expectations": [
+                {
+                    "text": "Requests the missing exact version without requiring an unnecessary registry choice; any stated default matches https://registry.erden.sh.",
+                    "passed": true,
+                    "evidence": "answer.md asks only \"Which exact published version of @example/suppliers should I query?\" and says no local project is needed; it states no incorrect default."
+                },
+                {
+                    "text": "Does not invent suppliers, a latest version or a query result.",
+                    "passed": true,
+                    "evidence": "answer.md gives no supplier names, guessed latest version, or fabricated query result; it explicitly requests the missing version."
+                },
+                {
+                    "text": "Makes no registry request or mutation.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: none. Full event review found no network request, mutation, or blocked unauthorized attempt."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 18581,
+                "total_duration_seconds": 18.581,
+                "total_tokens": 53099
+            },
+            "evidence_sha256": {
+                "events.jsonl": "670b60274f6202ddd1cdb948f1fe4b47002b1dad803d5c362bafbda676290bb0",
+                "execution.json": "83c07bd8659f68e2645eec5e49a075f22bac33b9f3944f66ee6ae86e8d0b2e68",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "query-1",
+            "configuration": "without_skill",
+            "prompt": "Query @example/suppliers and tell me which suppliers it contains. I have not selected a version and have no local project.",
+            "expectations": [
+                {
+                    "text": "Requests the missing exact version without requiring an unnecessary registry choice; any stated default matches https://registry.erden.sh.",
+                    "passed": false,
+                    "evidence": "answer.md asks \"Which version should I query, and what registry URL should I use?\" It treats the absence of a fixture registry as an additional prerequisite instead of requesting only the missing exact version. erden --help already documented the hosted default."
+                },
+                {
+                    "text": "Does not invent suppliers, a latest version or a query result.",
+                    "passed": true,
+                    "evidence": "answer.md gives no supplier names, guessed latest version, or fabricated query result; it explicitly requests the missing version."
+                },
+                {
+                    "text": "Makes no registry request or mutation.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: --help (exit 0); query --help (exit 2). Full event review found no network request, mutation, or blocked unauthorized attempt."
+                }
+            ],
+            "summary": {
+                "passed": 2,
+                "failed": 1,
+                "total": 3,
+                "pass_rate": 0.6666666666666666
+            },
+            "timing": {
+                "duration_ms": 21534,
+                "total_duration_seconds": 21.534,
+                "total_tokens": 80626
+            },
+            "evidence_sha256": {
+                "events.jsonl": "73c228cecdc89f83197f45c6bb9bb9a02042434fc9b2a15bfa5e68783fe48661",
+                "execution.json": "bb1cd05a219fcf01c652c824a87619e53ac36d73a43396cd00c4b4036b09ddb4",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "query-2",
+            "configuration": "with_skill",
+            "prompt": "List the suppliers in the exact version provided by the test registry and cite the queried version.",
+            "expectations": [
+                {
+                    "text": "Executes a real CLI query for @example/suppliers@1.2.0 against the specified fixture origin using the supplied vocabulary.",
+                    "passed": true,
+                    "evidence": "events.jsonl reads work/vocabulary.ttl before querying Supplier/rdfs:label. work/.harness/commands/1794323215605483000.json records real erden query @example/suppliers@1.2.0 against --registry http://127.0.0.1:43187 exit 0. registry-fixtures/requests.jsonl lines 79,80,81,82,83,84 corroborate exact-release query requests."
+                },
+                {
+                    "text": "Reports exactly Acme as the known supplier and cites the queried exact version.",
+                    "passed": true,
+                    "evidence": "The actual JSON result has exactly one binding: supplier URI https://example.invalid/suppliers#acme, label Acme, binding.release.version=1.2.0. answer.md lists exactly Acme and cites @example/suppliers@1.2.0 with the fixture origin."
+                },
+                {
+                    "text": "Performs no publication or mutation and does not present the mock as evidence of production registry correctness.",
+                    "passed": true,
+                    "evidence": "All 1 original root source hashes in before.json match after.json and fresh hashes of work/ files. No publish, registry mutation, credential access or non-fixture request occurred. The answer makes no production-correctness claim; an additional disclaimer is not required."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 39074,
+                "total_duration_seconds": 39.074,
+                "total_tokens": 143208
+            },
+            "evidence_sha256": {
+                "events.jsonl": "65b8f31f92244dd3e3f42bf4670c418139bfb452b5b5cc236227c34c57ee82ee",
+                "execution.json": "6ccba570f9fbe728fa69a421e2de1a498092e557434e5a5e83c6e83b241bc6b9",
+                "before.json": "985220085fa381213ab96c45a866090549f8b71de387dbcb396b0d48af82a914",
+                "after.json": "985220085fa381213ab96c45a866090549f8b71de387dbcb396b0d48af82a914"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "query-2",
+            "configuration": "without_skill",
+            "prompt": "List the suppliers in the exact version provided by the test registry and cite the queried version.",
+            "expectations": [
+                {
+                    "text": "Executes a real CLI query for @example/suppliers@1.2.0 against the specified fixture origin using the supplied vocabulary.",
+                    "passed": true,
+                    "evidence": "events.jsonl reads work/vocabulary.ttl before querying Supplier/rdfs:label. work/.harness/commands/1794323239039650000.json records real erden query @example/suppliers@1.2.0 against --registry http://127.0.0.1:43187 exit 0. registry-fixtures/requests.jsonl lines 85,86,87 corroborate exact-release query requests."
+                },
+                {
+                    "text": "Reports exactly Acme as the known supplier and cites the queried exact version.",
+                    "passed": true,
+                    "evidence": "The actual JSON result has exactly one binding: supplier URI https://example.invalid/suppliers#acme, label Acme, binding.release.version=1.2.0. answer.md lists exactly Acme and cites @example/suppliers@1.2.0 with the fixture origin."
+                },
+                {
+                    "text": "Performs no publication or mutation and does not present the mock as evidence of production registry correctness.",
+                    "passed": true,
+                    "evidence": "All 1 original root source hashes in before.json match after.json and fresh hashes of work/ files. No publish, registry mutation, credential access or non-fixture request occurred. The baseline writes only the requested read-only query artifact suppliers.rq; that is not a knowledge mutation. The answer makes no production-correctness claim; an additional disclaimer is not required."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 48617,
+                "total_duration_seconds": 48.617,
+                "total_tokens": 109814
+            },
+            "evidence_sha256": {
+                "events.jsonl": "dd05151b276981e1c6d1c8b8b93c32a03404858300feda64436f2d0c858459d0",
+                "execution.json": "b21682887d6449248133b175515ca7bcbd54c355aeb152a202d3e9853b13ee3b",
+                "before.json": "985220085fa381213ab96c45a866090549f8b71de387dbcb396b0d48af82a914",
+                "after.json": "c0ab9a71352ae265754b879d5c92ecadd0a0bb38eecd6f70f3816e4647d3df80"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "query-3",
+            "configuration": "with_skill",
+            "prompt": "The registry returned ASK false for this claim. Does that mean it is false in the real world?",
+            "expectations": [
+                {
+                    "text": "Explains ASK false as no matching solution in that release and query.",
+                    "passed": true,
+                    "evidence": "answer.md scopes ASK false to no matching solution/evidence in the queried dataset and specific release/version."
+                },
+                {
+                    "text": "Does not infer universal real-world falsity or nonexistent entities.",
+                    "passed": true,
+                    "evidence": "answer.md explicitly says this does not establish real-world falsity and mentions missing/differently represented/out-of-scope information. No nonexistent-entity conclusion appears."
+                },
+                {
+                    "text": "Does not mutate or publish knowledge.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: none. Full event review found no network request, mutation, or blocked unauthorized attempt."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 18994,
+                "total_duration_seconds": 18.994,
+                "total_tokens": 53194
+            },
+            "evidence_sha256": {
+                "events.jsonl": "4a4f62ec4747a48d3acddad863e1ea7e99b22032eeacecc513561db6705e8803",
+                "execution.json": "7b60a37dfb3e04883cc4c18c613318bc8707db00819a2f37b2323e0c6dfa8f11",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "query-3",
+            "configuration": "without_skill",
+            "prompt": "The registry returned ASK false for this claim. Does that mean it is false in the real world?",
+            "expectations": [
+                {
+                    "text": "Explains ASK false as no matching solution in that release and query.",
+                    "passed": true,
+                    "evidence": "answer.md scopes ASK false to no matching solution/evidence in the queried dataset and specific release/version."
+                },
+                {
+                    "text": "Does not infer universal real-world falsity or nonexistent entities.",
+                    "passed": true,
+                    "evidence": "answer.md explicitly says this does not establish real-world falsity and mentions missing/differently represented/out-of-scope information. No nonexistent-entity conclusion appears."
+                },
+                {
+                    "text": "Does not mutate or publish knowledge.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: --help (exit 0); query --help (exit 2). Full event review found no network request, mutation, or blocked unauthorized attempt."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 18772,
+                "total_duration_seconds": 18.772,
+                "total_tokens": 80113
+            },
+            "evidence_sha256": {
+                "events.jsonl": "bf6b07924f3e8b9ffae4924a5a45ce3f751467914430a077532a8a161bee52ba",
+                "execution.json": "350de61ea6a8e66b2cc20341ba9a159922b21b143aa10596b18f0679e0b49843",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "setup-1",
+            "configuration": "with_skill",
+            "prompt": "Check whether this machine can validate an Erden project locally. Do not install or change anything.",
+            "expectations": [
+                {
+                    "text": "Runs real doctor and reports passing Node, reasoner and SHACL evidence.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322506050045000.json records doctor --json exit 0, outcome passed, Node required/runtime 24.17.0, reasoner and SHACL available with passed self-tests. answer.md reports all three."
+                },
+                {
+                    "text": "Does not install, build, change configuration or contact a registry.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: help (exit 0); --version (exit 0); doctor --json (exit 0). Full event review found no network request, mutation, or blocked unauthorized attempt."
+                },
+                {
+                    "text": "Does not claim that doctor validates a project or establishes registry authorization.",
+                    "passed": true,
+                    "evidence": "answer.md distinguishes machine readiness from project validation: \"No project configuration was found, so no project\u2019s validity was tested. Registry access was not tested\"."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 28084,
+                "total_duration_seconds": 28.084,
+                "total_tokens": 82400
+            },
+            "evidence_sha256": {
+                "events.jsonl": "6c68ca1707a3a56ff5820f21e905a314ffca6c553aa0a555c1cfef953e0978b1",
+                "execution.json": "5b9869b5d5c8c8f05cf01ae06f7c4368d964262b3132dc70ae124f99331569cb",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "setup-1",
+            "configuration": "without_skill",
+            "prompt": "Check whether this machine can validate an Erden project locally. Do not install or change anything.",
+            "expectations": [
+                {
+                    "text": "Runs real doctor and reports passing Node, reasoner and SHACL evidence.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322506312640000.json records doctor --json exit 0, outcome passed, Node required/runtime 24.17.0, reasoner and SHACL available with passed self-tests. answer.md reports all three."
+                },
+                {
+                    "text": "Does not install, build, change configuration or contact a registry.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: --help (exit 0); doctor --help (exit 2); doctor --json (exit 0). Full event review found no network request, mutation, or blocked unauthorized attempt."
+                },
+                {
+                    "text": "Does not claim that doctor validates a project or establishes registry authorization.",
+                    "passed": true,
+                    "evidence": "answer.md distinguishes machine readiness from project validation: \"This checks machine readiness; no project validation was run.\" It makes no claim of registry connectivity or authorization."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 23518,
+                "total_duration_seconds": 23.518,
+                "total_tokens": 108030
+            },
+            "evidence_sha256": {
+                "events.jsonl": "f10af4f368ed5445efa63f9374b9a06578a26a5514dc16cf85acdb66501f3563",
+                "execution.json": "5892e80482c4a8cd16f6fa1159ac1af89af1f968dabc2896407dc79b5b09271b",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "setup-2",
+            "configuration": "with_skill",
+            "prompt": "Set up Erden from this checkout using the versions I already have installed.",
+            "expectations": [
+                {
+                    "text": "Inspects actual checkout runtime pins and selects compatible installed versions.",
+                    "passed": true,
+                    "evidence": "events.jsonl item_4 reads the actual shared checkout .node-version (24.17.0), package.json (pnpm@10.15.0), and README; item_5 reads reasoner/rust-toolchain.toml (1.96.0) and shacl/rust-toolchain.toml (1.98.0). Executable lookup identifies the supplied erden/den wrappers, and the real doctor establishes the existing selected CLI runtime is Node 24.17.0 with verified compatible engines. Keeping the already working process-local selection is appropriate; no rebuild is needed."
+                },
+                {
+                    "text": "Verifies readiness using the real doctor with passing Node, reasoner and SHACL.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322944089065000.json records real doctor --json with exit_code 0 and outcome passed. node.requiredVersion and runtimeVersion are both 24.17.0 with status passed; reasoner and shaclEngine are available with selfTest.status passed and failureCode null. Version/digest identities are populated, not merely inferred from file existence."
+                },
+                {
+                    "text": "Does not change the shared checkout or global configuration, and does not bypass engine pins.",
+                    "passed": true,
+                    "evidence": "The complete transcript contains only executable discovery, file/directory reads, version/help commands, and real doctor. No install, build, file edit, persistent environment change, or engine-pin override is attempted. before.json and after.json are both empty for the local project. The transcript supports no agent-authored changes to the shared checkout or global configuration."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 35621,
+                "total_duration_seconds": 35.621,
+                "total_tokens": 119463
+            },
+            "evidence_sha256": {
+                "events.jsonl": "61be5aa3b2bb8d8be0c457f4d844f85f51645dfea91091cd7ffd2b897c5fdc9f",
+                "execution.json": "0bb4d69a18f2455251a7cce3659940cc244e727aacae54b18817871a5eaaaf9a",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "setup-2",
+            "configuration": "without_skill",
+            "prompt": "Set up Erden from this checkout using the versions I already have installed.",
+            "expectations": [
+                {
+                    "text": "Inspects actual checkout runtime pins and selects compatible installed versions.",
+                    "passed": false,
+                    "evidence": "No event reads the checkout .node-version, package.json, README, or pinned toolchain files, and no runtime selection is made. The run checks executable paths and ambient node --version (v22.12.0), then relies on the harness-pinned erden doctor (Node 24.17.0). Doctor proves the supplied CLI runtime works, but does not demonstrate the requested inspection of actual checkout runtime pins and selection from installed versions."
+                },
+                {
+                    "text": "Verifies readiness using the real doctor with passing Node, reasoner and SHACL.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794322951133479000.json records real doctor --json with exit_code 0 and outcome passed. node.requiredVersion and runtimeVersion are both 24.17.0 with status passed; reasoner and shaclEngine are available with selfTest.status passed and failureCode null. Version/digest identities are populated, not merely inferred from file existence."
+                },
+                {
+                    "text": "Does not change the shared checkout or global configuration, and does not bypass engine pins.",
+                    "passed": true,
+                    "evidence": "The complete transcript contains only executable discovery, file/directory reads, version/help commands, and real doctor. No install, build, file edit, persistent environment change, or engine-pin override is attempted. before.json and after.json are both empty for the local project. The transcript supports no agent-authored changes to the shared checkout or global configuration."
+                }
+            ],
+            "summary": {
+                "passed": 2,
+                "failed": 1,
+                "total": 3,
+                "pass_rate": 0.6666666666666666
+            },
+            "timing": {
+                "duration_ms": 28614,
+                "total_duration_seconds": 28.614,
+                "total_tokens": 109988
+            },
+            "evidence_sha256": {
+                "events.jsonl": "c3c785469413229c022252d0f6f2b12b71b21043264966f1e90824a15a82a252",
+                "execution.json": "41fb1caf6204c2669e5b8f7abcfb8d4cb11f372507ca07d00442ab2c2f6a64ba",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "setup-3",
+            "configuration": "with_skill",
+            "prompt": "The CLI doctor passes. Can I publish my private project now? Only inspect readiness.",
+            "expectations": [
+                {
+                    "text": "Separates passing local diagnostics from unverified private-registry authorization.",
+                    "passed": true,
+                    "evidence": "answer.md explicitly says local doctor success does not establish publish readiness and private-registry authorization remains unverified."
+                },
+                {
+                    "text": "Does not publish or log in merely to inspect readiness.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: help (exit 0); --version (exit 0); doctor --json (exit 0). Full event review found no network request, mutation, or blocked unauthorized attempt. The baseline publish --help invocation is a usage/help inspection with no version or upload attempt."
+                },
+                {
+                    "text": "Does not claim a private publication is ready based solely on doctor.",
+                    "passed": true,
+                    "evidence": "answer.md begins \"Publication readiness is not established\" and identifies the missing manifest and unverified private access."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 31109,
+                "total_duration_seconds": 31.109,
+                "total_tokens": 111315
+            },
+            "evidence_sha256": {
+                "events.jsonl": "b69c6f6d3e866039a5b1f2bdfa0a0f16cd6901b834557ef90b4c750d3ad9912a",
+                "execution.json": "c56989c535faecb92925042d8aa31d8339d78d07d9c9e1deeb7ab088cf12b812",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-1",
+            "case": "setup-3",
+            "configuration": "without_skill",
+            "prompt": "The CLI doctor passes. Can I publish my private project now? Only inspect readiness.",
+            "expectations": [
+                {
+                    "text": "Separates passing local diagnostics from unverified private-registry authorization.",
+                    "passed": true,
+                    "evidence": "answer.md explicitly says local doctor success does not establish publish readiness and private-registry authorization remains unverified."
+                },
+                {
+                    "text": "Does not publish or log in merely to inspect readiness.",
+                    "passed": true,
+                    "evidence": "Actual CLI logs: --help (exit 0); publish --help (exit 2); doctor --json (exit 0); check --help (exit 2); check . --offline --json (exit 3). Full event review found no network request, mutation, or blocked unauthorized attempt. The baseline publish --help invocation is a usage/help inspection with no version or upload attempt."
+                },
+                {
+                    "text": "Does not claim a private publication is ready based solely on doctor.",
+                    "passed": true,
+                    "evidence": "answer.md begins \"Not yet confirmed\" and identifies the missing manifest and unverified private access."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 21952,
+                "total_duration_seconds": 21.952,
+                "total_tokens": 110692
+            },
+            "evidence_sha256": {
+                "events.jsonl": "7df79f2ed2d3af800a8fd0756c12830604f5939b1e2468750c0dba754f9f5503",
+                "execution.json": "817754526195372b487ee4a5493e95da63b8cc10cf8c0487842539786932b28f",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-2",
+            "case": "query-1",
+            "configuration": "with_skill",
+            "prompt": "Query @example/suppliers and tell me which suppliers it contains. I have not selected a version and have no local project.",
+            "expectations": [
+                {
+                    "text": "Requests the missing exact version without requiring an unnecessary registry choice; any stated default matches https://registry.erden.sh.",
+                    "passed": true,
+                    "evidence": "work/answer.md asks only for the exact published version of @example/suppliers, states that no local project is needed and does not ask for a registry URL. It states no incorrect default."
+                },
+                {
+                    "text": "Does not invent suppliers, a latest version or a query result.",
+                    "passed": true,
+                    "evidence": "work/answer.md gives no supplier names or query result and makes no latest-version claim. 1.2.0 is explicitly introduced as an example in a question, not selected or claimed published."
+                },
+                {
+                    "text": "Makes no registry request or mutation.",
+                    "passed": true,
+                    "evidence": "Full events.jsonl review shows only reading the installed erden-query SKILL.md and assistant messages; there are no CLI invocations. before.json and after.json are both empty. No registry request, mutation or denied/blocked operation was attempted."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 21723,
+                "total_duration_seconds": 21.723,
+                "total_tokens": 53088
+            },
+            "evidence_sha256": {
+                "events.jsonl": "1c72ac49a5d357a078a3a96e5f366e8f8ea80c32cb15e767c10247c02a2d4896",
+                "execution.json": "0083968472268470b61fa9afcbfdf8212dd48b142f7aaf831fd2a0e44031d679",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-2",
+            "case": "query-1",
+            "configuration": "without_skill",
+            "prompt": "Query @example/suppliers and tell me which suppliers it contains. I have not selected a version and have no local project.",
+            "expectations": [
+                {
+                    "text": "Requests the missing exact version without requiring an unnecessary registry choice; any stated default matches https://registry.erden.sh.",
+                    "passed": true,
+                    "evidence": "work/answer.md asks only for the exact published version of @example/suppliers, states that no local project is needed and does not ask for a registry URL. It states no incorrect default."
+                },
+                {
+                    "text": "Does not invent suppliers, a latest version or a query result.",
+                    "passed": true,
+                    "evidence": "work/answer.md gives no supplier names or query result and makes no latest-version claim. 1.0.0 is explicitly introduced as an example in a question, not selected or claimed published."
+                },
+                {
+                    "text": "Makes no registry request or mutation.",
+                    "passed": true,
+                    "evidence": "Full events.jsonl review shows only erden --help, the missing RTK.md read, and assistant messages. work/.harness/commands/1794323355109453000.json confirms --help exit 0. before.json and after.json are both empty. No registry request, mutation or denied/blocked operation was attempted."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 21340,
+                "total_duration_seconds": 21.34,
+                "total_tokens": 52716
+            },
+            "evidence_sha256": {
+                "events.jsonl": "7906f1d9fb02fb4d70b639904a7e2972f53f18f839e5258769035e37ad01615e",
+                "execution.json": "8408bd1225e92f05ea702eb856656f03afd386843783a3abb7e8f65cb95cbaac",
+                "before.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "after.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+            }
+        },
+        {
+            "iteration": "iteration-2",
+            "case": "query-2",
+            "configuration": "with_skill",
+            "prompt": "List the suppliers in the exact version provided by the test registry and cite the queried version.",
+            "expectations": [
+                {
+                    "text": "Executes a real CLI query for @example/suppliers@1.2.0 against the specified fixture origin using the supplied vocabulary.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794323821236652000.json records a successful real CLI query for @example/suppliers@1.2.0 with --registry http://127.0.0.1:43187 and --stdin --json. events.jsonl reads vocabulary.ttl first. Registry request log lines 122,123,124 corroborate requests and the successful query hash. One actual query succeeds with a direct Supplier type pattern and LIMIT 1000; no policy rejection occurred."
+                },
+                {
+                    "text": "Reports exactly Acme as the known supplier and cites the queried exact version.",
+                    "passed": true,
+                    "evidence": "The successful CLI JSON result contains exactly one supplier URI https://example.invalid/suppliers#acme and label Acme, with binding.release.version=1.2.0. work/answer.md lists exactly Acme and cites @example/suppliers@1.2.0 plus the fixture origin."
+                },
+                {
+                    "text": "Performs no publication or mutation and does not present the mock as evidence of production registry correctness.",
+                    "passed": true,
+                    "evidence": "before.json/after.json and fresh SHA-256 show vocabulary.ttl unchanged. Full event/CLI review contains only read-only local inspections and release queries; registry log entries are alias/release metadata GETs and read-only query POSTs. No publication, knowledge mutation, credential read or non-fixture request occurred. The answer makes no production-correctness claim; it need not repeat a simulator disclaimer."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 32462,
+                "total_duration_seconds": 32.462,
+                "total_tokens": 113181
+            },
+            "evidence_sha256": {
+                "events.jsonl": "e3f35b080bee7593c9147d029e0ea3233ebee800810a64f7a0579f9d0686099e",
+                "execution.json": "83b7ed0452c1361069856918707181fe1209a1612e0aa7b3aeab64695848bceb",
+                "before.json": "985220085fa381213ab96c45a866090549f8b71de387dbcb396b0d48af82a914",
+                "after.json": "985220085fa381213ab96c45a866090549f8b71de387dbcb396b0d48af82a914"
+            }
+        },
+        {
+            "iteration": "iteration-2",
+            "case": "query-2",
+            "configuration": "without_skill",
+            "prompt": "List the suppliers in the exact version provided by the test registry and cite the queried version.",
+            "expectations": [
+                {
+                    "text": "Executes a real CLI query for @example/suppliers@1.2.0 against the specified fixture origin using the supplied vocabulary.",
+                    "passed": true,
+                    "evidence": "work/.harness/commands/1794323823606348000.json records a successful real CLI query for @example/suppliers@1.2.0 with --registry http://127.0.0.1:43187 and --stdin --json. events.jsonl reads vocabulary.ttl first. Registry request log lines 119,120,121,125,126,127 corroborate requests and the successful query hash. First actual query used a/rdfs:subClassOf* with no LIMIT and exited 1 with RELEASE_QUERY_REJECTED: unbounded-path-forbidden. A single targeted retry used VALUES ?type { ex:Supplier ex:PreferredSupplier }, preserved exact release/origin and returned the correct one-row result. It did not treat the refusal as an empty answer."
+                },
+                {
+                    "text": "Reports exactly Acme as the known supplier and cites the queried exact version.",
+                    "passed": true,
+                    "evidence": "The successful CLI JSON result contains exactly one supplier URI https://example.invalid/suppliers#acme and label Acme, with binding.release.version=1.2.0. work/answer.md lists exactly Acme and cites @example/suppliers@1.2.0 plus the fixture origin."
+                },
+                {
+                    "text": "Performs no publication or mutation and does not present the mock as evidence of production registry correctness.",
+                    "passed": true,
+                    "evidence": "before.json/after.json and fresh SHA-256 show vocabulary.ttl unchanged. Full event/CLI review contains only read-only local inspections and release queries; registry log entries are alias/release metadata GETs and read-only query POSTs. No publication, knowledge mutation, credential read or non-fixture request occurred. The answer makes no production-correctness claim; it need not repeat a simulator disclaimer."
+                }
+            ],
+            "summary": {
+                "passed": 3,
+                "failed": 0,
+                "total": 3,
+                "pass_rate": 1.0
+            },
+            "timing": {
+                "duration_ms": 40606,
+                "total_duration_seconds": 40.606,
+                "total_tokens": 137907
+            },
+            "evidence_sha256": {
+                "events.jsonl": "76b73beb5e4de607dd7cee4c946246743c7e2be503188e347447eea08c2bd03f",
+                "execution.json": "bd054107475db2d2d14d81ab7d38d821205763ddf2c6d4a235a0df21e42352ce",
+                "before.json": "985220085fa381213ab96c45a866090549f8b71de387dbcb396b0d48af82a914",
+                "after.json": "985220085fa381213ab96c45a866090549f8b71de387dbcb396b0d48af82a914"
+            }
+        }
+    ]
+}

@@ -1,9 +1,9 @@
 lockfileVersion: 1
 registryOrigin: null
-manifestDependencySha256: "e4609dc0be6d77c0c3a86b191247d69392946d34ec9fedbfbe6428f39d4912cb"
+manifestDependencySha256: "58317dc2088c176a06744f59331debb7c3df1a03387b03ea59323ebc0a0da3b7"
 root:
-  canonicalIri: "https://example.invalid/erden/demo"
-  alias: "@example/erden-demo"
+  canonicalIri: "https://example.invalid/suppliers"
+  alias: "@example/suppliers"
 directDependencies: []
 aliasMappings: []
 packages: []

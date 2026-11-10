@@ -1,6 +1,37 @@
 # Skill validation and evaluation
 
-Initial checks on 2026-11-10 used Erden source `e937a6f`, CLI package `0.1.0`, on macOS arm64. The collection was subsequently updated to upstream `1dc6fd0`; results below distinguish those revisions. All checked-in instructions, examples and evaluation prompts are in English. Historical behavioral results predate the translation of evaluation prompts and do not validate the revised wording. Skills are initial versions. Local installation, selected diagnostic/preparation behavior and direct CLI semantic validation have been exercised. The qualified SHACL engine is now installed and passes its known-answer test. Full skill evaluations in English and live registry workflows remain unverified.
+The six English skills were exercised on 2026-11-10 against Erden upstream `1dc6fd0`, with skill source `84c7038`, CLI package `0.1.0`, and Codex CLI `0.166.0-alpha.5.1` on macOS arm64. The qualified reasoner and SHACL engines were available. All 18 behavioral scenarios ran once with the relevant skill and once without it; two query scenarios then received paired reruns after correcting evaluation-harness limitations. All 36 automatic-selection prompts also ran once. These are initial behavioral measurements, not a reliability guarantee across models or clients.
+
+## Current English evaluation
+
+The [recorded results](evaluation-results/2026-11-10-english.json) preserve both the initial comparison and the corrected query reruns, along with per-assertion evidence. Each behavioral run used a fresh ephemeral Codex session, equivalent inputs, the real built CLI, and separate project/configuration/cache directories. With-skill runs received the relevant installed skill; baseline runs received no Erden skill. Generic host skills remained available to both. Separate grading agents checked command records, generated RDF, source hashes and validation reports rather than accepting the final answers alone. The exact executor model ID was not exposed, so no model-specific claim is made.
+
+| Measurement                                         | With skill | Without skill  |
+| --------------------------------------------------- | ---------- | -------------- |
+| Initial comparison: observable assertions           | 55/56      | 48/56          |
+| Corrected comparison: observable assertions         | 55/56      | 49/56          |
+| Corrected comparison: cases meeting every assertion | 17/18      | 13/18          |
+| Automatic selection, positive and near-miss prompts | 36/36      | Not applicable |
+
+The corrected comparison uses the two query reruns plus the other 16 original scenarios. It does not discard the initial evidence or combine different harness conditions as repeated trials. Both query reruns finish successfully in both conditions; the skill's supported query succeeds immediately, while the baseline first receives an unbounded-path rejection and then recovers.
+
+The one unmet with-skill assertion is a real CLI limitation: `update` returns `PROJECT_DEPENDENCIES_REGISTRY_UNAVAILABLE` before any HTTP request. At `1dc6fd0`, the default service wires `update` to `unavailableDependencyRegistry` in `packages/project/src/project-dependencies/operation.ts`. Both conditions kept the existing lock and reported the blocker. This is an incomplete user task, even though the skill handled the failure correctly. The dependency reference now documents the observed revision-specific limitation.
+
+The baseline omitted SHACL and competency questions when creating a model, failed to inspect the checkout runtime pins, attempted unsupported `remove --dry-run` during a preview-only request, and attempted publication before checking. The latter failed locally before upload; it subsequently checked and completed the simulated publication. These are observed differences in individual runs, not statistically established benefits.
+
+### Registry simulation and coverage limits
+
+Registry scenarios used a disposable loopback server, real CLI archives and cache materialization, synthetic credentials, and an Oxigraph dataset containing the expected supplier. Offline restore, preview-only removal, exact-version querying, and publication polling were exercised. Publication advanced through simulated queued/validating/succeeded states. No production registry was contacted and no real model was published.
+
+The initial query simulator accepted an unbounded property path that the production contract forbids. A targeted guard was added and checked with 18 lexical cases and seven real CLI requests before rerunning both query agents. It is still an incomplete policy simulator. Publication runs also shared an idempotent attempt: the baseline reused the first run's uploaded archive, so an independent second archive transfer was not tested. Real server-side validation, authorization failures, and separate-user publication isolation remain release checks.
+
+The initial missing-version query comparison also had an overbroad network restriction. Both corrected reruns passed after the harness prohibited only premature requests. The rubric requires asking for the exact version; it does not require reciting an unused default registry. Setup grading likewise avoids requiring registry discussion for a question limited to local validation readiness. Original results and these corrections remain visible in the result record.
+
+The setup scenario used already-installed runtimes selected by the harness; it proves inspection and verification, not installation or recovery on a clean machine. The model-creation example is close to the skill's documented example, so testing unrelated domains is still needed. The activation test stopped after observing the selected skill's content load and measured routing only; one pass per prompt does not measure repeatability.
+
+### Evaluation repairs
+
+The original model-edit fixture described an unrelated artifact and could not test preservation of a preferred-supplier rule. The English runs used a real supplier fixture instead. The checked-in modeling fixture now matches that scenario; the creation case supplies only notes. Its notes explicitly include the subclass rule, its manifest uses the hosted default rather than a local test-server port, and an offline install followed by a real check passes all six stages. The preparation rubric now accepts actual healthy validation and packaging rather than assuming the old missing-SHACL blocker. All 18 case files include their observable grading expectations.
 
 ## Structural and installation checks
 
@@ -115,9 +146,9 @@ The same three CLI suites plus `shacl/distribution/test/index.test.ts` now repor
 
 ## Evaluation cases included for continued work
 
-Each skill has `evals/evals.json` with three behavioral cases, and `evals/triggers.json` with three positive and three near-miss negative activation prompts. Together these are 18 behavioral cases and 36 trigger queries in English. The case files describe scenarios; they are not an executable runner and not all have been run.
+Each skill has `evals/evals.json` with three behavioral cases, and `evals/triggers.json` with three positive and three near-miss negative activation prompts. Together these are 18 behavioral cases and 36 trigger queries in English. The case files describe the executed scenarios; they are not a standalone runner. Reproduce them with an agent-evaluation harness and the fixture preparation below.
 
-Model, check and publish skills include a copy of the dependency-free demo under `evals/files/project/`. Copy that fixture into a fresh temporary directory for each run. For modeling tests, the user-supplied notes in the prompt are additional evidence to preserve. For a deliberately failing SHACL scenario, the evaluator must construct the stated failing condition in its temporary copy and record that change; the bundled fixture itself is the original valid demo.
+Check and publish skills include the dependency-free demo under `evals/files/project/`; model editing uses the supplier fixture in its own skill. Model creation starts with `evals/files/notes.md` and no existing project. Copy only the case's listed files into a fresh temporary directory for each condition. For an existing project, run `erden install <temporary-project> --offline --json` during fixture preparation so the canonical lock has materialized installation state. Do not count this evaluator setup as an agent action. Preserve the user-supplied evidence. For a deliberately failing SHACL scenario, the evaluator must construct the stated failing condition in its temporary copy and record that change; the bundled fixture itself is the original valid demo.
 
 For positive query, dependency and publication cases, provision a disposable test registry with known packages, versions, vocabulary, credentials and expected results. Replace example identities with that fixture's actual identities in the run metadata. Never aim a synthetic test at an unknown public registry or use real production credentials just to complete coverage.
 
@@ -125,7 +156,7 @@ Use the [skill-creator evaluation workflow](https://github.com/anthropics/skills
 
 Remaining release checks:
 
-- Full agent-driven init/model/check evaluations in English, including inconsistent knowledge and invalid constraints. Direct CLI success and a SHACL violation are now verified above.
-- Registry-backed reads, authorization failures, dependency changes and publication outcomes in a disposable registry.
-- Automatic activation across supported target clients; the initial explicit-skill runs do not measure discovery accuracy.
+- Repeat behavioral and activation cases across the intended models and clients; add unrelated modeling domains, inconsistent ontologies, and clean-machine setup/recovery.
+- Repeat registry workflows against a disposable instance of the actual registry service, including authorization failures, independent uploads and terminal validation failure. Resolve the real dependency-update CLI blocker.
+- Verify automatic activation across supported target clients; the current 36-prompt run covers only the native Codex CLI environment.
 - Clean public GitHub installation from `cbnsndwch/erden` and actual skills.sh indexing after the files are merged into its default branch.

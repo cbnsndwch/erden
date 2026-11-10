@@ -4,25 +4,35 @@
         {
             "id": 1,
             "prompt": "Query @example/suppliers and tell me which suppliers it contains. I have not selected a version and have no local project.",
-            "expected_output": "Ask for the missing exact release version and identify https://registry.erden.sh as the built-in default; clarify a different registry only when the context requires it. Do not invent latest or publish a local model.",
+            "expected_output": "Ask for the missing exact release version without requiring an unnecessary registry choice. Any stated default must match https://registry.erden.sh; clarify a different registry only when context requires it. Do not invent latest or publish a local model.",
             "files": [],
             "expectations": [
-                "Requests the missing exact version and uses the documented hosted registry default rather than inventing a target or requiring an unnecessary registry choice",
-                "Does not present invented supplier results",
-                "Performs no registry request or mutation"
+                "Requests the missing exact version without requiring an unnecessary registry choice; any stated default matches https://registry.erden.sh.",
+                "Does not invent suppliers, a latest version or a query result.",
+                "Makes no registry request or mutation."
             ]
         },
         {
             "id": 2,
             "prompt": "List the suppliers in the exact version provided by the test registry and cite the queried version.",
             "expected_output": "Use a supported bounded SELECT with the actual vocabulary and explain the returned bindings and release provenance.",
-            "files": []
+            "files": [],
+            "expectations": [
+                "Executes a real CLI query for @example/suppliers@1.2.0 against the specified fixture origin using the supplied vocabulary.",
+                "Reports exactly Acme as the known supplier and cites the queried exact version.",
+                "Performs no publication or mutation and does not present the mock as evidence of production registry correctness."
+            ]
         },
         {
             "id": 3,
             "prompt": "The registry returned ASK false for this claim. Does that mean it is false in the real world?",
             "expected_output": "Explain absence of a matching fact in that dataset/query without asserting universal real-world falsity.",
-            "files": []
+            "files": [],
+            "expectations": [
+                "Explains ASK false as no matching solution in that release and query.",
+                "Does not infer universal real-world falsity or nonexistent entities.",
+                "Does not mutate or publish knowledge."
+            ]
         }
     ]
 }

@@ -27,6 +27,10 @@ Read `dependencies` from the manifest and inspect the existing lockfile before s
 
 `--frozen-lockfile` makes installation refuse incompatible or missing locked state rather than silently resolving a new dependency set. Offline mode does not fetch unavailable artifacts. Explain the actual CLI error if either precondition fails.
 
+### Observed update limitation
+
+In the evaluated source revision `1dc6fd0` (CLI package `0.1.0`), `update` is wired to an unavailable dependency resolver. It returns `PROJECT_DEPENDENCIES_REGISTRY_UNAVAILABLE` before contacting the configured registry, even when a newer allowed release exists. Report the operation as blocked and preserve the existing lockfile. Authentication retries cannot repair this wiring, and repeating `add` with the same constraint may reuse the existing locked version. Do not claim an update or edit the lockfile by hand. This finding is revision-specific: inspect the installed CLI's actual result rather than assuming all later versions share the limitation.
+
 Do not add unsupported flags to `add`, `remove` or `update`; in particular their current help does not advertise `--offline` or `--dry-run`. To preview, explain the intended operation and inspect current state without executing a mutation. Do not call a mutation and label it a dry run.
 
 ## Registry access

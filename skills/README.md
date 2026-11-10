@@ -56,7 +56,7 @@ After public integration, test listing and installation from a clean project, ve
 
 See [TESTING.md](TESTING.md) for validation commands, the initial evaluation set, observed results and remaining gaps. Update the relevant skill whenever a CLI flag, JSON contract, runtime prerequisite or semantic policy changes. Run formatting, structural validation, installation checks and the affected behavioral cases before release.
 
-The collection includes 18 initial behavioral cases and 36 trigger/non-trigger examples in English. Their presence is not a claim that every case has run. Trigger selection also depends on the agent/model, so validate the clients you intend to advertise.
+The collection includes 18 behavioral cases and 36 trigger/non-trigger examples in English. All ran in the initial Codex evaluation: the corrected comparison met every assertion in 17/18 cases with skills, and all 36 selection prompts passed once. Dependency updating remains blocked by the evaluated CLI's resolver wiring. Registry flows used a disposable simulator, so real-service behavior and broader client/model reliability remain unverified. See the evidence and limitations in TESTING.md.
 
 Authoring follows the [Agent Skills specification](https://agentskills.io/specification), its [creation guidance](https://agentskills.io/skill-creation/best-practices), and the [skill-creator evaluation workflow](https://github.com/anthropics/skills/tree/main/skills/skill-creator). The project-specific research and tradeoffs are recorded in [skills-research.md](../docs/skills-research.md).
 

@@ -1,0 +1,4 @@
+# @ask Which suppliers are known?
+# @expect rows == 1
+# @from Acme is a PreferredSupplier and therefore a Supplier.
+SELECT ?supplier WHERE { ?supplier a <https://example.invalid/suppliers#Supplier> }

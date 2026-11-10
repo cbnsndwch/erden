@@ -42,7 +42,7 @@ The user accepted the proposed collection with an additional environment-readine
 **Files:** Create `skills/README.md` and `skills/TESTING.md`; update `README.md` and `docs/skills-research.md`.
 
 - [x] Explain independent installation, prerequisites, natural-language examples, licensing, compatibility, update expectations and skills.sh indexing.
-- [x] Document the unresolved public owner/repository discrepancy as a release decision, using local installation commands that work before publication.
+- [x] Confirm `cbnsndwch/erden` as the public upstream and `el-frontend/erden` as the contribution fork, using local installation commands before upstream integration.
 - [x] Record test commands, observed outcomes and limits honestly, including any evaluations that require a registry fixture.
 
 ### Task 5: Validation
@@ -51,10 +51,13 @@ The user accepted the proposed collection with an additional environment-readine
 - [x] Run `pnpm exec oxfmt --check skills docs/skills-research.md docs/superpowers/plans/2026-11-10-erden-skills.md README.md`.
 - [x] Run `npx skills add ./ --list` with telemetry disabled and verify that all six skills are discoverable.
 - [x] Perform representative behavioral evaluations of setup, query and publication boundaries; separate observed runs from proposed future tests.
+- [x] Run all 18 English cases with and without skills, plus 36 automatic-selection prompts. Preserve two paired query reruns after correcting harness limitations, and record the real CLI update blocker separately from agent behavior.
 - [x] Inspect the final diff and repository status; preserve the pre-existing untracked `shacl/target/` directory.
 
 No production publishing, login or remote writes are required to deliver this collection. Public installation and registry-dependent end-to-end checks remain explicitly distinguished from local validation.
 
 ## Completion record
 
-Six skills were authored and installed in a clean temporary project. Structure, fixture paths, interfaces, formatting and repository boundaries pass. Three tasks were evaluated with and without skills; an output-extension gap was fixed and its targeted follow-up passed. An independent source review found no material instruction/CLI mismatch. The qualified SHACL engine was subsequently restored from an exact-match upstream artifact; direct CLI semantic validation and an invalid-constraint check now pass their expected outcomes. Full agent evaluations in English and registry-backed cases remain unverified as recorded in `skills/TESTING.md`. No production code, engine pins, global shell configuration or remote registry state was changed.
+Six skills were authored and installed in a clean temporary project. Structure, fixture paths, interfaces, formatting and repository boundaries pass. Initial smoke testing identified an output-extension gap, which was fixed and verified. The qualified SHACL engine was restored from an exact-match upstream artifact; direct CLI semantic validation and an invalid-constraint check pass their expected outcomes.
+
+All 18 English scenarios then ran with and without skills, plus two paired query reruns after harness corrections. With skills, 17/18 scenarios meet every assertion; the remaining update scenario is blocked by the actual CLI resolver wiring. All 36 automatic-selection prompts pass once. Registry behavior was exercised through a disposable simulator, with real-service and broader client/model checks still pending as recorded in `skills/TESTING.md`. No production code, engine pins, global shell configuration or production registry state was changed.

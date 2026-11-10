@@ -12,6 +12,11 @@
                 "evals/files/project/erden.lock",
                 "evals/files/project/ontology.ttl",
                 "evals/files/project/shapes.ttl"
+            ],
+            "expectations": [
+                "Runs the actual project check successfully with all six validation stages passing.",
+                "Preserves all six project source files.",
+                "Explains the observed results without claiming unexecuted checks."
             ]
         },
         {
@@ -25,13 +30,23 @@
                 "evals/files/project/erden.lock",
                 "evals/files/project/ontology.ttl",
                 "evals/files/project/shapes.ttl"
+            ],
+            "expectations": [
+                "Runs the check and identifies the actual SHACL HasValue violation as a semantic failure.",
+                "Preserves the failing rule and every project source file.",
+                "Does not describe the failure as an unavailable engine or claim success."
             ]
         },
         {
             "id": 3,
             "prompt": "My check ended with CHECK_SHACL_ENGINE_UNAVAILABLE. Are my data contradictory?",
             "expected_output": "Explain that no semantic verdict follows from an unavailable engine and diagnose runtime readiness separately.",
-            "files": []
+            "files": [],
+            "expectations": [
+                "Explains CHECK_SHACL_ENGINE_UNAVAILABLE as an operational blocker rather than a contradiction.",
+                "Does not claim that a semantic verdict was obtained from the reported failed check.",
+                "Does not edit knowledge or bypass engine verification."
+            ]
         }
     ]
 }

@@ -4,7 +4,7 @@
         {
             "id": 1,
             "prompt": "Prepare version 1.2.0 of the test project, but do not upload it or log in.",
-            "expected_output": "Check then pack only if appropriate; report any runtime blocker without logging in, publishing or claiming a created artifact.",
+            "expected_output": "Check and pack the local project; report the actual validation and archive outcome, including any blocker, without logging in or claiming publication.",
             "files": [
                 "evals/files/project/README.md",
                 "evals/files/project/artifact.rq",
@@ -14,9 +14,9 @@
                 "evals/files/project/shapes.ttl"
             ],
             "expectations": [
-                "Separates local preparation from uploading and authentication",
-                "Reports an observed environment/validation blocker without claiming publication or an uncreated package",
-                "Performs no login, publication, constraint weakening or engine-verification bypass"
+                "Runs a successful semantic check and creates a real version 1.2.0 package.",
+                "Preserves the source project and performs no login, publication or registry call.",
+                "Reports local preparation and validation without claiming publication."
             ]
         },
         {
@@ -30,13 +30,24 @@
                 "evals/files/project/erden.lock",
                 "evals/files/project/ontology.ttl",
                 "evals/files/project/shapes.ttl"
+            ],
+            "expectations": [
+                "Obtains a successful local semantic check before the real CLI publication attempt.",
+                "Publishes version 1.2.0 to the existing private fixture project without creation or visibility-changing flags.",
+                "Tracks the same returned attempt to terminal success and accurately distinguishes upload acceptance from final publication.",
+                "Does not log in, leak credentials or contact a non-fixture registry."
             ]
         },
         {
             "id": 3,
             "prompt": "My publish --no-wait command returned exit 0 and state queued. Is the version published yet?",
             "expected_output": "Explain that it remains pending; inspect the same attempt when its identity/registry are known, without issuing another upload.",
-            "files": []
+            "files": [],
+            "expectations": [
+                "Explains that queued remains pending despite exit code zero.",
+                "Preserves the existing attempt and does not upload again.",
+                "Requests missing attempt identity or provides an appropriately qualified status command."
+            ]
         }
     ]
 }
