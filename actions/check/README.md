@@ -111,3 +111,5 @@ node --test scripts/test/check-action.test.mjs
 The tests execute a protocol fixture through real child processes and exercise verified synthetic archive extraction. `.github/workflows/check-action.yml` runs those tests and invokes the local action on all four supported runner platforms. The fixture explicitly does not validate ontologies or stand in for the Erden engines.
 
 Local integration on macOS arm64 additionally runs this action against the existing qualified CLI and engines: the demo passes all six stages, and an isolated SHACL violation produces `outcome: failed`, exit code 1, and retained reports. Both runs preserve the project source files and lockfile. Downloading and checking an actual public release remains unverified until the first release is available.
+
+The first native [GitHub Actions verification run](https://github.com/cbnsndwch/erden/actions/runs/42899530417) passed all four platform jobs at implementation commit `5ebd498`, including all 18 adapter tests and the local action's passing/failing protocol fixtures. This verifies the GitHub integration separately from the local real-engine checks above.

@@ -31,7 +31,7 @@ Files: `actions/check/README.md`, `.github/workflows/check-action.yml`, `scripts
 - [x] Document inputs, outputs, permissions, prepared runtimes, reproducible action refs, and an always-upload example.
 - [x] Add native runner tests and invoke the actual local action with the clearly labeled fixture.
 - [x] Run the action against the real qualified CLI on a valid demo and an isolated invalid SHACL fixture.
-- [ ] Run formatting, lint, repository boundaries, and metadata/workflow validation; review the final diff, commit, and open an independent upstream PR.
+- [x] Run formatting, lint, repository boundaries, and metadata/workflow validation; review the final diff, commit, and open an independent upstream PR.
 
 ## Decisions and evidence
 
@@ -41,7 +41,11 @@ Files: `actions/check/README.md`, `.github/workflows/check-action.yml`, `scripts
 
 - Task 1: complete. Initial process tests failed without the action implementation, then all ten passed. A subsequent regression test demonstrated missing doctor.json on engine failure; preserving that structured report fixed it.
 - Task 2: complete. Three download tests failed before acquisition existed, then passed after exact-release download, digest verification and extraction were implemented. A fixture-construction mistake was corrected before treating the download tests as the red baseline.
-- Task 3: local real-CLI integration passes for both a valid demo and an isolated SHACL failure. Source files and lockfile remain unchanged. Native runner CI and final review are still pending.
+- Task 3: local real-CLI integration passes for both a valid demo and an isolated SHACL failure. Source files and lockfile remain unchanged. The fresh review and its regression fixes are complete. All four native action jobs passed on upstream GitHub Actions run 42899530417.
 - Ruling: checksum verification trusts the canonical publisher and release checksum file; it does not imply an independent signature. Prepared runtimes are explicitly trusted caller inputs and still undergo doctor checks.
 
 - Final fresh review identified an expected-competency-failure annotation mismatch and a dependency-source locator mismatch. Both were reproduced with failing process tests and corrected: annotations follow blocking policy and only root-owned shape sources receive checkout file links.
+
+- Final verification: 18/18 action tests pass locally; the real CLI integrations still return passed/0 and failed/1 after the review fixes. Formatting, type-aware lint, repository boundaries, legal checks, metadata and YAML examples pass.
+- Native verification: [upstream run 42899530417](https://github.com/cbnsndwch/erden/actions/runs/42899530417) passed the action suite and local action invocations on Ubuntu x64, Ubuntu arm64, macOS arm64, and Windows x64 at implementation commit `5ebd498`. These use the explicitly labeled protocol fixture; real engine integration was run locally on macOS arm64.
+- Delivery: [PR #7](https://github.com/cbnsndwch/erden/pull/7), based directly on upstream main and independent of the skills PR. Actual public-release acquisition remains pending the first upstream release; no release or tag was created.
